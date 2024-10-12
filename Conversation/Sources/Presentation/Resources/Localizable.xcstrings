@@ -1,0 +1,38 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "Type to Speak…" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type to Speak…"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入力して読み上げる…"
+          }
+        }
+      }
+    },
+    "こんにちは" : {
+
+    },
+    "分類" : {
+
+    },
+    "病院" : {
+
+    },
+    "語句" : {
+
+    }
+  },
+  "version" : "1.0"
+}

@@ -13,7 +13,7 @@ public struct RootView: View {
     public var body: some View {
         NavigationStack {
             ConversationView()
-                .navigationTitle("Talk Assistant")
+                .navigationTitle(Text("Talk Assistant", bundle: .module))
         }
     }
 }
