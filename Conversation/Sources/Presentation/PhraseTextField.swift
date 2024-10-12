@@ -10,11 +10,17 @@ import SwiftUI
 struct PhraseTextField: View {
     @Binding var text: String
     let isSpeaking: Bool
+    private var _onSubmit: (String) -> Void = { _ in }
+
+    init(text: Binding<String>, isSpeaking: Bool) {
+        self._text = text
+        self.isSpeaking = isSpeaking
+    }
 
     var body: some View {
         HStack(spacing: 4) {
-            Image(systemName: isSpeaking ? "pause.circle.fill" : "waveform.circle.fill")
-                .font(.largeTitle)
+            Image(systemName: isSpeaking ? "pause.circle.fill" : "play.circle.fill")
+                .font(.title)
                 .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
 
             ZStack(alignment: .leading) {
@@ -24,10 +30,11 @@ struct PhraseTextField: View {
                     .font(.title3)
                     .disabled(isSpeaking)
                     .submitLabel(.done)
-                    .onSubmit {
-                        // TODO: Call back to speech
-                        print("speech: ", text)
-                        text = ""
+                    .onChange(of: text) { _ in
+                        if text.last?.isNewline == .some(true) {
+                            text.removeLast()
+                            _onSubmit(text)
+                        }
                     }
             }
         }
@@ -35,11 +42,17 @@ struct PhraseTextField: View {
         .background(MaterialView(.systemThinMaterialDark))
         .cornerRadius(16)
     }
+
+    func onSubmit(_ action: @escaping (String) -> Void) -> some View {
+        var `self` = self
+        `self`._onSubmit = action
+        return `self`
+    }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
     @Previewable @State var text1 = ""
-    @Previewable @State var text2 = "長い文章を入力するとこのように改行されるテキストフィールドになります"
+    @Previewable @State var text2 = "If you enter a long sentence, the text field will break lines like this."
 
     PhraseTextField(text: $text1, isSpeaking: false)
     PhraseTextField(text: $text2, isSpeaking: true)

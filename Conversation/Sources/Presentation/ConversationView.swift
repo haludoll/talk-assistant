@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import SpeechSynthesizer
 
 public struct ConversationView: View {
-    @State private var text = ""
+    @State private var speechSynthesizer = SpeechSynthesizer()
     public init() {}
 
     public var body: some View {
-        PhraseTextField(text: $text, isSpeaking: false)
+        PhraseTextField(text: $speechSynthesizer.text, isSpeaking: false)
+            .onSubmit { text in
+                speechSynthesizer.speak(text)
+            }
             .shadow(radius: 4)
             .padding()
     }
@@ -20,5 +24,4 @@ public struct ConversationView: View {
 
 #Preview {
     ConversationView()
-        .environment(\.locale, .init(identifier: "ja"))
 }
