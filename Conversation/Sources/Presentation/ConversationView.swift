@@ -20,5 +20,4 @@ public struct ConversationView: View {
 
 #Preview {
     ConversationView()
-        .environment(\.locale, .init(identifier: "ja"))
 }
