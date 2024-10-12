@@ -19,8 +19,6 @@ public struct ConversationView: View {
 }
 
 #Preview {
-    NavigationStack {
-        ConversationView()
-            .navigationTitle("Talk Assistant")
-    }
+    ConversationView()
+        .environment(\.locale, .init(identifier: "ja"))
 }

@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Root",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
         .macOS(.v14)

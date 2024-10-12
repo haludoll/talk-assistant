@@ -1,19 +1,19 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Type to Speak…" : {
+    "Talk Assistant" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Type to Speak…"
+            "value" : "Talk Assistant"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "入力して読み上げる…"
+            "value" : "トークアシスタント"
           }
         }
       }
