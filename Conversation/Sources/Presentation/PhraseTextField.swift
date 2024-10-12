@@ -19,8 +19,8 @@ struct PhraseTextField: View {
 
     var body: some View {
         HStack(spacing: 4) {
-            Image(systemName: isSpeaking ? "pause.circle.fill" : "waveform.circle.fill")
-                .font(.largeTitle)
+            Image(systemName: isSpeaking ? "pause.circle.fill" : "play.circle.fill")
+                .font(.title)
                 .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
 
             ZStack(alignment: .leading) {
