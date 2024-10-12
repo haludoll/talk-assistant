@@ -10,7 +10,11 @@ import AVFoundation
 @Observable
 public final class SpeechSynthesizer {
     public var text = ""
-    private let avSpeechSynthesizer = AVSpeechSynthesizer()
+    private let avSpeechSynthesizer = {
+        let synthesizer = AVSpeechSynthesizer()
+        synthesizer.mixToTelephonyUplink = true
+        return synthesizer
+    }()
 
     public init() {}
 
