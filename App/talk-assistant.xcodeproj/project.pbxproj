@@ -205,6 +205,7 @@
 			packageReferences = (
 				CC9E340C2CB166C40057918C /* XCLocalSwiftPackageReference "../Root" */,
 				CCB74B852CB19289002CB17D /* XCLocalSwiftPackageReference "../Conversation" */,
+				0C1768052CBACBEE007054A6 /* XCLocalSwiftPackageReference "../SpeechSynthesizer" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CC0C20802CB159E000102C15 /* Products */;
@@ -610,6 +611,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		0C1768052CBACBEE007054A6 /* XCLocalSwiftPackageReference "../SpeechSynthesizer" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../SpeechSynthesizer;
+		};
 		CC9E340C2CB166C40057918C /* XCLocalSwiftPackageReference "../Root" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../Root;

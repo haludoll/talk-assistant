@@ -14,9 +14,14 @@ let package = Package(
             name: "ConversationPresentation",
             targets: ["Presentation"]),
     ],
+    dependencies: [
+        .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
+    ],
     targets: [
         .target(
-            name: "Presentation"),
+            name: "Presentation",
+            dependencies: [.product(name: "SpeechSynthesizer", package: "SpeechSynthesizer")]
+        ),
         .testTarget(
             name: "PresentationTests",
             dependencies: ["Presentation"]
