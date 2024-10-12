@@ -39,16 +39,6 @@
 			path = "talk-assistant";
 			sourceTree = "<group>";
 		};
-		CC0C20932CB159E400102C15 /* talk-assistantTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "talk-assistantTests";
-			sourceTree = "<group>";
-		};
-		CC0C209D2CB159E400102C15 /* talk-assistantUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "talk-assistantUITests";
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +71,6 @@
 			isa = PBXGroup;
 			children = (
 				CC0C20812CB159E000102C15 /* talk-assistant */,
-				CC0C20932CB159E400102C15 /* talk-assistantTests */,
-				CC0C209D2CB159E400102C15 /* talk-assistantUITests */,
 				CC0C20802CB159E000102C15 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -136,9 +124,6 @@
 			dependencies = (
 				CC0C20922CB159E400102C15 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				CC0C20932CB159E400102C15 /* talk-assistantTests */,
-			);
 			name = "talk-assistantTests";
 			packageProductDependencies = (
 			);
@@ -158,9 +143,6 @@
 			);
 			dependencies = (
 				CC0C209C2CB159E400102C15 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CC0C209D2CB159E400102C15 /* talk-assistantUITests */,
 			);
 			name = "talk-assistantUITests";
 			packageProductDependencies = (
@@ -406,7 +388,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"talk-assistant/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U2W9UR892A;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -447,7 +429,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"talk-assistant/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U2W9UR892A;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
