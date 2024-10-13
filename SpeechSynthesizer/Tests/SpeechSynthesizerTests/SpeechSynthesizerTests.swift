@@ -1,12 +1,17 @@
-import XCTest
-@testable import SpeechSynthesizer
+//
+//  SpeechSynthesizerTests.swift
+//  SpeechSynthesizer
+//
+//  Created by haludoll on 2024/10/13.
+//
 
-final class SpeechSynthesizerTests: XCTestCase {
-    func testExample() throws {
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+import Testing
+import SpeechSynthesizer
 
-        // Defining Test Cases and Test Methods
-        // https://developer.apple.com/documentation/xctest/defining_test_cases_and_test_methods
+struct SpeechSynthesizerTests {
+    @Test func didStart() async throws {
+        let speechSynthesizer = SpeechSynthesizer()
+        speechSynthesizer.speechSynthesizer(<#T##AVSpeechSynthesizer#>, didStart: <#T##AVSpeechUtterance#>)
     }
+
 }

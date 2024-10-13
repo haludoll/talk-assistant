@@ -22,8 +22,12 @@ let package = Package(
         .target(
             name: "Root",
             dependencies: [
-                .product(name: "ConversationPresentation", package: "Conversation", moduleAliases: ["Presentation" : "ConversationPresentation"]),
-                .product(name: "SettingsPresentation", package: "Settings", moduleAliases: ["Presentation" : "SettingsPresentation"])
+                .product(name: "ConversationPresentation",
+                         package: "Conversation",
+                         moduleAliases: ["Presentation" : "ConversationPresentation"]),
+                .product(name: "SettingsPresentation",
+                         package: "Settings",
+                         moduleAliases: ["Presentation" : "SettingsPresentation"])
             ]
         ),
         .testTarget(
