@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import AVFoundation
 @testable import SpeechSynthesizer
 
 @Observable
