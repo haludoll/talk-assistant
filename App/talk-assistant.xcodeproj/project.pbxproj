@@ -28,9 +28,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0CA117782CBDBB17008C173C /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "talk-assistant.app"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug/talk-assistant.app"; sourceTree = "<absolute>"; };
-		0CA1178D2CBDBE5D008C173C /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CA1179A2CBDBE94008C173C /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C0576A92CBDC56B0032C561 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "talk-assistant.app"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug/talk-assistant.app"; sourceTree = "<absolute>"; };
+		0CA1178D2CBDBE5D008C173C /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "talk-assistantTests.xctest"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug-iphoneos/talk-assistant.app/PlugIns/talk-assistantTests.xctest"; sourceTree = "<absolute>"; };
+		0CA1179A2CBDBE94008C173C /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "talk-assistantUITests.xctest"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug-iphoneos/talk-assistantUITests-Runner.app/PlugIns/talk-assistantUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -81,9 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0C20812CB159E000102C15 /* talk-assistant */,
-				0CA1178D2CBDBE5D008C173C /* talk-assistantTests.xctest */,
 				0CA1178E2CBDBE5D008C173C /* talk-assistantTests */,
-				0CA1179A2CBDBE94008C173C /* talk-assistantUITests.xctest */,
 				0CA1179B2CBDBE94008C173C /* talk-assistantUITests */,
 			);
 			sourceTree = "<group>";
@@ -157,7 +155,7 @@
 				CC9E340D2CB166C40057918C /* Root */,
 			);
 			productName = "talk-assistant";
-			productReference = 0CA117782CBDBB17008C173C /* talk-assistant.app */;
+			productReference = 0C0576A92CBDC56B0032C561 /* talk-assistant.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
