@@ -20,7 +20,21 @@ jobs:
           LANGUAGE: Japanese
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
-          PROMPT: "Please check if there are any confusions or irregularities in the following code diff:"
+          PROMPT: |
+            あなたはベテランエンジニアです。回答は日本語でお願いします。
+            渡されたコードについて改善点を見つけ、変更する理由を説明した上で、変更後のコード例を示してください。
+            改善点がない場合には絶対にコメントをしないでください。
+            対象とするファイルは `**.swift` と `**.yml` ファイルです。それ以外のファイルには絶対にコメントしないでください.
+
+            特に以下の点を指摘してください:
+              - 誤解を招いたり、実態を正確に表していない命名があるか
+              - 適度に変数を定義し自己ドキュメントされているか
+              - 冗長な書き方のコードがないか
+              - 読んで理解が難しい箇所にコメントが適切にされているか
+              - コメントの内容はわかりやすく、簡潔に説明できているか
+              - 理解の難しい複雑な条件式が作られていないか
+              - 新しいメソッドを定義したときにテストコードを書いているか
+              - 明らかなセキュリティの問題があるか
           top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
           temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
           max_tokens: 10000
