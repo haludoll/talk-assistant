@@ -20,7 +20,7 @@ public final class SpeechSynthesizer: NSObject {
         return synthesizer
     }()
 
-    private let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
+    let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
     @ObservationIgnored private var task: Task<Void, Never>?
 
     public override init() {
@@ -70,7 +70,7 @@ extension SpeechSynthesizer: @preconcurrency AVSpeechSynthesizerDelegate {
     }
 }
 
-private extension AVSpeechSynthesizer {
+extension AVSpeechSynthesizer {
     enum DelegateAction {
         case didStart
         case didFinish
