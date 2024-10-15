@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:talk-assistant.xctestplan">
+   </FileRef>
+   <FileRef
+      location = "group:App/talk-assistant.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Conversation">
+   </FileRef>
+   <FileRef
+      location = "group:Root">
+   </FileRef>
+   <FileRef
+      location = "group:Settings">
+   </FileRef>
+   <FileRef
+      location = "group:SpeechSynthesizer">
+   </FileRef>
+</Workspace>
