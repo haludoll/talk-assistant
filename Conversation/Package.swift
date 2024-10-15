@@ -12,19 +12,21 @@ let package = Package(
     products: [
         .library(
             name: "ConversationPresentation",
-            targets: ["Presentation"]),
+            targets: ["ConversationPresentation"]),
     ],
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
     ],
     targets: [
         .target(
-            name: "Presentation",
-            dependencies: [.product(name: "SpeechSynthesizer", package: "SpeechSynthesizer")]
+            name: "ConversationPresentation",
+            dependencies: [.product(name: "SpeechSynthesizer", package: "SpeechSynthesizer")],
+            path: "Sources/Presentation"
         ),
         .testTarget(
-            name: "PresentationTests",
-            dependencies: ["Presentation"]
-        ),
+            name: "ConversationPresentationTests",
+            dependencies: ["ConversationPresentation"],
+            path: "Tests/PresentationTests"
+        )
     ]
 )

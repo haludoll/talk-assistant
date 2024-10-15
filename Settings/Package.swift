@@ -4,17 +4,24 @@ import PackageDescription
 
 let package = Package(
     name: "Settings",
+    defaultLocalization: "en",
+    platforms: [
+        .iOS(.v17),
+        .macOS(.v14)
+    ],
     products: [
         .library(
             name: "SettingsPresentation",
-            targets: ["Presentation"]),
+            targets: ["SettingsPresentation"]),
     ],
     targets: [
         .target(
-            name: "Presentation"),
+            name: "SettingsPresentation",
+            path: "Sources/Presentation"),
         .testTarget(
-            name: "PresentationTests",
-            dependencies: ["Presentation"]
+            name: "SettingsPresentationTests",
+            dependencies: ["SettingsPresentation"],
+            path: "Tests/PresentationTests"
         ),
     ]
 )
