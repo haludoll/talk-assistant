@@ -1,0 +1,64 @@
+{
+  "configurations" : [
+    {
+      "id" : "01188951-A9A3-4885-930B-EAEE5400B78B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:talk-assistant.xcodeproj",
+        "identifier" : "0CA1178C2CBDBE5D008C173C",
+        "name" : "talk-assistantTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/Conversation",
+        "identifier" : "ConversationPresentationTests",
+        "name" : "ConversationPresentationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/Settings",
+        "identifier" : "SettingsPresentationTests",
+        "name" : "SettingsPresentationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/SpeechSynthesizer",
+        "identifier" : "SpeechSynthesizerTests",
+        "name" : "SpeechSynthesizerTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:talk-assistant.xcodeproj",
+        "identifier" : "0CA117992CBDBE94008C173C",
+        "name" : "talk-assistantUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/Root",
+        "identifier" : "RootTests",
+        "name" : "RootTests"
+      }
+    }
+  ],
+  "version" : 1
+}

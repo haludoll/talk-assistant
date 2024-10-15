@@ -28,9 +28,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C0576A92CBDC56B0032C561 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "talk-assistant.app"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug/talk-assistant.app"; sourceTree = "<absolute>"; };
-		0CA1178D2CBDBE5D008C173C /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "talk-assistantTests.xctest"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug-iphoneos/talk-assistant.app/PlugIns/talk-assistantTests.xctest"; sourceTree = "<absolute>"; };
-		0CA1179A2CBDBE94008C173C /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "talk-assistantUITests.xctest"; path = "/Users/shota-nishizawa/dev/talk-assistant/App/build/Debug-iphoneos/talk-assistantUITests-Runner.app/PlugIns/talk-assistantUITests.xctest"; sourceTree = "<absolute>"; };
+		0CC28A182CBDE427000059D0 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "talk-assistant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -83,6 +83,9 @@
 				CC0C20812CB159E000102C15 /* talk-assistant */,
 				0CA1178E2CBDBE5D008C173C /* talk-assistantTests */,
 				0CA1179B2CBDBE94008C173C /* talk-assistantUITests */,
+				0CC28A182CBDE427000059D0 /* talk-assistant.app */,
+				0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */,
+				0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,7 +112,7 @@
 			packageProductDependencies = (
 			);
 			productName = "talk-assistantTests";
-			productReference = 0CA1178D2CBDBE5D008C173C /* talk-assistantTests.xctest */;
+			productReference = 0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		0CA117992CBDBE94008C173C /* talk-assistantUITests */ = {
@@ -132,7 +135,7 @@
 			packageProductDependencies = (
 			);
 			productName = "talk-assistantUITests";
-			productReference = 0CA1179A2CBDBE94008C173C /* talk-assistantUITests.xctest */;
+			productReference = 0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		CC0C207E2CB159E000102C15 /* talk-assistant */ = {
@@ -155,7 +158,7 @@
 				CC9E340D2CB166C40057918C /* Root */,
 			);
 			productName = "talk-assistant";
-			productReference = 0C0576A92CBDC56B0032C561 /* talk-assistant.app */;
+			productReference = 0CC28A182CBDE427000059D0 /* talk-assistant.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -192,9 +195,6 @@
 			mainGroup = CC0C20762CB159E000102C15;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CC9E340C2CB166C40057918C /* XCLocalSwiftPackageReference "../Root" */,
-				CCB74B852CB19289002CB17D /* XCLocalSwiftPackageReference "../Conversation" */,
-				0C1768052CBACBEE007054A6 /* XCLocalSwiftPackageReference "../SpeechSynthesizer" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CC0C20762CB159E000102C15;
@@ -592,21 +592,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		0C1768052CBACBEE007054A6 /* XCLocalSwiftPackageReference "../SpeechSynthesizer" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../SpeechSynthesizer;
-		};
-		CC9E340C2CB166C40057918C /* XCLocalSwiftPackageReference "../Root" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Root;
-		};
-		CCB74B852CB19289002CB17D /* XCLocalSwiftPackageReference "../Conversation" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../Conversation;
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		CC9E340D2CB166C40057918C /* Root */ = {
