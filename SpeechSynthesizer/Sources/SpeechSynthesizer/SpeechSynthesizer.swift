@@ -56,15 +56,15 @@ public final class SpeechSynthesizer: NSObject {
     }
 }
 
-extension SpeechSynthesizer: @preconcurrency AVSpeechSynthesizerDelegate {
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
-        Task {
+extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
+    nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        Task { @MainActor in
             await speechDelegateAsyncChannel.send(.didStart)
         }
     }
 
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        Task {
+    nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor in
             await speechDelegateAsyncChannel.send(.didFinish)
         }
     }
