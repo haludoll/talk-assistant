@@ -30,11 +30,9 @@ struct PhraseTextField: View {
                     .font(.title3)
                     .disabled(isSpeaking)
                     .submitLabel(.done)
-                    .onChange(of: text) { _ in
-                        if text.last?.isNewline == .some(true) {
-                            text.removeLast()
-                            _onSubmit(text)
-                        }
+                    .onNewlineBroken(of: text) { _, _ in
+                        text.removeLast()
+                        _onSubmit(text)
                     }
             }
         }
@@ -47,6 +45,16 @@ struct PhraseTextField: View {
         var `self` = self
         `self`._onSubmit = action
         return `self`
+    }
+}
+
+private extension View {
+    func onNewlineBroken(of value: String, initial: Bool = false, _ action: @escaping (_ oldValue: String, _ newValue: String) -> Void) -> some View {
+        onChange(of: value, initial: initial) { old, new in
+            if new.last?.isNewline == .some(true) {
+                action(old, new)
+            }
+        }
     }
 }
 
