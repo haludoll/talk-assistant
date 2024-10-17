@@ -78,10 +78,6 @@ private struct ConversationSampleView: View {
                 }
             }
             .background(Color(UIColor.systemGroupedBackground))
-            
-            PhraseTextField(text: .constant(""), isSpeaking: false)
-                .shadow(radius: 4)
-                .padding()
         }
     }
 }
