@@ -22,7 +22,7 @@ public final class SpeechSynthesizer: NSObject {
         return synthesizer
     }()
     @ObservationIgnored private var task: Task<Void, Never>?
-    private var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
+    @ObservationIgnored private var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
 
     public override init() {
         super.init()

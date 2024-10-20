@@ -31,18 +31,18 @@ struct PhraseTextField: View {
                     .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
             }
 
-            ZStack(alignment: .leading) {
-                TextField("", text: $text, prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)), axis: .vertical)
-                    .bold()
-                    .foregroundStyle(.white)
-                    .font(.title3)
-                    .disabled(isSpeaking)
-                    .submitLabel(.done)
-                    .onNewlineBroken(of: text) { _, _ in
-                        text.removeLast()
-                        _onSubmit(text)
-                    }
-            }
+            TextField("",
+                      text: $text,
+                      prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
+                      axis: .vertical)
+                .bold()
+                .foregroundStyle(.white)
+                .font(.title3)
+                .submitLabel(.done)
+                .onNewlineBroken(of: text) { _, _ in
+                    text.removeLast()
+                    _onSubmit(text)
+                }
         }
         .padding()
         .background(MaterialView(.systemThinMaterialDark))
