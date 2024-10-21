@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0C2809B92CBDF35000DAA4ED /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2809B82CBDF35000DAA4ED /* Root */; };
 		CC9E340E2CB166C40057918C /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = CC9E340D2CB166C40057918C /* Root */; };
+		CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */; };
+		CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,7 @@
 		0CC28A182CBDE427000059D0 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "talk-assistant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC9F1C1E2CC67300002A35EF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -72,7 +75,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C2809B92CBDF35000DAA4ED /* Root in Frameworks */,
+				CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */,
 				CC9E340E2CB166C40057918C /* Root in Frameworks */,
+				CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +93,16 @@
 				0CC28A182CBDE427000059D0 /* talk-assistant.app */,
 				0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */,
 				0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */,
+				CC9F1C162CC66F38002A35EF /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		CC9F1C162CC66F38002A35EF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CC9F1C1E2CC67300002A35EF /* AdSupport.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +173,8 @@
 			packageProductDependencies = (
 				CC9E340D2CB166C40057918C /* Root */,
 				0C2809B82CBDF35000DAA4ED /* Root */,
+				CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */,
+				CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = "talk-assistant";
 			productReference = 0CC28A182CBDE427000059D0 /* talk-assistant.app */;
@@ -199,6 +215,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0C2809B72CBDF35000DAA4ED /* XCLocalSwiftPackageReference "../Root" */,
+				CC9F1C112CC66E8A002A35EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CC0C20762CB159E000102C15;
@@ -604,6 +621,17 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		CC9F1C112CC66E8A002A35EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		0C2809B82CBDF35000DAA4ED /* Root */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -612,6 +640,16 @@
 		CC9E340D2CB166C40057918C /* Root */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Root;
+		};
+		CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC9F1C112CC66E8A002A35EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CC9F1C112CC66E8A002A35EF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
