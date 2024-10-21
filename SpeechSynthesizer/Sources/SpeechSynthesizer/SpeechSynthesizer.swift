@@ -7,6 +7,7 @@
 
 import AVFoundation
 import AsyncAlgorithms
+import Dependencies
 
 @Observable
 @MainActor
@@ -16,17 +17,14 @@ public final class SpeechSynthesizer: NSObject {
 
     let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
 
-    private let avSpeechSynthesizer = {
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.mixToTelephonyUplink = true
-        return synthesizer
-    }()
+    @ObservationIgnored
+    @Dependency(\.avSpeechSynthesizer) private var avSpeechSynthesizer
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
 
     public override init() {
         super.init()
-        avSpeechSynthesizer.delegate = self
+        avSpeechSynthesizer.setup(delegate: self, mixToTelephonyUplink: true)
 
         task = Task {
             await observeSpeechDelegate()
@@ -48,7 +46,7 @@ public final class SpeechSynthesizer: NSObject {
     public func stop() {
         guard isSpeaking else { return }
         willStopSpeaking = true
-        avSpeechSynthesizer.stopSpeaking(at: .immediate)
+        isSpeaking = !avSpeechSynthesizer.stopSpeaking(at: .immediate)
     }
 
     private func observeSpeechDelegate() async {
@@ -60,7 +58,6 @@ public final class SpeechSynthesizer: NSObject {
                 isSpeaking = false
                 text = ""
             case .didCancel:
-                isSpeaking = false
                 willStopSpeaking = false
             }
         }
