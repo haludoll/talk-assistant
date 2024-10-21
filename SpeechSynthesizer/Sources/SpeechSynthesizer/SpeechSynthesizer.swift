@@ -29,6 +29,8 @@ public final class SpeechSynthesizer: NSObject {
         task = Task {
             await observeSpeechDelegate()
         }
+        
+        AVAudioSession.configure()
     }
 
     deinit {
