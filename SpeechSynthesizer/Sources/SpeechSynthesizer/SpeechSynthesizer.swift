@@ -13,14 +13,14 @@ import Dependencies
 @MainActor
 public final class SpeechSynthesizer: NSObject {
     public var text = ""
-    public private(set) var isSpeaking = false
+    public var isSpeaking = false
 
     let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
 
     @ObservationIgnored
     @Dependency(\.avSpeechSynthesizer) private var avSpeechSynthesizer
     @ObservationIgnored private var task: Task<Void, Never>?
-    @ObservationIgnored private var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
+    @ObservationIgnored var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
 
     public override init() {
         super.init()

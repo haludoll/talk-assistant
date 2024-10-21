@@ -11,10 +11,10 @@ import Dependencies
 protocol AVSpeechSynthesizerProtocol: Sendable {
     var delegate: (any AVSpeechSynthesizerDelegate)? { get set }
     var mixToTelephonyUplink: Bool { get set }
-    func speak(_ utterance: AVSpeechUtterance)
-    func stopSpeaking(at boundary: AVSpeechBoundary) -> Bool
 
     func setup(delegate: any AVSpeechSynthesizerDelegate, mixToTelephonyUplink: Bool)
+    func speak(_ utterance: AVSpeechUtterance)
+    func stopSpeaking(at boundary: AVSpeechBoundary) -> Bool
 }
 
 extension AVSpeechSynthesizer: @unchecked @retroactive Sendable {}
@@ -25,8 +25,8 @@ extension AVSpeechSynthesizer: AVSpeechSynthesizerProtocol {
     }
 }
 
-enum AVSpeechSynthesizerKey: @preconcurrency DependencyKey, Sendable {
-    @MainActor static var liveValue: any AVSpeechSynthesizerProtocol = AVSpeechSynthesizer()
+enum AVSpeechSynthesizerKey: DependencyKey {
+    static let liveValue: any AVSpeechSynthesizerProtocol = AVSpeechSynthesizer()
 }
 
 extension DependencyValues {
