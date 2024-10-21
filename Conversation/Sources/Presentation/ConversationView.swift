@@ -13,12 +13,15 @@ public struct ConversationView: View {
     public init() {}
 
     public var body: some View {
-        PhraseTextField(text: $speechSynthesizer.text, isSpeaking: false)
-            .onSubmit { text in
-                speechSynthesizer.speak(text)
-            }
-            .shadow(radius: 4)
-            .padding()
+        PhraseTextField(text: $speechSynthesizer.text,
+                        isSpeaking: speechSynthesizer.isSpeaking,
+                        playButtonTapped: { speechSynthesizer.speak(speechSynthesizer.text) },
+                        stopButtonTapped: { speechSynthesizer.stop() })
+        .onSubmit { text in
+            speechSynthesizer.speak(text)
+        }
+        .shadow(radius: 4)
+        .padding()
     }
 }
 

@@ -7,25 +7,24 @@
 
 import AVFoundation
 import AsyncAlgorithms
+import Dependencies
 
 @Observable
 @MainActor
 public final class SpeechSynthesizer: NSObject {
     public var text = ""
-    public private(set) var isSpeaking = false
-
-    private let avSpeechSynthesizer = {
-        let synthesizer = AVSpeechSynthesizer()
-        synthesizer.mixToTelephonyUplink = true
-        return synthesizer
-    }()
+    public var isSpeaking = false
 
     let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
+
+    @ObservationIgnored
+    @Dependency(\.avSpeechSynthesizer) private var avSpeechSynthesizer
     @ObservationIgnored private var task: Task<Void, Never>?
+    var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
 
     public override init() {
         super.init()
-        avSpeechSynthesizer.delegate = self
+        avSpeechSynthesizer.setup(delegate: self, mixToTelephonyUplink: true)
 
         task = Task {
             await observeSpeechDelegate()
@@ -37,10 +36,17 @@ public final class SpeechSynthesizer: NSObject {
     }
 
     public func speak(_ text: String) {
+        guard !isSpeaking else { return }
         let utterance =  AVSpeechUtterance(string: text)
         // TODO: - Allow users to toggle whether or not they want to inherit the values of the Assistive Technology Settings.
         utterance.prefersAssistiveTechnologySettings = true
         avSpeechSynthesizer.speak(utterance)
+    }
+
+    public func stop() {
+        guard isSpeaking else { return }
+        willStopSpeaking = true
+        isSpeaking = !avSpeechSynthesizer.stopSpeaking(at: .immediate)
     }
 
     private func observeSpeechDelegate() async {
@@ -51,6 +57,8 @@ public final class SpeechSynthesizer: NSObject {
             case .didFinish:
                 isSpeaking = false
                 text = ""
+            case .didCancel:
+                willStopSpeaking = false
             }
         }
     }
@@ -65,14 +73,24 @@ extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
 
     nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor in
-            await speechDelegateAsyncChannel.send(.didFinish)
+            // WORKAROUND: Due to `didCancel` delegate bug
+            if willStopSpeaking {
+                await speechDelegateAsyncChannel.send(.didCancel)
+            } else {
+                await speechDelegateAsyncChannel.send(.didFinish)
+            }
         }
     }
+
+    // FIXME: This delegate method is not called even when `stopSpeaking` is called, due to the AVFoundation bug.
+    // https://developer.apple.com/forums/thread/691347
+    nonisolated public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {}
 }
 
 extension AVSpeechSynthesizer {
     enum DelegateAction {
         case didStart
         case didFinish
+        case didCancel
     }
 }
