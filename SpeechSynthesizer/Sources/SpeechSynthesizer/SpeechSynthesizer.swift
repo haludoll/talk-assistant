@@ -20,7 +20,7 @@ public final class SpeechSynthesizer: NSObject {
     @ObservationIgnored
     @Dependency(\.avSpeechSynthesizer) private var avSpeechSynthesizer
     @ObservationIgnored private var task: Task<Void, Never>?
-    @ObservationIgnored var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
+    var willStopSpeaking = false  // WORKAROUND of `didCancel` delegate bug
 
     public override init() {
         super.init()

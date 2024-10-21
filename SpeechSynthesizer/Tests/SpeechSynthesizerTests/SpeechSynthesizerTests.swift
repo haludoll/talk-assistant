@@ -76,9 +76,17 @@ final class SpeechSynthesizerTests: XCTestCase {
         } operation: {
             SpeechSynthesizer()
         }
-        sut.isSpeaking = true
-        sut.stop()
+        sut.willStopSpeaking = true
+
+        let expectation = XCTestExpectation(description: #function)
+        withObservationTracking {
+            _ = sut.willStopSpeaking
+        } onChange: {
+            expectation.fulfill()
+        }
+
         await sut.speechDelegateAsyncChannel.send(.didCancel)
+        await fulfillment(of: [expectation], timeout: 0.1)
         XCTAssertFalse(sut.willStopSpeaking)
     }
 
