@@ -174,7 +174,8 @@
 				CC0C207B2CB159E000102C15 /* Sources */,
 				CC0C207C2CB159E000102C15 /* Frameworks */,
 				CC0C207D2CB159E000102C15 /* Resources */,
-				0CBC20AC2CC7358800ABB89A /* ShellScript */,
+				0CBC20AC2CC7358800ABB89A /* Copy Package.resolved */,
+				0CBC20DC2CC7467100ABB89A /* Upload dSYM */,
 			);
 			buildRules = (
 			);
@@ -268,7 +269,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0CBC20AC2CC7358800ABB89A /* ShellScript */ = {
+		0CBC20AC2CC7358800ABB89A /* Copy Package.resolved */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -277,6 +278,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Copy Package.resolved";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -284,6 +286,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = " ROOT_DIR=$( cd \"$( dirname \"$PROJECT_DIR\" )\" && pwd )\n cp -f $ROOT_DIR/talk-assistant.xcworkspace/xcshareddata/swiftpm/Package.resolved $PROJECT_DIR/talk-assistant.xcodeproj/project.xcworkspace/xcshareddata/swiftpm\n";
+		};
+		0CBC20DC2CC7467100ABB89A /* Upload dSYM */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Upload dSYM";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -531,6 +556,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U2W9UR892A;
 				ENABLE_HARDENED_RUNTIME = YES;
