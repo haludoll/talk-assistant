@@ -24,57 +24,38 @@ struct PhraseTextField: View {
     }
 
     var body: some View {
-        VStack(alignment: .trailing, spacing: 4) {
-            RepeatButton(action: {}, disabled: false)
-
-            HStack {
-                Button {
-                    isSpeaking ? stopButtonTapped() : playButtonTapped()
-                } label: {
-                    Image(systemName: isSpeaking ? "stop.circle.fill" : "play.circle.fill")
-                        .font(.title)
-                        .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
-                }
-                
-                TextField("",
-                          text: $text,
-                          prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
-                          axis: .vertical)
-                .bold()
-                .foregroundStyle(.white)
-                .font(.title3)
-                .submitLabel(.done)
-                .focused(focused)
-                .onNewlineBroken(of: text) { _, _ in
-                    text.removeLast()
-                    _onSubmit(text)
-                }
+        HStack {
+            Button {
+                isSpeaking ? stopButtonTapped() : playButtonTapped()
+            } label: {
+                Image(systemName: isSpeaking ? "stop.circle.fill" : "play.circle.fill")
+                    .font(.title)
+                    .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
             }
-            .padding()
-            .background(MaterialView(.systemThinMaterialDark))
-            .cornerRadius(16)
+            
+            TextField("",
+                      text: $text,
+                      prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
+                      axis: .vertical)
+            .bold()
+            .foregroundStyle(.white)
+            .font(.title3)
+            .submitLabel(.done)
+            .focused(focused)
+            .onNewlineBroken(of: text) { _, _ in
+                text.removeLast()
+                _onSubmit(text)
+            }
         }
+        .padding()
+        .background(MaterialView(.systemThinMaterialDark))
+        .cornerRadius(16)
     }
 
     func onSubmit(_ action: @escaping (String) -> Void) -> some View {
         var `self` = self
         `self`._onSubmit = action
         return `self`
-    }
-}
-
-private struct RepeatButton: View {
-    let action: () -> Void
-    let disabled: Bool
-
-    var body: some View {
-        Button {
-        } label: {
-            Image(systemName: "arrow.uturn.backward")
-        }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
-        .disabled(disabled)
     }
 }
 

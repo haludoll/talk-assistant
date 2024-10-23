@@ -18,13 +18,21 @@ public struct ConversationView: View {
         VStack {
             Spacer()
 
-            PhraseTextField(text: $speechSynthesizer.text,
-                            isSpeaking: speechSynthesizer.isSpeaking,
-                            focused: $phraseTextFieldFocused,
-                            playButtonTapped: { speechSynthesizer.speak(speechSynthesizer.text) },
-                            stopButtonTapped: { speechSynthesizer.stop() })
-            .onSubmit { text in
-                speechSynthesizer.speak(text)
+            VStack(alignment: .trailing, spacing: 4) {
+                RepeatButton {
+                    speechSynthesizer.text = speechSynthesizer.lastText
+                    speechSynthesizer.speak()
+                }
+                .disabled(speechSynthesizer.lastText.isEmpty)
+
+                PhraseTextField(text: $speechSynthesizer.text,
+                                isSpeaking: speechSynthesizer.isSpeaking,
+                                focused: $phraseTextFieldFocused,
+                                playButtonTapped: { speechSynthesizer.speak() },
+                                stopButtonTapped: { speechSynthesizer.stop() })
+                .onSubmit { _ in
+                    speechSynthesizer.speak()
+                }
             }
             .padding()
         }

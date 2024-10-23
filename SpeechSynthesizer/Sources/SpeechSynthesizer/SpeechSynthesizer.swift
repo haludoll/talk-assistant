@@ -13,6 +13,7 @@ import Dependencies
 @MainActor
 public final class SpeechSynthesizer: NSObject {
     public var text = ""
+    public private(set) var lastText = ""
     public var isSpeaking = false
 
     let speechDelegateAsyncChannel = AsyncChannel<AVSpeechSynthesizer.DelegateAction>()
@@ -37,7 +38,7 @@ public final class SpeechSynthesizer: NSObject {
         task?.cancel()
     }
 
-    public func speak(_ text: String) {
+    public func speak() {
         guard !isSpeaking else { return }
         let utterance =  AVSpeechUtterance(string: text)
         // TODO: - Allow users to toggle whether or not they want to inherit the values of the Assistive Technology Settings.
@@ -58,6 +59,7 @@ public final class SpeechSynthesizer: NSObject {
                 isSpeaking = true
             case .didFinish:
                 isSpeaking = false
+                lastText = text
                 text = ""
             case .didCancel:
                 willStopSpeaking = false
