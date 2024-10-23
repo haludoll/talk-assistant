@@ -30,9 +30,11 @@ struct PhraseTextField: View {
             } label: {
                 Image(systemName: isSpeaking ? "stop.circle.fill" : "play.circle.fill")
                     .font(.title)
-                    .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
+                    .foregroundStyle(.white, isSpeaking ? .pink : .blue)
             }
-            
+            .disabled(text.isEmpty)
+            .buttonStyle(.plain)
+
             TextField("",
                       text: $text,
                       prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
