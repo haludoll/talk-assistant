@@ -10,18 +10,36 @@ import SpeechSynthesizer
 
 public struct ConversationView: View {
     @State private var speechSynthesizer = SpeechSynthesizer()
+    @FocusState private var phraseTextFieldFocused: Bool
+
     public init() {}
 
     public var body: some View {
-        PhraseTextField(text: $speechSynthesizer.text,
-                        isSpeaking: speechSynthesizer.isSpeaking,
-                        playButtonTapped: { speechSynthesizer.speak(speechSynthesizer.text) },
-                        stopButtonTapped: { speechSynthesizer.stop() })
-        .onSubmit { text in
-            speechSynthesizer.speak(text)
+        VStack {
+            Spacer()
+
+            VStack(alignment: .trailing, spacing: 4) {
+                RepeatButton {
+                    speechSynthesizer.text = speechSynthesizer.lastText
+                    speechSynthesizer.speak()
+                }
+                .disabled(speechSynthesizer.lastText.isEmpty)
+
+                PhraseTextField(text: $speechSynthesizer.text,
+                                isSpeaking: speechSynthesizer.isSpeaking,
+                                focused: $phraseTextFieldFocused,
+                                playButtonTapped: { speechSynthesizer.speak() },
+                                stopButtonTapped: { speechSynthesizer.stop() })
+                .onSubmit { _ in
+                    speechSynthesizer.speak()
+                }
+            }
+            .padding()
         }
-        .shadow(radius: 4)
-        .padding()
+        .contentShape(Rectangle())
+        .onTapGesture {
+            phraseTextFieldFocused = false
+        }
     }
 }
 

@@ -98,8 +98,9 @@ final class SpeechSynthesizerTests: XCTestCase {
         } operation: {
             SpeechSynthesizer()
         }
+        sut.text = "test"
         sut.isSpeaking = false
-        sut.speak("test")
+        sut.speak()
         await fulfillment(of: [expectation], timeout: 0.1)
     }
 
@@ -112,8 +113,9 @@ final class SpeechSynthesizerTests: XCTestCase {
         } operation: {
             SpeechSynthesizer()
         }
+        sut.text = "test"
         sut.isSpeaking = true
-        sut.speak("test")
+        sut.speak()
         await fulfillment(of: [expectation], timeout: 0.1)
     }
     

@@ -10,19 +10,21 @@ import SwiftUI
 struct PhraseTextField: View {
     @Binding var text: String
     let isSpeaking: Bool
+    let focused: FocusState<Bool>.Binding
     let playButtonTapped: () -> Void
     let stopButtonTapped: () -> Void
     private var _onSubmit: (String) -> Void = { _ in }
 
-    init(text: Binding<String>, isSpeaking: Bool, playButtonTapped: @escaping () -> Void, stopButtonTapped: @escaping () -> Void) {
+    init(text: Binding<String>, isSpeaking: Bool, focused: FocusState<Bool>.Binding, playButtonTapped: @escaping () -> Void, stopButtonTapped: @escaping () -> Void) {
         self._text = text
         self.isSpeaking = isSpeaking
+        self.focused = focused
         self.playButtonTapped = playButtonTapped
         self.stopButtonTapped = stopButtonTapped
     }
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack {
             Button {
                 isSpeaking ? stopButtonTapped() : playButtonTapped()
             } label: {
@@ -30,19 +32,20 @@ struct PhraseTextField: View {
                     .font(.title)
                     .foregroundStyle(.white, isSpeaking ? .pink :  Color.accentColor)
             }
-
+            
             TextField("",
                       text: $text,
                       prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
                       axis: .vertical)
-                .bold()
-                .foregroundStyle(.white)
-                .font(.title3)
-                .submitLabel(.done)
-                .onNewlineBroken(of: text) { _, _ in
-                    text.removeLast()
-                    _onSubmit(text)
-                }
+            .bold()
+            .foregroundStyle(.white)
+            .font(.title3)
+            .submitLabel(.done)
+            .focused(focused)
+            .onNewlineBroken(of: text) { _, _ in
+                text.removeLast()
+                _onSubmit(text)
+            }
         }
         .padding()
         .background(MaterialView(.systemThinMaterialDark))
@@ -70,8 +73,8 @@ private extension View {
     @Previewable @State var text1 = ""
     @Previewable @State var text2 = "If you enter a long sentence, the text field will break lines like this."
 
-    PhraseTextField(text: $text1, isSpeaking: false, playButtonTapped: {}, stopButtonTapped: {})
-    PhraseTextField(text: $text2, isSpeaking: true, playButtonTapped: {}, stopButtonTapped: {})
+    PhraseTextField(text: $text1, isSpeaking: false, focused: FocusState<Bool>.init().projectedValue, playButtonTapped: {}, stopButtonTapped: {})
+    PhraseTextField(text: $text2, isSpeaking: true, focused: FocusState<Bool>.init().projectedValue, playButtonTapped: {}, stopButtonTapped: {})
 }
 
 private struct MaterialView: UIViewRepresentable {
