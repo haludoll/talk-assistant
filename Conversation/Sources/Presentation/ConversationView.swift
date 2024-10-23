@@ -26,7 +26,6 @@ public struct ConversationView: View {
             .onSubmit { text in
                 speechSynthesizer.speak(text)
             }
-            .shadow(radius: 4)
             .padding()
         }
         .contentShape(Rectangle())
