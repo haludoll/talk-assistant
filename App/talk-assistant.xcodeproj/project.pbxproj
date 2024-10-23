@@ -271,6 +271,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		0CBC20AC2CC7358800ABB89A /* Copy Package.resolved */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -289,6 +290,7 @@
 		};
 		0CBC20DC2CC7467100ABB89A /* Upload dSYM */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
