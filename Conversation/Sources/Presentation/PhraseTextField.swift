@@ -45,7 +45,7 @@ struct PhraseTextField: View {
             .submitLabel(.done)
             .focused(focused)
             .onNewlineBroken(of: text) { _, _ in
-                text.removeLast()
+                text.removeAll(where: \.isNewline)
                 _onSubmit(text)
             }
         }
@@ -64,7 +64,7 @@ struct PhraseTextField: View {
 private extension View {
     func onNewlineBroken(of value: String, initial: Bool = false, _ action: @escaping (_ oldValue: String, _ newValue: String) -> Void) -> some View {
         onChange(of: value, initial: initial) { old, new in
-            if new.last?.isNewline == .some(true) {
+            if new.contains(where: \.isNewline) {
                 action(old, new)
             }
         }
