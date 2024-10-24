@@ -7,30 +7,22 @@
 
 import SwiftUI
 
-struct SettingsView: View {
-    @State private var isPresentedPopover = false
+public struct SettingsView: View {
     @State private var takeOverOSSetting = false
+    public init() {}
 
-    var body: some View {
+    public var body: some View {
         NavigationStack {
             List {
-                Section("Voice") {
-                    Toggle(isOn: $takeOverOSSetting) {
-                        HStack {
-                            Text("Take over OS Settings")
-                            Button {
-                                
-                                isPresentedPopover = true
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .foregroundStyle(Color(.secondaryLabel))
-                            }
-                            .popover(isPresented: $isPresentedPopover) {
-                                Text("hoge")
-                                    .presentationCompactAdaptation(PresentationAdaptation.popover)
-                            }
-                        }
-                    }
+                Section {
+                    Toggle("Use Accessibility Voice Setting", isOn: $takeOverOSSetting)
+
+                } footer: {
+                    Text("When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied", bundle: .module)
+                }
+
+                if !takeOverOSSetting {
+                    Text("hoge")
                 }
             }
             .navigationTitle(Text("Settings", bundle: .module))

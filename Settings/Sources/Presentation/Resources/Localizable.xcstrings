@@ -1,8 +1,38 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Voice Settings" : {
+    "hoge" : {
 
+    },
+    "Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " 設定"
+          }
+        }
+      }
+    },
+    "Use Accessibility Voice Setting" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アクセシビリティ設定の声を使用する"
+          }
+        }
+      }
+    },
+    "When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オンにすると、設定 > アクセシビリティ > 読み上げコンテンツ で設定した声が適用されます"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
