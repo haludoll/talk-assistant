@@ -26,7 +26,7 @@ public struct RootView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingSettings) {
+            .navigationDestination(isPresented: $showingSettings) {
                 SettingsView()
             }
         }

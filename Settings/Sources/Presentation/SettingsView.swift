@@ -23,7 +23,6 @@ public struct SettingsView: View {
                 }
 
                 if !settingViewModel.prefersAssistiveTechnologySettings {
-
                     Section(String(localized: "Rate", bundle: .module)) {
                         Slider(value: $settingViewModel.rate,
                                in: SettingsViewModel.rateRange,
