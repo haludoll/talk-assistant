@@ -13,15 +13,28 @@ let package = Package(
         .library(
             name: "ConversationPresentation",
             targets: ["ConversationPresentation"]),
+        .library(
+            name: "ConversationViewModel",
+            targets: ["ConversationViewModel"]),
     ],
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1")
     ],
     targets: [
         .target(
             name: "ConversationPresentation",
-            dependencies: [.product(name: "SpeechSynthesizer", package: "SpeechSynthesizer")],
+            dependencies: ["ConversationViewModel"],
             path: "Sources/Presentation"
+        ),
+        .target(
+            name: "ConversationViewModel",
+            dependencies: [
+                .product(name: "SpeechSynthesizerEntity", package: "SpeechSynthesizer"),
+                .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
+                .product(name: "Dependencies", package: "swift-dependencies"),
+            ],
+            path: "Sources/ViewModel"
         ),
         .testTarget(
             name: "ConversationPresentationTests",

@@ -16,8 +16,8 @@ public struct VoiceSettings {
     public let rateRange: Range<Float> = AVSpeechUtteranceMinimumSpeechRate..<AVSpeechUtteranceMaximumSpeechRate
     public var pitchMultiplier: Float = 1.0
     public var volume: Float = 1.0
-    
+
     public var prefersAssistiveTechnologySettings = false
-    
+
     public init() {}
 }

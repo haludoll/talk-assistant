@@ -5,11 +5,12 @@ import PackageDescription
 let package = Package(
     name: "SpeechSynthesizer",
     platforms: [
-        .iOS(.v17),
-        .macOS(.v14),
+        .iOS(.v17)
     ],
     products: [
-        .library(name: "SpeechSynthesizer", targets: ["SpeechSynthesizer"])
+        .library(name: "SpeechSynthesizerDependency", targets: ["SpeechSynthesizerDependency"]),
+        .library(name: "SpeechSynthesizerEntity", targets: ["SpeechSynthesizerEntity"]),
+        .library(name: "SpeechSynthesizerRepository", targets: ["SpeechSynthesizerRepository"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
@@ -17,12 +18,26 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SpeechSynthesizer",
+            name: "SpeechSynthesizerDependency",
             dependencies: [
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                "SpeechSynthesizerEntity",
+                "SpeechSynthesizerRepository",
                 .product(name: "Dependencies", package: "swift-dependencies"),
-            ]
+            ],
+            path: "Sources/Dependency"
         ),
-        .testTarget(name: "SpeechSynthesizerTests", dependencies: ["SpeechSynthesizer"]),
+        .target(
+            name: "SpeechSynthesizerEntity",
+            dependencies: [.product(name: "AsyncAlgorithms", package: "swift-async-algorithms")],
+            path: "Sources/Entity"
+        ),
+        .target(
+            name: "SpeechSynthesizerRepository",
+            dependencies: [
+                "SpeechSynthesizerEntity",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+            ],
+            path: "Sources/Repository"
+        ),
     ]
 )
