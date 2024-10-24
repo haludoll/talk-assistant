@@ -14,12 +14,12 @@
         }
       }
     },
-    "Use Accessibility Voice Setting" : {
+    "Use System Voice Setting" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アクセシビリティ設定の声を使用する"
+            "value" : "システム設定の声を使用する"
           }
         }
       }

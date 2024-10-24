@@ -15,7 +15,7 @@ public struct SettingsView: View {
         NavigationStack {
             List {
                 Section {
-                    Toggle("Use Accessibility Voice Setting", isOn: $takeOverOSSetting)
+                    Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $takeOverOSSetting)
 
                 } footer: {
                     Text("When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied", bundle: .module)
