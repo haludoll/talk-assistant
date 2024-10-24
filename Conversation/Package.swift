@@ -37,9 +37,9 @@ let package = Package(
             path: "Sources/ViewModel"
         ),
         .testTarget(
-            name: "ConversationPresentationTests",
-            dependencies: ["ConversationPresentation"],
-            path: "Tests/PresentationTests"
+            name: "ConversationViewModelTests",
+            dependencies: ["ConversationViewModel"],
+            path: "Tests/ViewModelTests"
         )
     ]
 )

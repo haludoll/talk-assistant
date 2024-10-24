@@ -18,7 +18,7 @@ package final class ConversationViewModel {
     public var isSpeaking = false
 
     @ObservationIgnored
-    @Dependency(\.speechSynthesizer) private var speechSynthesizer
+    @Dependency(\.speechSynthesizer) var speechSynthesizer
     @ObservationIgnored private var task: Task<Void, Never>?
 
     package init() {
@@ -41,7 +41,7 @@ package final class ConversationViewModel {
         speechSynthesizer.stop()
     }
 
-    private func observeSpeechDelegate() async {
+    func observeSpeechDelegate() async {
         for await action in speechSynthesizer.delegateAsyncChannel {
             switch action {
             case .didStart:
