@@ -1,8 +1,25 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "hoge" : {
-
+    "Pitch" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ピッチ"
+          }
+        }
+      }
+    },
+    "Rate" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度"
+          }
+        }
+      }
     },
     "Settings" : {
       "localizations" : {
@@ -20,6 +37,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定の声を使用する"
+          }
+        }
+      }
+    },
+    "Volume" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音量"
           }
         }
       }

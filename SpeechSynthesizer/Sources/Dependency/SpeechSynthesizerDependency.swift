@@ -14,19 +14,18 @@ enum SpeechSynthesizerKey: DependencyKey {
     public static let liveValue: any SpeechSynthesizerProtocol = SpeechSynthesizer()
 }
 
+extension VoiceSettingRepository: DependencyKey {
+    public static var liveValue: VoiceSettingRepository { .live }
+}
+
 extension DependencyValues {
     public var speechSynthesizer: any SpeechSynthesizerProtocol {
         get { self[SpeechSynthesizerKey.self] }
         set { self[SpeechSynthesizerKey.self] = newValue }
     }
-}
 
-public struct SpeechSynthesizerDependency {
-    public static let voiceSettingRepository: VoiceSettingRepository = {
-        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
-            return .preview
-        } else {
-            return .live
-        }
-    }()
+    public var voiceSettingRepository: VoiceSettingRepository {
+        get { self[VoiceSettingRepository.self] }
+        set { self[VoiceSettingRepository.self] = newValue }
+    }
 }
