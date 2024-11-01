@@ -13,6 +13,8 @@ struct VoiceSelectionView: View {
     @Binding var selectedVoice: AVSpeechSynthesisVoice?
     let availableVoices: [AVSpeechSynthesisVoice]
 
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         List {
             AnyView(
@@ -30,7 +32,8 @@ struct VoiceSelectionView: View {
                     Section(gender.name) {
                         ForEach(voices) { voice in
                             Button {
-                                print("row")
+                                selectedVoice = voice
+                                dismiss()
                             } label: {
                                 Label {
                                     LabeledContent {
@@ -50,7 +53,7 @@ struct VoiceSelectionView: View {
                                     } label: {
                                         Image(systemName: "play.circle")
                                     }
-                                        .foregroundStyle(Color.accentColor)
+                                    .foregroundStyle(Color.accentColor)
                                 }
                             }
                         }
