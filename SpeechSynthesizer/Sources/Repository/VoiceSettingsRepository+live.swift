@@ -22,10 +22,11 @@ extension VoiceSettingsRepository {
                     } else {
                         let initialVoiceParam = VoiceParameter()
                         context.insert(VoiceParameter())
+                        try context.save()
                         return initialVoiceParam
                     }
                 } catch {
-                    fatalError()
+                    fatalError(error.localizedDescription)
                 }
             },
             updateVoiceParamter: { voiceParam in
@@ -35,7 +36,7 @@ extension VoiceSettingsRepository {
                     context.insert(voiceParam)
                     try context.save()
                 } catch {
-                    fatalError()
+                    fatalError(error.localizedDescription)
                 }
             },
             fetchAvailableVoices: { AVSpeechSynthesisVoice.speechVoices() },
