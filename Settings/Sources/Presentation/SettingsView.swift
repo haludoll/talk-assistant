@@ -16,12 +16,6 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             List {
-                Section {
-                    Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
-                } footer: {
-                    Text("When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied", bundle: .module)
-                }
-
                 if !voiceSettingsViewModel.prefersAssistiveTechnologySettings {
                     NavigationLink {
                         @Bindable var voiceSettingsViewModel = voiceSettingsViewModel
@@ -65,6 +59,12 @@ public struct SettingsView: View {
                             Image(systemName: "speaker.wave.3.fill")
                         }
                         .foregroundStyle(Color(.secondaryLabel))
+                    }
+
+                    Section {
+                        Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
+                    } footer: {
+                        Text("When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied", bundle: .module)
                     }
                 }
             }

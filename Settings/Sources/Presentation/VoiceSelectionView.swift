@@ -29,14 +29,29 @@ struct VoiceSelectionView: View {
                 if !voices.isEmpty {
                     Section(gender.name) {
                         ForEach(voices) { voice in
-                            LabeledContent {
-                                if let selectedVoice,
-                                   voice == selectedVoice {
-                                    Image(systemName: "checkmark")
+                            Button {
+                                print("row")
+                            } label: {
+                                Label {
+                                    LabeledContent {
+                                        if let selectedVoice,
+                                           voice == selectedVoice {
+                                            Image(systemName: "checkmark")
+                                                .foregroundStyle(Color.accentColor)
+                                        }
+                                    } label: {
+                                        Text(voice.name)
+                                            .foregroundStyle(Color.primary)
+                                    }
+                                } icon: {
+                                    Button {
+                                        // TODO: Play sample audio.
+                                        print("play sample")
+                                    } label: {
+                                        Image(systemName: "play.circle")
+                                    }
                                         .foregroundStyle(Color.accentColor)
                                 }
-                            } label: {
-                                Text(voice.name)
                             }
                         }
                     }
