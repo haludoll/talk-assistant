@@ -14,6 +14,8 @@ import class AVFoundation.AVSpeechSynthesisVoice
 @Observable
 @MainActor
 package final class VoiceSettingsViewModel {
+    public var selectedVoice: AVSpeechSynthesisVoice?
+
     public var rate: Float = 0.5
     public var pitchMultiplier: Float = 1.0
     public var volume: Float = 1.0
@@ -51,7 +53,7 @@ package final class VoiceSettingsViewModel {
     }
 
     package func fetchSelectedVoice() {
-
+        selectedVoice = voiceSettingsRepository.fetchSelectedVoice()
     }
 
     package func updateParam() {}

@@ -1,12 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.\nReopen this screen again after the download is complete." : {
+    " " : {
+
+    },
+    "Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.\nOpen this screen again after the download is complete." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "追加の音声は、端末の設定アプリ＞アクセシビリティ＞音声コンテンツ＞声 からダウンロードできます。\nダウンロードが完了したら、この画面をもう一度開いてください。"
+            "value" : "追加の音声は、端末の設定アプリ＞アクセシビリティ＞音声コンテンツ＞声 からダウンロードできます\nダウンロードが完了したら、この画面をもう一度開いてください"
           }
         }
       }
@@ -101,12 +104,12 @@
         }
       }
     },
-    "When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied" : {
+    "When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "オンにすると、設定 > アクセシビリティ > 読み上げコンテンツ で設定した声が適用されます"
+            "value" : "オンにすると、端末の設定アプリ > アクセシビリティ > 読み上げコンテンツ で設定した声が適用されます"
           }
         }
       }

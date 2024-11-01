@@ -18,16 +18,17 @@ public struct SettingsView: View {
             List {
                 Section {
                     Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
-
                 } footer: {
-                    Text("When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied", bundle: .module)
+                    Text("When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied", bundle: .module)
                 }
 
                 if !voiceSettingsViewModel.prefersAssistiveTechnologySettings {
                     NavigationLink {
-                        VoiceSelectionView(availableVoices: voiceSettingsViewModel.availableVoices)
+                        @Bindable var voiceSettingsViewModel = voiceSettingsViewModel
+                        VoiceSelectionView(selectedVoice: $voiceSettingsViewModel.selectedVoice,
+                                           availableVoices: voiceSettingsViewModel.availableVoices)
                     } label: {
-                        LabeledContent(String(localized: "Voice", bundle: .module), value: "O-ren")
+                        LabeledContent(String(localized: "Voice", bundle: .module), value: voiceSettingsViewModel.selectedVoice?.name ?? "")
                     }
 
                     Section(String(localized: "Rate", bundle: .module)) {
@@ -71,6 +72,7 @@ public struct SettingsView: View {
             .task {
                 voiceSettingsViewModel.fetchVoiceParameter()
                 voiceSettingsViewModel.fetchAvailableVoices()
+                voiceSettingsViewModel.fetchSelectedVoice()
             }
         }
     }

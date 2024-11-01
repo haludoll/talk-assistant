@@ -11,6 +11,7 @@ import SpeechSynthesizerEntity
 extension VoiceSettingsRepository {
     package static let live = Self(
         fetchVoiceParameter: { .init() },
-        fetchAvailableVoices: { AVSpeechSynthesisVoice.speechVoices() }
+        fetchAvailableVoices: { AVSpeechSynthesisVoice.speechVoices() },
+        fetchSelectedVoice: { .init(language: Locale.preferredLanguages.first!)! }
     )
 }

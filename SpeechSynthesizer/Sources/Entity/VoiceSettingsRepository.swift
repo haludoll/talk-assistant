@@ -29,9 +29,11 @@ public struct VoiceParameter: Sendable {
 public struct VoiceSettingsRepository: Sendable {
     public let fetchVoiceParameter: @Sendable () -> VoiceParameter
     public let fetchAvailableVoices: @Sendable () -> [AVSpeechSynthesisVoice]
+    public let fetchSelectedVoice: @Sendable () -> AVSpeechSynthesisVoice
 
-    public init(fetchVoiceParameter: @escaping @Sendable () -> VoiceParameter, fetchAvailableVoices: @escaping @Sendable () -> [AVSpeechSynthesisVoice]) {
+    public init(fetchVoiceParameter: @escaping @Sendable () -> VoiceParameter, fetchAvailableVoices: @escaping @Sendable () -> [AVSpeechSynthesisVoice], fetchSelectedVoice: @escaping @Sendable () -> AVSpeechSynthesisVoice) {
         self.fetchVoiceParameter = fetchVoiceParameter
         self.fetchAvailableVoices = fetchAvailableVoices
+        self.fetchSelectedVoice = fetchSelectedVoice
     }
 }
