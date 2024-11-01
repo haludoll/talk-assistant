@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.\nReopen this screen again after the download is complete." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "追加の音声は、端末の設定アプリ＞アクセシビリティ＞音声コンテンツ＞声 からダウンロードできます。\nダウンロードが完了したら、この画面をもう一度開いてください。"
+          }
+        }
+      }
+    },
     "Female" : {
       "localizations" : {
         "ja" : {

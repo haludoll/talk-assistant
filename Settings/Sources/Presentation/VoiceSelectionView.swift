@@ -13,6 +13,10 @@ struct VoiceSelectionView: View {
 
     var body: some View {
         List {
+            Text("Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.\nReopen this screen again after the download is complete.", bundle: .module)
+                .foregroundStyle(.secondary)
+                .listRowBackground(Color.clear)
+
             Section(String(localized: "Male", bundle: .module)) {
                 ForEach(availableVoices.filter { $0.gender == .male }, id: \.self) { voice in
                     Text(voice.name)
@@ -37,5 +41,5 @@ struct VoiceSelectionView: View {
 }
 
 #Preview {
-    VoiceSelectionView(availableVoices: [.init(language: "ja-JP")!])
+    VoiceSelectionView(availableVoices: AVSpeechSynthesisVoice.speechVoices())
 }
