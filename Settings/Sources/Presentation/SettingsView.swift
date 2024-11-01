@@ -7,25 +7,32 @@
 
 import SwiftUI
 import SettingsViewModel
+import enum AVFoundation.AVSpeechSynthesisVoiceGender
 
 public struct SettingsView: View {
-    @State private var settingViewModel = SettingsViewModel()
+    @State private var voiceSettingsViewModel = VoiceSettingsViewModel()
     public init() {}
 
     public var body: some View {
         NavigationStack {
             List {
                 Section {
-                    Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $settingViewModel.prefersAssistiveTechnologySettings)
+                    Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
 
                 } footer: {
                     Text("When enabled, the voice set in Settings > Accessibility > Spoken Content will be applied", bundle: .module)
                 }
 
-                if !settingViewModel.prefersAssistiveTechnologySettings {
+                if !voiceSettingsViewModel.prefersAssistiveTechnologySettings {
+                    NavigationLink {
+                        VoiceSelectionView(availableVoices: voiceSettingsViewModel.availableVoices)
+                    } label: {
+                        LabeledContent(String(localized: "Voice", bundle: .module), value: "O-ren")
+                    }
+
                     Section(String(localized: "Rate", bundle: .module)) {
-                        Slider(value: $settingViewModel.rate,
-                               in: SettingsViewModel.rateRange,
+                        Slider(value: $voiceSettingsViewModel.rate,
+                               in: VoiceSettingsViewModel.rateRange,
                                step: 0.1) {
                         } minimumValueLabel: {
                             Image(systemName: "tortoise.fill")
@@ -36,8 +43,8 @@ public struct SettingsView: View {
                     }
 
                     Section(String(localized: "Pitch", bundle: .module)) {
-                        Slider(value: $settingViewModel.pitchMultiplier,
-                               in: SettingsViewModel.pitchRange,
+                        Slider(value: $voiceSettingsViewModel.pitchMultiplier,
+                               in: VoiceSettingsViewModel.pitchRange,
                                step: 0.1) {
                         } minimumValueLabel: {
                             Image(systemName: "waveform.badge.minus")
@@ -48,8 +55,8 @@ public struct SettingsView: View {
                     }
 
                     Section(String(localized: "Volume", bundle: .module)) {
-                        Slider(value: $settingViewModel.volume,
-                               in: SettingsViewModel.volumeRange,
+                        Slider(value: $voiceSettingsViewModel.volume,
+                               in: VoiceSettingsViewModel.volumeRange,
                                step: 0.1) {
                         } minimumValueLabel: {
                             Image(systemName: "speaker.fill")
@@ -62,7 +69,8 @@ public struct SettingsView: View {
             }
             .navigationTitle(Text("Settings", bundle: .module))
             .task {
-                settingViewModel.fetchVoiceParameter()
+                voiceSettingsViewModel.fetchVoiceParameter()
+                voiceSettingsViewModel.fetchAvailableVoices()
             }
         }
     }

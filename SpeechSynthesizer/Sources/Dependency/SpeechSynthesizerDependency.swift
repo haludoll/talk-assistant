@@ -14,8 +14,8 @@ enum SpeechSynthesizerKey: DependencyKey {
     public static let liveValue: any SpeechSynthesizerProtocol = SpeechSynthesizer()
 }
 
-extension VoiceSettingRepository: DependencyKey {
-    public static var liveValue: VoiceSettingRepository { .live }
+extension VoiceSettingsRepository: DependencyKey {
+    public static var liveValue: VoiceSettingsRepository { .live }
 }
 
 extension DependencyValues {
@@ -24,8 +24,8 @@ extension DependencyValues {
         set { self[SpeechSynthesizerKey.self] = newValue }
     }
 
-    public var voiceSettingRepository: VoiceSettingRepository {
-        get { self[VoiceSettingRepository.self] }
-        set { self[VoiceSettingRepository.self] = newValue }
+    public var voiceSettingsRepository: VoiceSettingsRepository {
+        get { self[VoiceSettingsRepository.self] }
+        set { self[VoiceSettingsRepository.self] = newValue }
     }
 }

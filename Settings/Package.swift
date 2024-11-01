@@ -23,7 +23,10 @@ let package = Package(
     targets: [
         .target(
             name: "SettingsPresentation",
-            dependencies: ["SettingsViewModel"],
+            dependencies: [
+                "SettingsViewModel",
+                .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
+            ],
             path: "Sources/Presentation"
         ),
         .target(

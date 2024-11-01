@@ -1,5 +1,5 @@
 //
-//  VoiceSettingRepository.swift
+//  VoiceSettingsRepository.swift
 //  SpeechSynthesizer
 //
 //  Created by haludoll on 2024/10/24.
@@ -26,7 +26,7 @@ public struct VoiceParameter: Sendable {
     }
 }
 
-public struct VoiceSettingRepository: Sendable {
+public struct VoiceSettingsRepository: Sendable {
     public let fetchVoiceParameter: @Sendable () -> VoiceParameter
     public let fetchAvailableVoices: @Sendable () -> [AVSpeechSynthesisVoice]
 
