@@ -39,6 +39,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:..\/Settings",
         "identifier" : "SettingsViewModelTests",

@@ -16,9 +16,11 @@ struct VoiceSettingsViewModelTests {
     @Test func fetchAvailableVoices_filter_current_language() {
         let sut = withDependencies {
             $0.voiceSettingsRepository = .init(fetchVoiceParameter: { .init() },
+                                               updateVoiceParamter: { _ in },
                                                fetchAvailableVoices: { [.init(language: "en-US")!,
                                                                         .init(language: "ja-JP")!,
-                                                                        .init(language: "en-AU")!] })
+                                                                        .init(language: "en-AU")!] },
+                                               fetchSelectedVoice: { .init() })
         } operation: {
             VoiceSettingsViewModel(currentLanguageCode: "en-US")
         }
@@ -30,8 +32,10 @@ struct VoiceSettingsViewModelTests {
     @Test func fetchAvailableVoices_sort_by_name() {
         let sut = withDependencies {
             $0.voiceSettingsRepository = .init(fetchVoiceParameter: { .init() },
+                                               updateVoiceParamter: { _ in },
                                                fetchAvailableVoices: { [.init(identifier: "com.apple.voice.compact.en-US.Samantha")!,
-                                                                        .init(identifier: "com.apple.speech.synthesis.voice.Albert")!] })
+                                                                        .init(identifier: "com.apple.speech.synthesis.voice.Albert")!] },
+                                               fetchSelectedVoice: { .init() })
         } operation: {
             VoiceSettingsViewModel(currentLanguageCode: "en-US")
         }

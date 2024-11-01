@@ -15,7 +15,7 @@ enum SpeechSynthesizerKey: DependencyKey {
 }
 
 extension VoiceSettingsRepository: DependencyKey {
-    public static var liveValue: VoiceSettingsRepository { .live }
+    public static let liveValue = VoiceSettingsRepository.live
 }
 
 extension DependencyValues {

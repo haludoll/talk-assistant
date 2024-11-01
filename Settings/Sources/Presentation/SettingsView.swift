@@ -16,9 +16,16 @@ public struct SettingsView: View {
     public var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
+                } footer: {
+                    Text("When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied", bundle: .module)
+                }
+
                 if !voiceSettingsViewModel.prefersAssistiveTechnologySettings {
+                    @Bindable var voiceSettingsViewModel = voiceSettingsViewModel
+
                     NavigationLink {
-                        @Bindable var voiceSettingsViewModel = voiceSettingsViewModel
                         VoiceSelectionView(selectedVoice: $voiceSettingsViewModel.selectedVoice,
                                            availableVoices: voiceSettingsViewModel.availableVoices)
                     } label: {
@@ -60,19 +67,20 @@ public struct SettingsView: View {
                         }
                         .foregroundStyle(Color(.secondaryLabel))
                     }
-
-                    Section {
-                        Toggle(String(localized: "Use System Voice Setting", bundle: .module), isOn: $voiceSettingsViewModel.prefersAssistiveTechnologySettings)
-                    } footer: {
-                        Text("When enabled, the voice set in the device Settings app > Accessibility > Spoken Content will be applied", bundle: .module)
-                    }
                 }
             }
             .navigationTitle(Text("Settings", bundle: .module))
             .task {
-                voiceSettingsViewModel.fetchVoiceParameter()
                 voiceSettingsViewModel.fetchAvailableVoices()
                 voiceSettingsViewModel.fetchSelectedVoice()
+            }
+            .onChange(of: [voiceSettingsViewModel.rate,
+                           voiceSettingsViewModel.pitchMultiplier,
+                           voiceSettingsViewModel.volume]) { _, _ in
+                voiceSettingsViewModel.updateVoiceParam()
+            }
+            .onChange(of: voiceSettingsViewModel.prefersAssistiveTechnologySettings) { _, _ in
+                voiceSettingsViewModel.updateVoiceParam()
             }
         }
     }

@@ -56,5 +56,10 @@ package final class VoiceSettingsViewModel {
         selectedVoice = voiceSettingsRepository.fetchSelectedVoice()
     }
 
-    package func updateParam() {}
+    package func updateVoiceParam() {
+        voiceSettingsRepository.updateVoiceParamter(.init(rate: self.rate,
+                                                          pitchMultiplier: self.pitchMultiplier,
+                                                          volume: self.volume,
+                                                          prefersAssistiveTechnologySettings: self.prefersAssistiveTechnologySettings))
+    }
 }

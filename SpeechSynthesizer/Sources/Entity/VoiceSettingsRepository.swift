@@ -6,17 +6,14 @@
 //
 
 import AVFoundation
+import SwiftData
 
-public struct VoiceParameter: Sendable {
+@Model
+public final class VoiceParameter {
     public var rate: Float
     public var pitchMultiplier: Float
     public var volume: Float
     public var prefersAssistiveTechnologySettings: Bool
-
-    public static let rateRange: ClosedRange<Float> = AVSpeechUtteranceMinimumSpeechRate...AVSpeechUtteranceMaximumSpeechRate
-    public static let defaultRate: Float = AVSpeechUtteranceDefaultSpeechRate
-    public static let pitchRange: ClosedRange<Float> = 0.5...1.5
-    public static let volumeRange: ClosedRange<Float> = 0...1.0
 
     public init(rate: Float = AVSpeechUtteranceDefaultSpeechRate, pitchMultiplier: Float = 1.0, volume: Float = 1.0, prefersAssistiveTechnologySettings: Bool = false) {
         self.rate = rate
@@ -26,13 +23,25 @@ public struct VoiceParameter: Sendable {
     }
 }
 
+extension VoiceParameter {
+    public static let rateRange: ClosedRange<Float> = AVSpeechUtteranceMinimumSpeechRate...AVSpeechUtteranceMaximumSpeechRate
+    public static let defaultRate: Float = AVSpeechUtteranceDefaultSpeechRate
+    public static let pitchRange: ClosedRange<Float> = 0.5...1.5
+    public static let volumeRange: ClosedRange<Float> = 0...1.0
+}
+
 public struct VoiceSettingsRepository: Sendable {
-    public let fetchVoiceParameter: @Sendable () -> VoiceParameter
+    public let fetchVoiceParameter: @MainActor () -> VoiceParameter
+    public let updateVoiceParamter: @MainActor (VoiceParameter) -> Void
     public let fetchAvailableVoices: @Sendable () -> [AVSpeechSynthesisVoice]
     public let fetchSelectedVoice: @Sendable () -> AVSpeechSynthesisVoice
 
-    public init(fetchVoiceParameter: @escaping @Sendable () -> VoiceParameter, fetchAvailableVoices: @escaping @Sendable () -> [AVSpeechSynthesisVoice], fetchSelectedVoice: @escaping @Sendable () -> AVSpeechSynthesisVoice) {
+    public init(fetchVoiceParameter: @escaping @MainActor () -> VoiceParameter,
+                updateVoiceParamter: @escaping @MainActor (VoiceParameter) -> Void,
+                fetchAvailableVoices: @escaping @Sendable () -> [AVSpeechSynthesisVoice],
+                fetchSelectedVoice: @escaping @Sendable () -> AVSpeechSynthesisVoice) {
         self.fetchVoiceParameter = fetchVoiceParameter
+        self.updateVoiceParamter = updateVoiceParamter
         self.fetchAvailableVoices = fetchAvailableVoices
         self.fetchSelectedVoice = fetchSelectedVoice
     }
