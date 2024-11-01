@@ -29,7 +29,11 @@ package final class VoiceSettingsViewModel {
     @ObservationIgnored
     @Dependency(\.voiceSettingsRepository) private var voiceSettingsRepository
 
-    package init() {}
+    private let currentLanguageCode: String
+
+    package init(currentLanguageCode: String = AVSpeechSynthesisVoice.currentLanguageCode()) {
+        self.currentLanguageCode = currentLanguageCode
+    }
 
     package func fetchVoiceParameter() {
         let param = voiceSettingsRepository.fetchVoiceParameter()
@@ -40,7 +44,14 @@ package final class VoiceSettingsViewModel {
     }
 
     package func fetchAvailableVoices() {
-        availableVoices = voiceSettingsRepository.fetchAvailableVoices().filter { $0.language == Locale.preferredLanguages.first }
+        availableVoices = voiceSettingsRepository
+            .fetchAvailableVoices()
+            .filter { $0.language == currentLanguageCode }
+            .sorted(by: { $0.name < $1.name })
+    }
+
+    package func fetchSelectedVoice() {
+
     }
 
     package func updateParam() {}

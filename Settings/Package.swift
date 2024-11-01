@@ -42,5 +42,10 @@ let package = Package(
             dependencies: ["SettingsPresentation"],
             path: "Tests/PresentationTests"
         ),
+        .testTarget(
+            name: "SettingsViewModelTests",
+            dependencies: ["SettingsViewModel"],
+            path: "Tests/ViewModelTests"
+        ),
     ]
 )
