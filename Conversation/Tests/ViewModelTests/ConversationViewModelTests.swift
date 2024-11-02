@@ -103,6 +103,10 @@ final class ConversationViewModelTests: XCTestCase {
         } operation: {
             ConversationViewModel()
         }
+        Task.detached {
+            await sut.observeSpeechDelegate()
+        }
+        await Task.yield()
 
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {
@@ -122,6 +126,11 @@ final class ConversationViewModelTests: XCTestCase {
         } operation: {
             ConversationViewModel()
         }
+        Task.detached {
+            await sut.observeSpeechDelegate()
+        }
+        await Task.yield()
+
         sut.isSpeaking = true
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {
@@ -141,6 +150,11 @@ final class ConversationViewModelTests: XCTestCase {
         } operation: {
             ConversationViewModel()
         }
+        Task.detached {
+            await sut.observeSpeechDelegate()
+        }
+        await Task.yield()
+
         sut.text = "test"
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {
@@ -160,6 +174,11 @@ final class ConversationViewModelTests: XCTestCase {
         } operation: {
             ConversationViewModel()
         }
+        Task.detached {
+            await sut.observeSpeechDelegate()
+        }
+        await Task.yield()
+
         sut.text = "test"
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {
@@ -179,6 +198,10 @@ final class ConversationViewModelTests: XCTestCase {
         } operation: {
             ConversationViewModel()
         }
+        Task.detached {
+            await sut.observeSpeechDelegate()
+        }
+        await Task.yield()
 
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {

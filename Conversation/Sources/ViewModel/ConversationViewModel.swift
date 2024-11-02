@@ -20,7 +20,7 @@ package final class ConversationViewModel {
     public var isSpeaking = false
 
     @ObservationIgnored
-    @Dependency(\.speechSynthesizer) private var speechSynthesizer
+    @Dependency(\.speechSynthesizer) var speechSynthesizer
     @ObservationIgnored
     @Dependency(\.voiceSettingsRepository) private var voiceSettingsRepository
 
