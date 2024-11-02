@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "Talk Assistant" : {
       "extractionState" : "manual",
       "localizations" : {

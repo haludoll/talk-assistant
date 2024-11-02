@@ -13,15 +13,39 @@ let package = Package(
         .library(
             name: "SettingsPresentation",
             targets: ["SettingsPresentation"]),
+        .library(
+            name: "SettingsViewModel",
+            targets: ["SettingsViewModel"]),
+    ],
+    dependencies: [
+        .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
     ],
     targets: [
         .target(
             name: "SettingsPresentation",
-            path: "Sources/Presentation"),
+            dependencies: [
+                "SettingsViewModel",
+                .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
+            ],
+            path: "Sources/Presentation"
+        ),
+        .target(
+            name: "SettingsViewModel",
+            dependencies: [
+                .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
+                .product(name: "SpeechSynthesizerEntity", package: "SpeechSynthesizer")
+            ],
+            path: "Sources/ViewModel"
+        ),
         .testTarget(
             name: "SettingsPresentationTests",
             dependencies: ["SettingsPresentation"],
             path: "Tests/PresentationTests"
+        ),
+        .testTarget(
+            name: "SettingsViewModelTests",
+            dependencies: ["SettingsViewModel"],
+            path: "Tests/ViewModelTests"
         ),
     ]
 )

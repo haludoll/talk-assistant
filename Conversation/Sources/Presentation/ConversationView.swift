@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import SpeechSynthesizer
+import ConversationViewModel
 
 public struct ConversationView: View {
-    @State private var speechSynthesizer = SpeechSynthesizer()
+    @State private var conversationViewModel = ConversationViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
 
     public init() {}
@@ -20,18 +20,18 @@ public struct ConversationView: View {
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
-                    speechSynthesizer.text = speechSynthesizer.lastText
-                    speechSynthesizer.speak()
+                    conversationViewModel.text = conversationViewModel.lastText
+                    conversationViewModel.speak()
                 }
-                .disabled(speechSynthesizer.lastText.isEmpty)
+                .disabled(conversationViewModel.lastText.isEmpty)
 
-                PhraseTextField(text: $speechSynthesizer.text,
-                                isSpeaking: speechSynthesizer.isSpeaking,
+                PhraseTextField(text: $conversationViewModel.text,
+                                isSpeaking: conversationViewModel.isSpeaking,
                                 focused: $phraseTextFieldFocused,
-                                playButtonTapped: { speechSynthesizer.speak() },
-                                stopButtonTapped: { speechSynthesizer.stop() })
+                                playButtonTapped: { conversationViewModel.speak() },
+                                stopButtonTapped: { conversationViewModel.stop() })
                 .onSubmit { _ in
-                    speechSynthesizer.speak()
+                    conversationViewModel.speak()
                 }
             }
             .padding()
@@ -39,6 +39,12 @@ public struct ConversationView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             phraseTextFieldFocused = false
+        }
+        .onAppear {
+            conversationViewModel.setupVoice()
+        }
+        .task {
+            await conversationViewModel.observeSpeechDelegate()
         }
     }
 }

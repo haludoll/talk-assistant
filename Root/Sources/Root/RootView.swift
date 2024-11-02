@@ -7,13 +7,28 @@
 
 import SwiftUI
 import ConversationPresentation
+import SettingsPresentation
 
 public struct RootView: View {
+    @State private var showingSettings = false
+
     public init() {}
     public var body: some View {
         NavigationStack {
-            ConversationView()
-                .navigationTitle(Text("Talk Assistant", bundle: .module))
+            VStack {
+                ConversationView()
+                    .navigationTitle(Text("Talk Assistant", bundle: .module))
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button("", systemImage: "gearshape") {
+                        showingSettings.toggle()
+                    }
+                }
+            }
+            .navigationDestination(isPresented: $showingSettings) {
+                SettingsView()
+            }
         }
     }
 }
