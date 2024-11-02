@@ -25,7 +25,7 @@ package final class SpeechSampleViewModel {
     }
 
     @ObservationIgnored
-    @Dependency(\.speechSynthesizer) private var speechSynthesizer
+    @Dependency(\.speechSynthesizer) var speechSynthesizer
 
     package init() {}
 
@@ -39,9 +39,9 @@ package final class SpeechSampleViewModel {
     }
 
     package func speakingStatus(for voice: AVSpeechSynthesisVoice) -> SpeakingStatus {
-        guard let isSpeakingVoice = speakingVoice else { return .none }
+        guard let speakingVoice else { return .none }
 
-        if voice == isSpeakingVoice {
+        if voice == speakingVoice {
             return .speaking
         } else {
             return .speakingSomeoneElse
