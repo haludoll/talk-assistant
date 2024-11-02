@@ -70,17 +70,23 @@ struct VoiceSelectionView: View {
 private struct PlaySampleButton: View {
     let voice: AVSpeechSynthesisVoice
     let speechSampleViewModel: SpeechSampleViewModel
+    private let sampleText = String(localized: "This is a sample sentence. I can speak English sentences.", bundle: .module)
+
+    init(voice: AVSpeechSynthesisVoice, speechSampleViewModel: SpeechSampleViewModel) {
+        self.voice = voice
+        self.speechSampleViewModel = speechSampleViewModel
+    }
 
     var body: some View {
         Button {
             switch speechSampleViewModel.speakingStatus(for: voice) {
             case .none:
-                speechSampleViewModel.speakSampleText(with: voice)
+                speechSampleViewModel.speakSample(text: sampleText, with: voice)
             case .speaking:
                 speechSampleViewModel.stopSampleText(with: voice)
             case .speakingSomeoneElse:
                 speechSampleViewModel.stopSampleText(with: voice)
-                speechSampleViewModel.speakSampleText(with: voice)
+                speechSampleViewModel.speakSample(text: sampleText, with: voice)
             }
         } label: {
             if let speakingVoice = speechSampleViewModel.speakingVoice,

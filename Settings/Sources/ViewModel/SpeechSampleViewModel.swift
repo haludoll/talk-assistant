@@ -9,6 +9,7 @@ import Foundation
 import AVFoundation
 import SpeechSynthesizerDependency
 import Dependencies
+import SpeechSynthesizerEntity
 
 @Observable
 @MainActor
@@ -29,9 +30,9 @@ package final class SpeechSampleViewModel {
 
     package init() {}
 
-    package func speakSampleText(with voice: AVSpeechSynthesisVoice) {
+    package func speakSample(text: String, with voice: AVSpeechSynthesisVoice, using voiceParameter: VoiceParameter = .init()) {
         willSpeakingVoice = voice
-        speechSynthesizer.speak(text: "this is sample", in: voice, using: .init())
+        speechSynthesizer.speak(text: text, in: voice, using: voiceParameter)
     }
 
     package func stopSampleText(with voice: AVSpeechSynthesisVoice) {
