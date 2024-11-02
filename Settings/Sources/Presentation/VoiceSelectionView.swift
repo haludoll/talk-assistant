@@ -8,6 +8,7 @@
 import SwiftUI
 import SettingsViewModel
 import AVFoundation
+import TipKit
 
 struct VoiceSelectionView: View {
     let selectedVoice: AVSpeechSynthesisVoice?
@@ -16,16 +17,24 @@ struct VoiceSelectionView: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    private var additionalVoiceDownloadTip = AdditionalVoiceDownloadTip()
+
+    init(selectedVoice: AVSpeechSynthesisVoice?,
+         availableVoices: [AVSpeechSynthesisVoice],
+         updateSelectedVoice: @escaping (AVSpeechSynthesisVoice) -> Void) {
+        self.selectedVoice = selectedVoice
+        self.availableVoices = availableVoices
+        self.updateSelectedVoice = updateSelectedVoice
+
+        try? Tips.configure([.displayFrequency(.monthly)])
+    }
+
     var body: some View {
         List {
-            AnyView(
-                Text(Image(systemName: "info.circle")).foregroundStyle(.secondary)
-                    + Text(" ")
-                    + Text("Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.\nOpen this screen again after the download is complete.", bundle: .module).foregroundStyle(.secondary)
-            )
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
-            .padding(.horizontal)
+            TipView(additionalVoiceDownloadTip)
+                .tipBackground(Color(.secondarySystemGroupedBackground))
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets())
 
             ForEach(AVSpeechSynthesisVoiceGender.allCases) { gender in
                 let voices = availableVoices.filter { $0.gender == gender }
@@ -94,4 +103,19 @@ private extension AVSpeechSynthesisVoiceGender {
 
 extension AVSpeechSynthesisVoice: @retroactive Identifiable {
     public var id: String { identifier }
+}
+
+private struct AdditionalVoiceDownloadTip: Tip {
+    var title: Text {
+        Text("Download additional voices", bundle: .module)
+    }
+
+    var message: Text? {
+        Text("Additional voices can be downloaded from the device Settings app > Accessibility > Spoken Content > Voices.", bundle: .module)
+            .font(.footnote)
+    }
+
+    var image: Image? {
+        Image(systemName: "arrow.down.circle")
+    }
 }
