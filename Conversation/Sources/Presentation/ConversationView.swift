@@ -43,6 +43,9 @@ public struct ConversationView: View {
         .onAppear {
             conversationViewModel.setupVoice()
         }
+        .task {
+            await conversationViewModel.observeSpeechDelegate()
+        }
     }
 }
 

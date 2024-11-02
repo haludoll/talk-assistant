@@ -20,24 +20,14 @@ package final class ConversationViewModel {
     public var isSpeaking = false
 
     @ObservationIgnored
-    @Dependency(\.speechSynthesizer) var speechSynthesizer
+    @Dependency(\.speechSynthesizer) private var speechSynthesizer
     @ObservationIgnored
-    @Dependency(\.voiceSettingsRepository) var voiceSettingsRepository
-
-    @ObservationIgnored private var task: Task<Void, Never>?
+    @Dependency(\.voiceSettingsRepository) private var voiceSettingsRepository
 
     private var voice: AVSpeechSynthesisVoice?
     private var voiceParameter: VoiceParameter?
 
-    package init() {
-        task = Task {
-            await observeSpeechDelegate()
-        }
-    }
-
-    deinit {
-        task?.cancel()
-    }
+    package init() {}
 
     package func speak() {
         guard !isSpeaking, let voice, let voiceParameter else { return }
@@ -58,7 +48,7 @@ package final class ConversationViewModel {
         }
     }
 
-    func observeSpeechDelegate() async {
+    package func observeSpeechDelegate() async {
         for await action in speechSynthesizer.delegateAsyncChannel {
             switch action {
             case .didStart:

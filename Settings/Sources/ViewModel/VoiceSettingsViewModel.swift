@@ -21,7 +21,7 @@ package final class VoiceSettingsViewModel {
     public var volume: Float = 1.0
     public var prefersAssistiveTechnologySettings = false
 
-    public var availableVoices: [AVSpeechSynthesisVoice] = []
+    public private(set) var availableVoices: [AVSpeechSynthesisVoice] = []
 
     public static let rateRange = VoiceParameter.rateRange
     public static let defaultRate = VoiceParameter.defaultRate
@@ -44,7 +44,9 @@ package final class VoiceSettingsViewModel {
             pitchMultiplier = param.pitchMultiplier
             volume = param.volume
             prefersAssistiveTechnologySettings = param.prefersAssistiveTechnologySettings
-        } catch {}
+        } catch {
+            // TODO: record error
+        }
     }
 
     package func fetchAvailableVoices() {
@@ -64,7 +66,9 @@ package final class VoiceSettingsViewModel {
                                                                   pitchMultiplier: self.pitchMultiplier,
                                                                   volume: self.volume,
                                                                   prefersAssistiveTechnologySettings: self.prefersAssistiveTechnologySettings))
-        } catch {}
+        } catch {
+            // TODO: record error
+        }
     }
     
     package func updateSelectedVoice(_ voice: AVSpeechSynthesisVoice) {

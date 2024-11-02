@@ -11,20 +11,14 @@ import AVFoundation
 import TipKit
 
 struct VoiceSelectionView: View {
-    let selectedVoice: AVSpeechSynthesisVoice?
-    let availableVoices: [AVSpeechSynthesisVoice]
-    let updateSelectedVoice: (AVSpeechSynthesisVoice) -> Void
+    let voiceSettingsViewModel: VoiceSettingsViewModel
 
+    @State private var speechSampleViewModel = SpeechSampleViewModel()
     @Environment(\.dismiss) private var dismiss
-
     private var additionalVoiceDownloadTip = AdditionalVoiceDownloadTip()
 
-    init(selectedVoice: AVSpeechSynthesisVoice?,
-         availableVoices: [AVSpeechSynthesisVoice],
-         updateSelectedVoice: @escaping (AVSpeechSynthesisVoice) -> Void) {
-        self.selectedVoice = selectedVoice
-        self.availableVoices = availableVoices
-        self.updateSelectedVoice = updateSelectedVoice
+    init(voiceSettingsViewModel: VoiceSettingsViewModel) {
+        self.voiceSettingsViewModel = voiceSettingsViewModel
 
         try? Tips.configure([.displayFrequency(.monthly)])
     }
@@ -37,17 +31,17 @@ struct VoiceSelectionView: View {
                 .listRowInsets(EdgeInsets())
 
             ForEach(AVSpeechSynthesisVoiceGender.allCases) { gender in
-                let voices = availableVoices.filter { $0.gender == gender }
+                let voices = voiceSettingsViewModel.availableVoices.filter { $0.gender == gender }
                 if !voices.isEmpty {
                     Section(gender.name) {
                         ForEach(voices) { voice in
                             Button {
-                                updateSelectedVoice(voice)
+                                voiceSettingsViewModel.updateSelectedVoice(voice)
                                 dismiss()
                             } label: {
                                 Label {
                                     LabeledContent {
-                                        if let selectedVoice,
+                                        if let selectedVoice = voiceSettingsViewModel.selectedVoice,
                                            voice == selectedVoice {
                                             Image(systemName: "checkmark")
                                                 .foregroundStyle(Color.accentColor)
@@ -57,13 +51,7 @@ struct VoiceSelectionView: View {
                                             .foregroundStyle(Color.primary)
                                     }
                                 } icon: {
-                                    Button {
-                                        // TODO: Play sample audio.
-                                        print("play sample")
-                                    } label: {
-                                        Image(systemName: "play.circle")
-                                    }
-                                    .foregroundStyle(Color.accentColor)
+                                    PlaySampleButton(voice: voice, speechSampleViewModel: speechSampleViewModel)
                                 }
                             }
                         }
@@ -73,12 +61,41 @@ struct VoiceSelectionView: View {
         }
         .navigationTitle(Text("Voice", bundle: .module))
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await speechSampleViewModel.observeSpeechDelegate()
+        }
+    }
+}
+
+private struct PlaySampleButton: View {
+    let voice: AVSpeechSynthesisVoice
+    let speechSampleViewModel: SpeechSampleViewModel
+
+    var body: some View {
+        Button {
+            switch speechSampleViewModel.speakingStatus(for: voice) {
+            case .none:
+                speechSampleViewModel.speakSampleText(with: voice)
+            case .speaking:
+                speechSampleViewModel.stopSampleText(with: voice)
+            case .speakingSomeoneElse:
+                speechSampleViewModel.stopSampleText(with: voice)
+                speechSampleViewModel.speakSampleText(with: voice)
+            }
+        } label: {
+            if let speakingVoice = speechSampleViewModel.speakingVoice,
+               speakingVoice == voice {
+                Image(systemName: "stop.circle")
+            } else {
+                Image(systemName: "play.circle")
+            }
+        }
+        .foregroundStyle(Color.accentColor)
     }
 }
 
 #Preview {
-    VoiceSelectionView(selectedVoice: .init(language: "en-US")!,
-                       availableVoices: AVSpeechSynthesisVoice.speechVoices()) { _ in }
+    VoiceSelectionView(voiceSettingsViewModel: .init())
 }
 
 extension AVSpeechSynthesisVoiceGender: @retroactive CaseIterable {
@@ -97,6 +114,18 @@ private extension AVSpeechSynthesisVoiceGender {
         case .female: String(localized: "Female", bundle: .module)
         @unknown default:
             fatalError()
+        }
+    }
+}
+
+private extension SpeechSampleViewModel.SpeakingStatus {
+    var image: Image {
+        switch self {
+        case .none,
+             .speakingSomeoneElse:
+            Image(systemName: "play.circle")
+        case .speaking:
+            Image(systemName: "stop.circle")
         }
     }
 }
