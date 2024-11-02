@@ -70,7 +70,7 @@ struct VoiceSelectionView: View {
 private struct PlaySampleButton: View {
     let voice: AVSpeechSynthesisVoice
     let speechSampleViewModel: SpeechSampleViewModel
-    private let sampleText = String(localized: "This is a sample sentence. I can speak English sentences.", bundle: .module)
+    private let sampleText = String(localized: "This is a sample sentence.", bundle: .module)
 
     init(voice: AVSpeechSynthesisVoice, speechSampleViewModel: SpeechSampleViewModel) {
         self.voice = voice

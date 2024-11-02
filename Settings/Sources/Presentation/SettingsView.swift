@@ -12,6 +12,7 @@ import enum AVFoundation.AVSpeechSynthesisVoiceGender
 public struct SettingsView: View {
     @State private var voiceSettingsViewModel = VoiceSettingsViewModel()
     @State private var speechSampleViewModel = SpeechSampleViewModel()
+    @State private var isSkipped = false
     public init() {}
 
     public var body: some View {
@@ -77,13 +78,16 @@ public struct SettingsView: View {
             .onChange(of: [voiceSettingsViewModel.rate,
                            voiceSettingsViewModel.pitchMultiplier,
                            voiceSettingsViewModel.volume]) { _, _ in
-                voiceSettingsViewModel.updateVoiceParam()
-                if let voice = voiceSettingsViewModel.selectedVoice {
-                    speechSampleViewModel.stopSampleText(with: voice)
-                    speechSampleViewModel.speakSample(text: String(localized: "This is a sample sentence. I can speak English sentences.", bundle: .module),
-                                                      with: voice,
-                                                      using: voiceSettingsViewModel.voiceParameter)
+                if isSkipped {
+                    voiceSettingsViewModel.updateVoiceParam()
+                    if let voice = voiceSettingsViewModel.selectedVoice {
+                        speechSampleViewModel.stopSampleText(with: voice)
+                        speechSampleViewModel.speakSample(text: String(localized: "This is a sample sentence.", bundle: .module),
+                                                          with: voice,
+                                                          using: voiceSettingsViewModel.voiceParameter)
+                    }
                 }
+                isSkipped = true
             }
             .onChange(of: voiceSettingsViewModel.prefersAssistiveTechnologySettings) { _, _ in
                 voiceSettingsViewModel.updateVoiceParam()

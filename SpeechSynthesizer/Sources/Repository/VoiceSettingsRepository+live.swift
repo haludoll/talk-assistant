@@ -34,7 +34,7 @@ extension VoiceSettingsRepository {
                    let voice = AVSpeechSynthesisVoice(identifier: id) {
                     return voice
                 } else {
-                    let initialVoice = AVSpeechSynthesisVoice()
+                    let initialVoice = AVSpeechSynthesisVoice.currentLanguageCode() == "ja-JP" ? AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.siri_O-ren_ja-JP_compact") ?? AVSpeechSynthesisVoice() : AVSpeechSynthesisVoice()
                     userDefaults.set(initialVoice.identifier, forKey: Self.selectedVoiceIDUserDefaultsKey)
                     return initialVoice
                 }
