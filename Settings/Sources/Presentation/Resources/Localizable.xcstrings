@@ -81,12 +81,12 @@
         }
       }
     },
-    "This is a sample sentence. I can speak English sentences." : {
+    "This is a sample sentence." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "これはサンプルの文章です。日本語の文章を読み上げます。"
+            "value" : "これはサンプルの文章です。"
           }
         }
       }
