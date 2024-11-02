@@ -14,7 +14,7 @@ import class AVFoundation.AVSpeechSynthesisVoice
 @Observable
 @MainActor
 package final class VoiceSettingsViewModel {
-    public var selectedVoice: AVSpeechSynthesisVoice?
+    public private(set) var selectedVoice: AVSpeechSynthesisVoice?
 
     public var rate: Float = 0.5
     public var pitchMultiplier: Float = 1.0
@@ -38,11 +38,13 @@ package final class VoiceSettingsViewModel {
     }
 
     package func fetchVoiceParameter() {
-        let param = voiceSettingsRepository.fetchVoiceParameter()
-        rate = param.rate
-        pitchMultiplier = param.pitchMultiplier
-        volume = param.volume
-        prefersAssistiveTechnologySettings = param.prefersAssistiveTechnologySettings
+        do {
+            let param = try voiceSettingsRepository.fetchVoiceParameter()
+            rate = param.rate
+            pitchMultiplier = param.pitchMultiplier
+            volume = param.volume
+            prefersAssistiveTechnologySettings = param.prefersAssistiveTechnologySettings
+        } catch {}
     }
 
     package func fetchAvailableVoices() {
@@ -57,9 +59,15 @@ package final class VoiceSettingsViewModel {
     }
 
     package func updateVoiceParam() {
-        voiceSettingsRepository.updateVoiceParamter(.init(rate: self.rate,
-                                                          pitchMultiplier: self.pitchMultiplier,
-                                                          volume: self.volume,
-                                                          prefersAssistiveTechnologySettings: self.prefersAssistiveTechnologySettings))
+        do {
+            try voiceSettingsRepository.updateVoiceParamter(.init(rate: self.rate,
+                                                                  pitchMultiplier: self.pitchMultiplier,
+                                                                  volume: self.volume,
+                                                                  prefersAssistiveTechnologySettings: self.prefersAssistiveTechnologySettings))
+        } catch {}
+    }
+    
+    package func updateSelectedVoice(_ voice: AVSpeechSynthesisVoice) {
+        voiceSettingsRepository.updateSelectedVoice(voice)
     }
 }

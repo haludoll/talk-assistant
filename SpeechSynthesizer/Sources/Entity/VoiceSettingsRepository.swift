@@ -6,10 +6,8 @@
 //
 
 import AVFoundation
-import SwiftData
 
-@Model
-public final class VoiceParameter {
+public struct VoiceParameter: Codable {
     public var rate: Float
     public var pitchMultiplier: Float
     public var volume: Float
@@ -31,18 +29,21 @@ extension VoiceParameter {
 }
 
 public struct VoiceSettingsRepository: Sendable {
-    public let fetchVoiceParameter: @MainActor () -> VoiceParameter
-    public let updateVoiceParamter: @MainActor (VoiceParameter) -> Void
+    public let fetchVoiceParameter: @Sendable () throws -> VoiceParameter
+    public let updateVoiceParamter: @Sendable (VoiceParameter) throws -> Void
     public let fetchAvailableVoices: @Sendable () -> [AVSpeechSynthesisVoice]
-    public let fetchSelectedVoice: @MainActor () -> AVSpeechSynthesisVoice
+    public let fetchSelectedVoice: @Sendable () -> AVSpeechSynthesisVoice
+    public let updateSelectedVoice: @Sendable (AVSpeechSynthesisVoice) -> Void
 
-    public init(fetchVoiceParameter: @escaping @MainActor () -> VoiceParameter,
-                updateVoiceParamter: @escaping @MainActor (VoiceParameter) -> Void,
+    public init(fetchVoiceParameter: @escaping @Sendable () throws -> VoiceParameter,
+                updateVoiceParamter: @escaping @Sendable (VoiceParameter) throws -> Void,
                 fetchAvailableVoices: @escaping @Sendable () -> [AVSpeechSynthesisVoice],
-                fetchSelectedVoice: @escaping @MainActor () -> AVSpeechSynthesisVoice) {
+                fetchSelectedVoice: @escaping @Sendable () -> AVSpeechSynthesisVoice,
+                updateSelectedVoice: @escaping @Sendable (AVSpeechSynthesisVoice) -> Void) {
         self.fetchVoiceParameter = fetchVoiceParameter
         self.updateVoiceParamter = updateVoiceParamter
         self.fetchAvailableVoices = fetchAvailableVoices
         self.fetchSelectedVoice = fetchSelectedVoice
+        self.updateSelectedVoice = updateSelectedVoice
     }
 }

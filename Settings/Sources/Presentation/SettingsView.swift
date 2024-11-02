@@ -26,8 +26,10 @@ public struct SettingsView: View {
                     @Bindable var voiceSettingsViewModel = voiceSettingsViewModel
 
                     NavigationLink {
-                        VoiceSelectionView(selectedVoice: $voiceSettingsViewModel.selectedVoice,
-                                           availableVoices: voiceSettingsViewModel.availableVoices)
+                        VoiceSelectionView(selectedVoice: voiceSettingsViewModel.selectedVoice,
+                                           availableVoices: voiceSettingsViewModel.availableVoices) { voice in
+                            voiceSettingsViewModel.updateSelectedVoice(voice)
+                        }
                     } label: {
                         LabeledContent(String(localized: "Voice", bundle: .module), value: voiceSettingsViewModel.selectedVoice?.name ?? "")
                     }
@@ -71,6 +73,7 @@ public struct SettingsView: View {
             }
             .navigationTitle(Text("Settings", bundle: .module))
             .task {
+                voiceSettingsViewModel.fetchVoiceParameter()
                 voiceSettingsViewModel.fetchAvailableVoices()
                 voiceSettingsViewModel.fetchSelectedVoice()
             }

@@ -20,7 +20,8 @@ struct VoiceSettingsViewModelTests {
                                                fetchAvailableVoices: { [.init(language: "en-US")!,
                                                                         .init(language: "ja-JP")!,
                                                                         .init(language: "en-AU")!] },
-                                               fetchSelectedVoice: { .init() })
+                                               fetchSelectedVoice: { .init() },
+                                               updateSelectedVoice: { _ in })
         } operation: {
             VoiceSettingsViewModel(currentLanguageCode: "en-US")
         }
@@ -35,7 +36,8 @@ struct VoiceSettingsViewModelTests {
                                                updateVoiceParamter: { _ in },
                                                fetchAvailableVoices: { [.init(identifier: "com.apple.voice.compact.en-US.Samantha")!,
                                                                         .init(identifier: "com.apple.speech.synthesis.voice.Albert")!] },
-                                               fetchSelectedVoice: { .init() })
+                                               fetchSelectedVoice: { .init() },
+                                               updateSelectedVoice: { _ in })
         } operation: {
             VoiceSettingsViewModel(currentLanguageCode: "en-US")
         }

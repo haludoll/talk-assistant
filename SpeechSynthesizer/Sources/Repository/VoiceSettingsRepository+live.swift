@@ -7,46 +7,43 @@
 
 import AVFoundation
 import SpeechSynthesizerEntity
-import SwiftData
+import Foundation
 
 extension VoiceSettingsRepository {
+    private static let voiceParameterUserDefaultsKey = "voice_parameter"
+    private static let selectedVoiceIDUserDefaultsKey = "selected_voice_id"
     package static let live = live()
 
-    private static func live(voiceParameterModelContainer: ModelContainer = try! ModelContainer(for: VoiceParameter.self, configurations: .init(isStoredInMemoryOnly: false)),) -> Self {
+    private static func live(userDefaults: UserDefaults = .standard) -> Self {
         return .init(
             fetchVoiceParameter: {
-                let context = voiceParameterModelContainer.mainContext
-                do {
-                    if let voiceParam = try context.fetch(FetchDescriptor<VoiceParameter>()).first {
-                        return voiceParam
-                    } else {
-                        let initialVoiceParam = VoiceParameter()
-                        context.insert(VoiceParameter())
-                        try context.save()
-                        return initialVoiceParam
-                    }
-                } catch {
-                    fatalError(error.localizedDescription)
+                if let data = userDefaults.data(forKey: Self.voiceParameterUserDefaultsKey) {
+                    return try JSONDecoder().decode(VoiceParameter.self, from: data)
+                } else {
+                    let initialParam = VoiceParameter()
+                    userDefaults.set(try JSONEncoder().encode(initialParam), forKey: Self.voiceParameterUserDefaultsKey)
+                    return initialParam
                 }
             },
             updateVoiceParamter: { voiceParam in
-                let context = voiceParameterModelContainer.mainContext
-                do {
-                    try context.delete(model: VoiceParameter.self)
-                    context.insert(voiceParam)
-                    try context.save()
-                } catch {
-                    fatalError(error.localizedDescription)
-                }
+                userDefaults.set(try JSONEncoder().encode(voiceParam), forKey: Self.voiceParameterUserDefaultsKey)
             },
             fetchAvailableVoices: { AVSpeechSynthesisVoice.speechVoices() },
             fetchSelectedVoice: {
-//                let context = modelContainer.mainContext
-//                do {
-//                    if let selectedVoice = try context.fetch
-//                }
-//                .init(language: Locale.preferredLanguages.first!)!
+                if let id = userDefaults.string(forKey: Self.selectedVoiceIDUserDefaultsKey),
+                   let voice = AVSpeechSynthesisVoice(identifier: id) {
+                    return voice
+                } else {
+                    let initialVoice = AVSpeechSynthesisVoice()
+                    userDefaults.set(initialVoice.identifier, forKey: Self.selectedVoiceIDUserDefaultsKey)
+                    return initialVoice
+                }
+            },
+            updateSelectedVoice: { voice in
+                userDefaults.set(voice.identifier, forKey: Self.selectedVoiceIDUserDefaultsKey)
             }
         )
     }
 }
+
+extension UserDefaults: @unchecked @retroactive Sendable {}

@@ -10,8 +10,9 @@ import SettingsViewModel
 import AVFoundation
 
 struct VoiceSelectionView: View {
-    @Binding var selectedVoice: AVSpeechSynthesisVoice?
+    let selectedVoice: AVSpeechSynthesisVoice?
     let availableVoices: [AVSpeechSynthesisVoice]
+    let updateSelectedVoice: (AVSpeechSynthesisVoice) -> Void
 
     @Environment(\.dismiss) private var dismiss
 
@@ -32,7 +33,7 @@ struct VoiceSelectionView: View {
                     Section(gender.name) {
                         ForEach(voices) { voice in
                             Button {
-                                selectedVoice = voice
+                                updateSelectedVoice(voice)
                                 dismiss()
                             } label: {
                                 Label {
@@ -67,8 +68,8 @@ struct VoiceSelectionView: View {
 }
 
 #Preview {
-    VoiceSelectionView(selectedVoice: .constant(.init(language: "en-US")!),
-                       availableVoices: AVSpeechSynthesisVoice.speechVoices())
+    VoiceSelectionView(selectedVoice: .init(language: "en-US")!,
+                       availableVoices: AVSpeechSynthesisVoice.speechVoices()) { _ in }
 }
 
 extension AVSpeechSynthesisVoiceGender: @retroactive CaseIterable {
