@@ -21,6 +21,13 @@ package final class VoiceSettingsViewModel {
     public var volume: Float = 1.0
     public var prefersAssistiveTechnologySettings = false
 
+    public var voiceParameter: VoiceParameter {
+        .init(rate: rate,
+              pitchMultiplier: pitchMultiplier,
+              volume: volume,
+              prefersAssistiveTechnologySettings: prefersAssistiveTechnologySettings)
+    }
+
     public private(set) var availableVoices: [AVSpeechSynthesisVoice] = []
 
     public static let rateRange = VoiceParameter.rateRange

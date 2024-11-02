@@ -34,7 +34,7 @@ final class SpeechSampleViewModelTests: XCTestCase {
             expectation.fulfill()
         }
         let sampleVoice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)!
-        sut.speakSampleText(with: sampleVoice)
+        sut.speakSample(text: "This is sample.", with: sampleVoice)
         await sut.speechSynthesizer.delegateAsyncChannel.send(.didStart)
         await fulfillment(of: [expectation], timeout: 0.1)
         XCTAssertEqual(sut.speakingVoice, sampleVoice)
