@@ -29,9 +29,9 @@ package final class SpeechSampleViewModel {
 
     package init() {}
 
-    package func speakSampleText(with voice: AVSpeechSynthesisVoice) {
+    package func speakSample(text: String, with voice: AVSpeechSynthesisVoice) {
         willSpeakingVoice = voice
-        speechSynthesizer.speak(text: "this is sample", in: voice, using: .init())
+        speechSynthesizer.speak(text: text, in: voice, using: .init())
     }
 
     package func stopSampleText(with voice: AVSpeechSynthesisVoice) {
