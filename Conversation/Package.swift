@@ -19,7 +19,8 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0")
     ],
     targets: [
         .target(
@@ -33,6 +34,7 @@ let package = Package(
                 .product(name: "SpeechSynthesizerEntity", package: "SpeechSynthesizer"),
                 .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")
             ],
             path: "Sources/ViewModel"
         ),

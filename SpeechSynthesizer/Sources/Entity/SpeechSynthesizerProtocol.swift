@@ -6,6 +6,7 @@
 //
 
 import AsyncAlgorithms
+import AVFoundation
 
 public enum SpeechSynthesizerDelegateAction: Sendable {
     case didStart
@@ -16,6 +17,6 @@ public enum SpeechSynthesizerDelegateAction: Sendable {
 @MainActor
 public protocol SpeechSynthesizerProtocol: Sendable {
     var delegateAsyncChannel: AsyncChannel<SpeechSynthesizerDelegateAction> { get }
-    func speak(text: String)
+    func speak(text: String, in voice: AVSpeechSynthesisVoice, using voiceParameter: VoiceParameter)
     func stop()
 }

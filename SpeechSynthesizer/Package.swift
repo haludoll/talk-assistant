@@ -14,7 +14,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0")
     ],
     targets: [
         .target(
@@ -36,6 +37,7 @@ let package = Package(
             dependencies: [
                 "SpeechSynthesizerEntity",
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")
             ],
             path: "Sources/Repository"
         ),

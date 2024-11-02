@@ -40,6 +40,9 @@ public struct ConversationView: View {
         .onTapGesture {
             phraseTextFieldFocused = false
         }
+        .onAppear {
+            conversationViewModel.setupVoice()
+        }
     }
 }
 

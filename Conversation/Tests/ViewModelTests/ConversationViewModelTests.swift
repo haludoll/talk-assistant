@@ -9,6 +9,7 @@ import XCTest
 import AsyncAlgorithms
 import Dependencies
 import SpeechSynthesizerEntity
+import AVFoundation
 @testable import ConversationViewModel
 
 @Observable
@@ -19,10 +20,12 @@ final class ConversationViewModelTests: XCTestCase {
         expectation.isInverted = true
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
+            $0.voiceSettingsRepository = .testValue
         } operation: {
             ConversationViewModel()
         }
         sut.isSpeaking = true
+        sut.setupVoice()
         sut.speak()
         await fulfillment(of: [expectation], timeout: 0.1)
     }
@@ -31,10 +34,40 @@ final class ConversationViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: #function)
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
+            $0.voiceSettingsRepository = .testValue
         } operation: {
             ConversationViewModel()
         }
         sut.isSpeaking = false
+        sut.setupVoice()
+        sut.speak()
+        await fulfillment(of: [expectation], timeout: 0.1)
+    }
+
+    func test_speak_voiceSetting_nil_notExecuted() async {
+        let expectation = XCTestExpectation(description: #function)
+        expectation.isInverted = true
+        let sut = withDependencies {
+            $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
+            $0.voiceSettingsRepository = .testValue
+        } operation: {
+            ConversationViewModel()
+        }
+        sut.isSpeaking = false
+        sut.speak()
+        await fulfillment(of: [expectation], timeout: 0.1)
+    }
+
+    func test_speak_voiceSetting_not_nil_executed() async {
+        let expectation = XCTestExpectation(description: #function)
+        let sut = withDependencies {
+            $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
+            $0.voiceSettingsRepository = .testValue
+        } operation: {
+            ConversationViewModel()
+        }
+        sut.isSpeaking = false
+        sut.setupVoice()
         sut.speak()
         await fulfillment(of: [expectation], timeout: 0.1)
     }
@@ -165,7 +198,7 @@ private struct SpeechSynthesizerMock: SpeechSynthesizerProtocol {
     var speakExpectation: XCTestExpectation?
     var stopExpectation: XCTestExpectation?
 
-    func speak(text: String) {
+    func speak(text: String, in voice: AVSpeechSynthesisVoice, using voiceParameter: VoiceParameter) {
         speakExpectation?.fulfill()
     }
     func stop() {

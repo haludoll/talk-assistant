@@ -9,6 +9,8 @@ import Foundation
 import SpeechSynthesizerEntity
 import SpeechSynthesizerDependency
 import Dependencies
+import AVFoundation
+import FirebaseCrashlytics
 
 @Observable
 @MainActor
@@ -19,7 +21,13 @@ package final class ConversationViewModel {
 
     @ObservationIgnored
     @Dependency(\.speechSynthesizer) var speechSynthesizer
+    @ObservationIgnored
+    @Dependency(\.voiceSettingsRepository) var voiceSettingsRepository
+
     @ObservationIgnored private var task: Task<Void, Never>?
+
+    private var voice: AVSpeechSynthesisVoice?
+    private var voiceParameter: VoiceParameter?
 
     package init() {
         task = Task {
@@ -32,13 +40,22 @@ package final class ConversationViewModel {
     }
 
     package func speak() {
-        guard !isSpeaking else { return }
-        speechSynthesizer.speak(text: text)
+        guard !isSpeaking, let voice, let voiceParameter else { return }
+        speechSynthesizer.speak(text: text, in: voice, using: voiceParameter)
     }
 
     package func stop() {
         guard isSpeaking else { return }
         speechSynthesizer.stop()
+    }
+
+    package func setupVoice() {
+        voice = voiceSettingsRepository.fetchSelectedVoice()
+        do {
+            voiceParameter = try voiceSettingsRepository.fetchVoiceParameter()
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
     }
 
     func observeSpeechDelegate() async {
