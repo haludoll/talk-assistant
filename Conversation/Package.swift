@@ -11,6 +11,9 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "ConversationEntity",
+            targets: ["ConversationEntity"]),
+        .library(
             name: "ConversationPresentation",
             targets: ["ConversationPresentation"]),
         .library(
@@ -23,6 +26,10 @@ let package = Package(
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0")
     ],
     targets: [
+        .target(
+            name: "ConversationEntity",
+            path: "Sources/Entity"
+        ),
         .target(
             name: "ConversationPresentation",
             dependencies: ["ConversationViewModel"],
