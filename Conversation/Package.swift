@@ -17,6 +17,9 @@ let package = Package(
             name: "ConversationPresentation",
             targets: ["ConversationPresentation"]),
         .library(
+            name: "ConversationRepository",
+            targets: ["ConversationRepository"]),
+        .library(
             name: "ConversationViewModel",
             targets: ["ConversationViewModel"]),
     ],
@@ -34,6 +37,11 @@ let package = Package(
             name: "ConversationPresentation",
             dependencies: ["ConversationViewModel"],
             path: "Sources/Presentation"
+        ),
+        .target(
+            name: "ConversationRepository",
+            dependencies: ["ConversationEntity"],
+            path: "Sources/Repository"
         ),
         .target(
             name: "ConversationViewModel",
