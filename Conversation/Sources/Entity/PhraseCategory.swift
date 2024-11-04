@@ -25,9 +25,19 @@ package final class PhraseCategory: Identifiable {
         package var name: String
         package var icon: Icon
 
+        package init(name: String, icon: Icon) {
+            self.name = name
+            self.icon = icon
+        }
+
         package struct Icon: Codable {
-            package let name: String
-            package let color: Color
+            package var name: String
+            package var color: Color
+
+            package init(name: String, color: Color) {
+                self.name = name
+                self.color = color
+            }
         }
     }
 }
