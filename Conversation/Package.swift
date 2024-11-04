@@ -11,8 +11,17 @@ let package = Package(
     ],
     products: [
         .library(
+            name: "ConversationDependency",
+            targets: ["ConversationDependency"]),
+        .library(
+            name: "ConversationEntity",
+            targets: ["ConversationEntity"]),
+        .library(
             name: "ConversationPresentation",
             targets: ["ConversationPresentation"]),
+        .library(
+            name: "ConversationRepository",
+            targets: ["ConversationRepository"]),
         .library(
             name: "ConversationViewModel",
             targets: ["ConversationViewModel"]),
@@ -23,14 +32,35 @@ let package = Package(
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0")
     ],
     targets: [
+        .target( 
+            name: "ConversationDependency",
+            dependencies: [
+                "ConversationEntity",
+                "ConversationRepository",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk")
+            ],
+            path: "Sources/Dependency"
+        ),
+        .target(
+            name: "ConversationEntity",
+            path: "Sources/Entity"
+        ),
         .target(
             name: "ConversationPresentation",
             dependencies: ["ConversationViewModel"],
             path: "Sources/Presentation"
         ),
         .target(
+            name: "ConversationRepository",
+            dependencies: ["ConversationEntity"],
+            path: "Sources/Repository"
+        ),
+        .target(
             name: "ConversationViewModel",
             dependencies: [
+                "ConversationEntity",
+                "ConversationDependency",
                 .product(name: "SpeechSynthesizerEntity", package: "SpeechSynthesizer"),
                 .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
