@@ -35,15 +35,15 @@ package final class PhraseCategoryViewModel {
 @MainActor
 package final class PhraseCategoryCreateViewModel {
     public var categoryName = ""
-    public var iconName = ""
-    public var iconColor: Color = .accentColor
+    public var iconName = "house.fill"
+    public var iconColor: Color = .blue
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
 
-    func create() {
+    package func create() {
         do {
             try phraseCategoryRepository.create(.init(id: .init(),
                                                       metadata: .init(name: categoryName,

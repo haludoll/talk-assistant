@@ -4,6 +4,15 @@
     "" : {
 
     },
+    "Create a Category" : {
+
+    },
+    "Done" : {
+
+    },
+    "Name" : {
+
+    },
     "Type to Speak…" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -31,6 +40,9 @@
 
     },
     "語句" : {
+
+    },
+    "読み上げ" : {
 
     }
   },
