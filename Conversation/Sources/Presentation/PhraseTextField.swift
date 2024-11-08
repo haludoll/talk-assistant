@@ -6,37 +6,35 @@
 //
 
 import SwiftUI
+import ConversationViewModel
 
 struct PhraseTextField: View {
-    @Binding var text: String
-    let isSpeaking: Bool
+    var conversationViewModel: ConversationViewModel
     let focused: FocusState<Bool>.Binding
-    let playButtonTapped: () -> Void
-    let stopButtonTapped: () -> Void
-    private var _onSubmit: (String) -> Void = { _ in }
 
-    init(text: Binding<String>, isSpeaking: Bool, focused: FocusState<Bool>.Binding, playButtonTapped: @escaping () -> Void, stopButtonTapped: @escaping () -> Void) {
-        self._text = text
-        self.isSpeaking = isSpeaking
+    init(conversationViewModel: ConversationViewModel, focused: FocusState<Bool>.Binding) {
+        self.conversationViewModel = conversationViewModel
         self.focused = focused
-        self.playButtonTapped = playButtonTapped
-        self.stopButtonTapped = stopButtonTapped
     }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             Button {
-                isSpeaking ? stopButtonTapped() : playButtonTapped()
+                conversationViewModel.isSpeaking ? conversationViewModel.stop() : conversationViewModel.speak()
             } label: {
-                Image(systemName: isSpeaking ? "stop.circle.fill" : "play.circle.fill")
+                Image(systemName: conversationViewModel.isSpeaking ? "stop.circle.fill" : "play.circle.fill")
                     .font(.title)
-                    .foregroundStyle(.white, isSpeaking ? .pink : .blue)
+                    .foregroundStyle(.white, conversationViewModel.isSpeaking ? .pink : .blue)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 8)
+                    .contentShape(.rect)
             }
-            .disabled(text.isEmpty)
+            .disabled(conversationViewModel.text.isEmpty)
             .buttonStyle(.plain)
 
             TextField("",
-                      text: $text,
+                      text: .init(get: { conversationViewModel.text },
+                                  set: { conversationViewModel.text = $0 }),
                       prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
                       axis: .vertical)
             .bold()
@@ -44,20 +42,26 @@ struct PhraseTextField: View {
             .font(.title3)
             .submitLabel(.done)
             .focused(focused)
-            .onNewlineBroken(of: text) { _, _ in
-                text.removeAll(where: \.isNewline)
-                _onSubmit(text)
+            .onNewlineBroken(of: conversationViewModel.text) { _, _ in
+                conversationViewModel.text.removeAll(where: \.isNewline)
+                conversationViewModel.speak()
+            }
+
+            if !conversationViewModel.text.isEmpty {
+                Button {
+                    conversationViewModel.text = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.white)
+                        .opacity(0.8)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                }
             }
         }
-        .padding()
+        .padding(8)
         .background(MaterialView(.systemThinMaterialDark))
         .cornerRadius(16)
-    }
-
-    func onSubmit(_ action: @escaping (String) -> Void) -> some View {
-        var `self` = self
-        `self`._onSubmit = action
-        return `self`
     }
 }
 
@@ -71,12 +75,10 @@ private extension View {
     }
 }
 
-#Preview(traits: .sizeThatFitsLayout) {
-    @Previewable @State var text1 = ""
-    @Previewable @State var text2 = "If you enter a long sentence, the text field will break lines like this."
+#Preview {
+    @Previewable @State var conversationViewModel1 = ConversationViewModel()
 
-    PhraseTextField(text: $text1, isSpeaking: false, focused: FocusState<Bool>.init().projectedValue, playButtonTapped: {}, stopButtonTapped: {})
-    PhraseTextField(text: $text2, isSpeaking: true, focused: FocusState<Bool>.init().projectedValue, playButtonTapped: {}, stopButtonTapped: {})
+    PhraseTextField(conversationViewModel: conversationViewModel1, focused: FocusState<Bool>.init().projectedValue)
 }
 
 private struct MaterialView: UIViewRepresentable {
