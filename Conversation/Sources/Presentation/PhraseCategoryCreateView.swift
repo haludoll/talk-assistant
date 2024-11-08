@@ -140,6 +140,7 @@ struct PhraseCategoryCreateView: View {
 
                 Button {
                     phraseCategoryCreateViewModel.create()
+                    dismiss()
                 } label: {
                     Text("Done", bundle: .module)
                         .padding(.vertical, 8)

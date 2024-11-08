@@ -32,11 +32,19 @@ package final class PhraseCategory: Identifiable {
 
         package struct Icon: Codable {
             package var name: String
-            package var color: Color
+            package var colorData: Data
+            package var color: Color {
+                get {
+                    try! JSONDecoder().decode(Color.self, from: colorData)
+                }
+                set {
+                    colorData = try! JSONEncoder().encode(newValue)
+                }
+            }
 
             package init(name: String, color: Color) {
                 self.name = name
-                self.color = color
+                self.colorData = try! JSONEncoder().encode(color)
             }
         }
     }
