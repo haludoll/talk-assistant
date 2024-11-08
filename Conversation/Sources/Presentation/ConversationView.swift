@@ -26,14 +26,7 @@ public struct ConversationView: View {
                 }
                 .disabled(conversationViewModel.lastText.isEmpty)
 
-                PhraseTextField(text: $conversationViewModel.text,
-                                isSpeaking: conversationViewModel.isSpeaking,
-                                focused: $phraseTextFieldFocused,
-                                playButtonTapped: { conversationViewModel.speak() },
-                                stopButtonTapped: { conversationViewModel.stop() })
-                .onSubmit { _ in
-                    conversationViewModel.speak()
-                }
+                PhraseTextField(conversationViewModel: conversationViewModel, focused: $phraseTextFieldFocused)
             }
             .padding()
         }
