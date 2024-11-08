@@ -46,6 +46,7 @@ struct PhraseTextField: View {
                 conversationViewModel.text.removeAll(where: \.isNewline)
                 conversationViewModel.speak()
             }
+            .padding(.vertical, 8)
 
             if !conversationViewModel.text.isEmpty {
                 Button {
@@ -54,7 +55,7 @@ struct PhraseTextField: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.white)
                         .opacity(0.8)
-                        .padding(.horizontal, 8)
+                        .padding(.horizontal, 4)
                         .padding(.vertical, 4)
                 }
             }
@@ -79,6 +80,7 @@ private extension View {
     @Previewable @State var conversationViewModel1 = ConversationViewModel()
 
     PhraseTextField(conversationViewModel: conversationViewModel1, focused: FocusState<Bool>.init().projectedValue)
+        .padding()
 }
 
 private struct MaterialView: UIViewRepresentable {
