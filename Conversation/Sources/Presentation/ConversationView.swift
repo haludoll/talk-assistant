@@ -10,6 +10,7 @@ import ConversationViewModel
 
 public struct ConversationView: View {
     @State private var conversationViewModel = ConversationViewModel()
+    @State private var showingPhraseCategoryCreateView = false
     @FocusState private var phraseTextFieldFocused: Bool
 
     public init() {}
@@ -46,9 +47,21 @@ public struct ConversationView: View {
         .task {
             await conversationViewModel.observeSpeechDelegate()
         }
+        .toolbar {
+            ToolbarItem {
+                Button("", systemImage: "folder.badge.plus") {
+                    showingPhraseCategoryCreateView.toggle()
+                }
+            }
+        }
+        .sheet(isPresented: $showingPhraseCategoryCreateView) {
+            PhraseCategoryCreateView()
+        }
     }
 }
 
 #Preview {
-    ConversationView()
+    NavigationStack {
+        ConversationView()
+    }
 }
