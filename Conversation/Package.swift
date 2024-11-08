@@ -29,7 +29,8 @@ let package = Package(
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0"),
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
     ],
     targets: [
         .target( 
@@ -48,7 +49,10 @@ let package = Package(
         ),
         .target(
             name: "ConversationPresentation",
-            dependencies: ["ConversationViewModel"],
+            dependencies: [
+                "ConversationViewModel",
+                .product(name: "Algorithms", package: "swift-algorithms")
+            ],
             path: "Sources/Presentation"
         ),
         .target(

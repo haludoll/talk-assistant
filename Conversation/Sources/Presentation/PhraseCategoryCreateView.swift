@@ -7,22 +7,14 @@
 
 import SwiftUI
 import ConversationViewModel
+import Algorithms
 
 struct PhraseCategoryCreateView: View {
     @State private var phraseCategoryCreateViewModel = PhraseCategoryCreateViewModel()
     @Environment(\.dismiss) private var dismiss
 
-    private let colors: [[Color]] = [
-        [.red, .pink, .orange, .yellow, .green, .purple, .indigo],
-        [.blue, .teal, .mint, .cyan, .brown, .gray]
-    ]
-    private let icons = [
-        ["house.fill", "heart.fill", "clock.fill", "pencil.line", "sun.max.fill", "moon.fill"],
-        ["building.2.fill", "laptopcomputer", "iphone.gen1", "gamecontroller.fill", "figure.walk", "dumbbell.fill"],
-        ["text.bubble.fill", "phone.fill", "video.fill", "envelope.fill", "car.fill", "airplane"],
-        ["bus", "tram.fill", "book.fill", "fork.knife", "wineglass.fill", "scissors"],
-        ["cart.fill", "stethoscope", "pill.fill", "cross.case.fill", "toilet.fill", "headphones"],
-        ["tshirt.fill", "figure.2", "textformat.size", "lock.fill"]
+    private let colors: [Color] = [.red, .pink, .orange, .yellow, .green, .purple, .indigo, .blue, .teal, .mint, .cyan, .brown, .gray]
+    private let icons = ["house.fill", "heart.fill", "clock.fill", "pencil.line", "sun.max.fill", "moon.fill", "building.2.fill", "laptopcomputer", "iphone.gen1", "gamecontroller.fill", "figure.walk", "dumbbell.fill", "text.bubble.fill", "phone.fill", "video.fill", "envelope.fill", "car.fill", "airplane", "bus", "tram.fill", "book.fill", "fork.knife", "wineglass.fill", "scissors", "cart.fill", "stethoscope", "pill.fill", "cross.case.fill", "toilet.fill", "headphones", "tshirt.fill", "figure.2", "textformat.size", "lock.fill"
     ]
 
     var body: some View {
@@ -50,7 +42,7 @@ struct PhraseCategoryCreateView: View {
                             .cornerRadius(8)
 
                         Grid(horizontalSpacing: 20, verticalSpacing: 20) {
-                            ForEach(colors, id: \.self) { row in
+                            ForEach(colors.chunks(ofCount: (colors.count / 2) + 1), id: \.self) { row in
                                 GridRow {
                                     ForEach(row, id: \.self) { color in
                                         ZStack {
@@ -58,10 +50,12 @@ struct PhraseCategoryCreateView: View {
                                                 Circle()
                                                     .foregroundStyle(Color.secondary)
                                                     .scaleEffect(1.35)
+                                                    .frame(maxWidth: 44)
 
                                                 Circle()
                                                     .foregroundStyle(Color(.systemBackground))
                                                     .scaleEffect(1.2)
+                                                    .frame(maxWidth: 44)
                                             }
 
                                             Button {
@@ -69,18 +63,41 @@ struct PhraseCategoryCreateView: View {
                                             } label: {
                                                 Circle()
                                                     .foregroundStyle(color)
+                                                    .frame(maxWidth: 44)
+                                            }
+                                        }
+
+                                        if let lastColor = colors.last,
+                                           lastColor == color {
+                                            ZStack {
+                                                if !colors.contains(phraseCategoryCreateViewModel.iconColor) {
+                                                    Circle()
+                                                        .foregroundStyle(Color.secondary)
+                                                        .scaleEffect(1.35)
+                                                        .frame(maxWidth: 44)
+
+                                                    Circle()
+                                                        .foregroundStyle(Color(.systemBackground))
+                                                        .scaleEffect(1.2)
+                                                        .frame(maxWidth: 44)
+                                                }
+                                                ColorPicker("", selection: $phraseCategoryCreateViewModel.iconColor)
+                                                    .scaleEffect(1.2)
+                                                    .labelsHidden()
+                                                    .frame(maxWidth: 44)
                                             }
                                         }
                                     }
                                 }
                             }
+                            .frame(maxWidth: .infinity)
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
 
                         Grid(horizontalSpacing: 24, verticalSpacing: 24) {
-                            ForEach(icons, id: \.self) { row in
+                            ForEach(icons.chunks(ofCount: 6), id: \.self) { row in
                                 GridRow {
                                     ForEach(row, id: \.self) { iconName in
                                         Button {
@@ -91,10 +108,12 @@ struct PhraseCategoryCreateView: View {
                                                     Circle()
                                                         .foregroundStyle(phraseCategoryCreateViewModel.iconColor)
                                                         .scaleEffect(1.35)
+                                                        .frame(maxWidth: 44)
 
                                                     Circle()
                                                         .foregroundStyle(Color(.systemBackground))
                                                         .scaleEffect(1.2)
+                                                        .frame(maxWidth: 44)
                                                 }
 
                                                 Circle()
@@ -105,7 +124,9 @@ struct PhraseCategoryCreateView: View {
                                                             .scaleEffect(1.15)
                                                             .dynamicTypeSize(.medium ... .xLarge)
                                                     }
+                                                    .frame(maxWidth: 60)
                                             }
+                                            .frame(maxWidth: .infinity)
                                         }
                                     }
                                 }
