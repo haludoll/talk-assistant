@@ -12,7 +12,7 @@ import Dependencies
 import FirebaseCrashlytics
 
 @MainActor
-package final class SpeechSynthesizer: NSObject, Sendable, SpeechSynthesizerProtocol {
+package final class SpeechSynthesizer: NSObject, SpeechSynthesizerProtocol {
     package let delegateAsyncChannel = AsyncChannel<SpeechSynthesizerDelegateAction>()
 
     private let avSpeechSynthesizer = AVSpeechSynthesizer()
@@ -22,14 +22,20 @@ package final class SpeechSynthesizer: NSObject, Sendable, SpeechSynthesizerProt
     private var voiceParameter: VoiceParameter?
     private var selectedVoice: AVSpeechSynthesisVoice?
 
+    private var task: Task<Void, Never>?
+
     nonisolated public override init() {
         super.init()
-        Task { @MainActor in
+        task = Task { @MainActor in
             avSpeechSynthesizer.delegate = self
             avSpeechSynthesizer.mixToTelephonyUplink = true
         }
 
         AVAudioSession.configure()
+    }
+
+    deinit {
+        task?.cancel()
     }
 
     package func speak(text: String, in voice: AVSpeechSynthesisVoice, using voiceParameter: VoiceParameter) {
