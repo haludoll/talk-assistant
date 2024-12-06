@@ -29,6 +29,15 @@ package final class PhraseCategoryViewModel {
             Crashlytics.crashlytics().record(error: error)
         }
     }
+
+    package func delete(_ phraseCategory: PhraseCategory) {
+        do {
+            try phraseCategoryRepository.delete(phraseCategory)
+            phraseCategories.removeAll(where: { $0.id == phraseCategory.id })
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
 }
 
 @Observable
