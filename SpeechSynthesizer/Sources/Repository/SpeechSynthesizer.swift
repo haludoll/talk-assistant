@@ -40,7 +40,6 @@ package final class SpeechSynthesizer: NSObject, SpeechSynthesizerProtocol {
 
     package func speak(text: String, in voice: AVSpeechSynthesisVoice, using voiceParameter: VoiceParameter) {
         let utterance =  AVSpeechUtterance(string: text)
-        // TODO: - Allow users to toggle whether or not they want to inherit the values of the Assistive Technology Settings.
         utterance.voice = voice
         utterance.prefersAssistiveTechnologySettings = voiceParameter.prefersAssistiveTechnologySettings
         utterance.rate = voiceParameter.rate

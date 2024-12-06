@@ -10,13 +10,14 @@ import ConversationViewModel
 
 public struct ConversationView: View {
     @State private var conversationViewModel = ConversationViewModel()
-    @State private var showingPhraseCategoryCreateView = false
     @FocusState private var phraseTextFieldFocused: Bool
 
     public init() {}
 
     public var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            PhraseCategoryListHeader()
+
             Spacer()
 
             VStack(alignment: .trailing, spacing: 4) {
@@ -28,9 +29,9 @@ public struct ConversationView: View {
 
                 PhraseTextField(conversationViewModel: conversationViewModel, focused: $phraseTextFieldFocused)
             }
-            .padding()
         }
         .contentShape(Rectangle())
+        .padding()
         .onTapGesture {
             phraseTextFieldFocused = false
         }
@@ -40,15 +41,32 @@ public struct ConversationView: View {
         .task {
             await conversationViewModel.observeSpeechDelegate()
         }
-        .toolbar {
-            ToolbarItem {
-                Button("", systemImage: "folder.badge.plus") {
-                    showingPhraseCategoryCreateView.toggle()
+    }
+}
+
+private struct PhraseCategoryListHeader: View {
+    @State private var showingPhraseCategoryListView = false
+
+    var body: some View {
+        VStack {
+            Button {
+                showingPhraseCategoryListView.toggle()
+            } label: {
+                HStack {
+                    Text("Category", bundle: .module)
+                        .font(.title2)
+
+                    Image(systemName: "chevron.right")
+                        .font(.headline)
+                        .foregroundStyle(Color(.secondaryLabel))
                 }
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .buttonStyle(.plain)
         }
-        .sheet(isPresented: $showingPhraseCategoryCreateView) {
-            PhraseCategoryCreateView()
+        .navigationDestination(isPresented: $showingPhraseCategoryListView) {
+            PhraseCategoryListView()
         }
     }
 }

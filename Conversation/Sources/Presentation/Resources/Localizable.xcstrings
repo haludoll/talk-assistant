@@ -4,6 +4,26 @@
     "" : {
 
     },
+    "Category" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句カテゴリ"
+          }
+        }
+      }
+    },
+    "Category List" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句カテゴリ一覧"
+          }
+        }
+      }
+    },
     "Create a Category" : {
       "localizations" : {
         "ja" : {
