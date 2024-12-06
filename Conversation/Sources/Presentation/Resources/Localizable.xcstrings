@@ -9,7 +9,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "語句カテゴリ"
+            "value" : "カテゴリ"
           }
         }
       }
@@ -19,7 +19,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "語句カテゴリ一覧"
+            "value" : "カテゴリ一覧"
           }
         }
       }
@@ -29,7 +29,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "語句カテゴリを作成"
+            "value" : "カテゴリを作成"
           }
         }
       }
@@ -49,7 +49,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“%@”の語句カテゴリを削除しますか？"
+            "value" : "“%@”のカテゴリを削除しますか？"
           }
         }
       }
