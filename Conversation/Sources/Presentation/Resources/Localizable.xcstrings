@@ -4,6 +4,16 @@
     "" : {
 
     },
+    "Category" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カテゴリ"
+          }
+        }
+      }
+    },
     "Create a Category" : {
       "localizations" : {
         "ja" : {
@@ -61,6 +71,9 @@
 
     },
     "語句" : {
+
+    },
+    "読み上げ" : {
 
     }
   },

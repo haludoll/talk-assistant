@@ -16,7 +16,9 @@ public struct ConversationView: View {
     public init() {}
 
     public var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            PhraseCategoryListHeader()
+
             Spacer()
 
             VStack(alignment: .trailing, spacing: 4) {
@@ -28,9 +30,9 @@ public struct ConversationView: View {
 
                 PhraseTextField(conversationViewModel: conversationViewModel, focused: $phraseTextFieldFocused)
             }
-            .padding()
         }
         .contentShape(Rectangle())
+        .padding()
         .onTapGesture {
             phraseTextFieldFocused = false
         }
@@ -49,6 +51,28 @@ public struct ConversationView: View {
         }
         .sheet(isPresented: $showingPhraseCategoryCreateView) {
             PhraseCategoryCreateView()
+        }
+    }
+}
+
+private struct PhraseCategoryListHeader: View {
+    var body: some View {
+        VStack {
+            Button {
+                // TODO: Destinate to ListView
+            } label: {
+                HStack {
+                    Text("Category", bundle: .module)
+                        .font(.title2)
+
+                    Image(systemName: "chevron.right")
+                        .font(.headline)
+                        .foregroundStyle(Color(.secondaryLabel))
+                }
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .buttonStyle(.plain)
         }
     }
 }
