@@ -9,7 +9,17 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "カテゴリ"
+            "value" : "語句カテゴリ"
+          }
+        }
+      }
+    },
+    "Category List" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句カテゴリ一覧"
           }
         }
       }
@@ -71,9 +81,6 @@
 
     },
     "語句" : {
-
-    },
-    "読み上げ" : {
 
     }
   },
