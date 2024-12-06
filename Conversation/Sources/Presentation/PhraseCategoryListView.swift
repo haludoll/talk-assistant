@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import ConversationViewModel
 
 struct PhraseCategoryListView: View {
+    @State private var phraseCategoryViewModel = PhraseCategoryViewModel()
     @State private var showingPhraseCategoryCreateView = false
 
     var body: some View {
         List {
-            ForEach(0..<10) { i in
-                Label("Name", systemImage: "house")
+            ForEach(phraseCategoryViewModel.phraseCategories) { phraseCategory in
+                Label {
+                    Text(phraseCategory.metadata.name)
+                } icon: {
+                    Image(systemName: phraseCategory.metadata.icon.name)
+                        .foregroundStyle(phraseCategory.metadata.icon.color)
+                }
             }
         }
         .navigationTitle(Text("Category List", bundle: .module))
@@ -24,8 +31,13 @@ struct PhraseCategoryListView: View {
                 }
             }
         }
-        .sheet(isPresented: $showingPhraseCategoryCreateView) {
+        .sheet(isPresented: $showingPhraseCategoryCreateView, onDismiss: {
+            phraseCategoryViewModel.fetchAll()
+        }) {
             PhraseCategoryCreateView()
+        }
+        .task {
+            phraseCategoryViewModel.fetchAll()
         }
     }
 }
