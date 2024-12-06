@@ -17,6 +17,10 @@ extension PhraseCategoryRepository {
             create: { phraseCategory in
                 modelContainer.mainContext.insert(phraseCategory)
                 try modelContainer.mainContext.save()
+            },
+            delete: { phraseCategoryToDelete in
+                modelContainer.mainContext.delete(phraseCategoryToDelete)
+                try modelContainer.mainContext.save()
             }
         )
     }
