@@ -7,10 +7,17 @@
 
 import ConversationEntity
 import SwiftData
+import Foundation
 
 extension PhraseCategoryRepository {
-    package static func live(modelContainer: ModelContainer = try! .init(for: PhraseCategory.self, configurations: .init(isStoredInMemoryOnly: true))) -> Self {
+    package static func live(modelContainer: ModelContainer = try! .init(for: PhraseCategory.self, configurations: .init(isStoredInMemoryOnly: false))) -> Self {
         Self(
+            fetch: { id in
+                var descriptor = FetchDescriptor<PhraseCategory>(predicate: #Predicate { $0.id == id })
+                descriptor.fetchLimit = 1
+                guard let category = try modelContainer.mainContext.fetch(descriptor).first else { fatalError() }
+                return category
+            },
             fetchAll: {
                 try modelContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>())
             },

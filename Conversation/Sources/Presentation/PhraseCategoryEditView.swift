@@ -27,7 +27,7 @@ struct PhraseCategoryEditView: View {
             VStack {
                 ScrollView {
                     VStack(spacing: 32) {
-                        Text("Edit the Category", bundle: .module)
+                        Text("Edit Category", bundle: .module)
                             .bold()
                             .font(.largeTitle)
                             .padding(.bottom)

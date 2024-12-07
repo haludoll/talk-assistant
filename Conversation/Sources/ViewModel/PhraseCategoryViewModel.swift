@@ -14,7 +14,7 @@ import SwiftUI
 
 @Observable
 @MainActor
-package final class PhraseCategoryViewModel {
+package final class PhraseCategoryListViewModel {
     public var phraseCategories: [PhraseCategory] = []
 
     @ObservationIgnored
@@ -29,11 +29,21 @@ package final class PhraseCategoryViewModel {
             Crashlytics.crashlytics().record(error: error)
         }
     }
+}
 
-    package func delete(_ phraseCategory: PhraseCategory) {
+@Observable
+@MainActor
+package final class PhraseCategoryDetailViewModel {
+    public var phraseCategory: PhraseCategory?
+
+    @ObservationIgnored
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+
+    package init() {}
+
+    package func fetch(for id: PhraseCategory.ID) {
         do {
-            try phraseCategoryRepository.delete(phraseCategory)
-            phraseCategories.removeAll(where: { $0.id == phraseCategory.id })
+            phraseCategory = try phraseCategoryRepository.fetch(id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
@@ -91,6 +101,23 @@ package final class PhraseCategoryEditViewModel {
                                                     metadata: .init(name: categoryName,
                                                                     icon: .init(name: iconName, color: iconColor)),
                                                     phrases: phrases))
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
+}
+
+@Observable
+@MainActor
+package final class PhraseCategoryDeleteViewModel {
+    @ObservationIgnored
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+
+    package init() {}
+
+    package func delete(_ phraseCategory: PhraseCategory) {
+        do {
+            try phraseCategoryRepository.delete(phraseCategory)
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
