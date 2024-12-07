@@ -44,6 +44,16 @@
         }
       }
     },
+    "Delete Category" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カテゴリを削除"
+          }
+        }
+      }
+    },
     "Delete Category \"%@\"?" : {
       "localizations" : {
         "ja" : {
@@ -60,6 +70,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "完了"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
           }
         }
       }

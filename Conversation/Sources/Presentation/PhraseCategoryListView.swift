@@ -11,6 +11,7 @@ import ConversationEntity
 
 struct PhraseCategoryListView: View {
     @State private var phraseCategoryViewModel = PhraseCategoryViewModel()
+    //@State private var navigateToCategoryDetailView: PhraseCategory?
     @State private var showingPhraseCategoryCreateView = false
     @State private var showingDeleteAlert = false
     @State private var deletingPhraseCategory: PhraseCategory?
@@ -18,18 +19,22 @@ struct PhraseCategoryListView: View {
     var body: some View {
         List {
             ForEach(phraseCategoryViewModel.phraseCategories) { phraseCategory in
-                Label {
-                    Text(phraseCategory.metadata.name)
-                } icon: {
-                    Image(systemName: phraseCategory.metadata.icon.name)
-                        .foregroundStyle(phraseCategory.metadata.icon.color)
-                }
-                .swipeActions {
-                    Button(String(localized: "Delete", bundle: .module)) {
-                        deletingPhraseCategory = phraseCategory
-                        showingDeleteAlert.toggle()
+                NavigationLink {
+                    PhraseCategoryDetailView(phraseCategory: phraseCategory)
+                } label: {
+                    Label {
+                        Text(phraseCategory.metadata.name)
+                    } icon: {
+                        Image(systemName: phraseCategory.metadata.icon.name)
+                            .foregroundStyle(phraseCategory.metadata.icon.color)
                     }
-                    .tint(.red)
+                    .swipeActions {
+                        Button(String(localized: "Delete", bundle: .module)) {
+                            deletingPhraseCategory = phraseCategory
+                            showingDeleteAlert.toggle()
+                        }
+                        .tint(.red)
+                    }
                 }
             }
         }
@@ -41,6 +46,9 @@ struct PhraseCategoryListView: View {
                 }
             }
         }
+//        .navigationDestination(item: $navigateToCategoryDetailView) { phraseCategory in
+//
+//        }
         .sheet(isPresented: $showingPhraseCategoryCreateView, onDismiss: {
             phraseCategoryViewModel.fetchAll()
         }) {
