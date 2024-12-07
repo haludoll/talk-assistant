@@ -12,12 +12,11 @@ import ConversationDependency
 import FirebaseCrashlytics
 import SwiftUI
 
-@Observable
+//FIXME: When using the observation framework, the view may not be updated. (Detected when returning from the details screen with the category updated)
 @MainActor
-package final class PhraseCategoryListViewModel {
-    public var phraseCategories: [PhraseCategory] = []
+package final class PhraseCategoryListViewModel: ObservableObject {
+    @Published public var phraseCategories: [PhraseCategory] = []
 
-    @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
