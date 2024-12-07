@@ -12,12 +12,11 @@ import ConversationDependency
 import FirebaseCrashlytics
 import SwiftUI
 
-@Observable
+//FIXME: When using the observation framework, the view may not be updated. (Detected when returning from the details screen with the category updated)
 @MainActor
-package final class PhraseCategoryViewModel {
-    public var phraseCategories: [PhraseCategory] = []
+package final class PhraseCategoryListViewModel: ObservableObject {
+    @Published public var phraseCategories: [PhraseCategory] = []
 
-    @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
@@ -29,11 +28,21 @@ package final class PhraseCategoryViewModel {
             Crashlytics.crashlytics().record(error: error)
         }
     }
+}
 
-    package func delete(_ phraseCategory: PhraseCategory) {
+@Observable
+@MainActor
+package final class PhraseCategoryDetailViewModel {
+    public var phraseCategory: PhraseCategory?
+
+    @ObservationIgnored
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+
+    package init() {}
+
+    package func fetch(for id: PhraseCategory.ID) {
         do {
-            try phraseCategoryRepository.delete(phraseCategory)
-            phraseCategories.removeAll(where: { $0.id == phraseCategory.id })
+            phraseCategory = try phraseCategoryRepository.fetch(id)
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
@@ -58,6 +67,56 @@ package final class PhraseCategoryCreateViewModel {
                                                       metadata: .init(name: categoryName,
                                                                       icon: .init(name: iconName, color: iconColor)),
                                                       phrases: []))
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
+}
+
+@Observable
+@MainActor
+package final class PhraseCategoryEditViewModel {
+    public var categoryName: String
+    public var iconName: String
+    public var iconColor: Color
+
+    private let id: PhraseCategory.ID
+    private let phrases: [Phrase]
+
+    @ObservationIgnored
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+
+    package init(phraseCategory: PhraseCategory) {
+        self.id = phraseCategory.id
+        self.phrases = phraseCategory.phrases
+        self.categoryName = phraseCategory.metadata.name
+        self.iconName = phraseCategory.metadata.icon.name
+        self.iconColor = phraseCategory.metadata.icon.color
+    }
+
+    package func edit() {
+        do {
+            try phraseCategoryRepository.edit(.init(id: id,
+                                                    metadata: .init(name: categoryName,
+                                                                    icon: .init(name: iconName, color: iconColor)),
+                                                    phrases: phrases))
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
+}
+
+@Observable
+@MainActor
+package final class PhraseCategoryDeleteViewModel {
+    @ObservationIgnored
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+
+    package init() {}
+
+    package func delete(_ phraseCategory: PhraseCategory) {
+        do {
+            try phraseCategoryRepository.delete(phraseCategory)
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
