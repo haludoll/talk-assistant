@@ -7,14 +7,10 @@
 
 import SwiftUI
 import ConversationViewModel
-import Algorithms
 
 struct PhraseCategoryCreateView: View {
     @State private var phraseCategoryCreateViewModel = PhraseCategoryCreateViewModel()
     @Environment(\.dismiss) private var dismiss
-
-    private let icons = ["house.fill", "heart.fill", "clock.fill", "pencil.line", "sun.max.fill", "moon.fill", "building.2.fill", "laptopcomputer", "iphone.gen1", "gamecontroller.fill", "figure.walk", "dumbbell.fill", "text.bubble.fill", "phone.fill", "video.fill", "envelope.fill", "car.fill", "airplane", "bus", "tram.fill", "book.fill", "fork.knife", "wineglass.fill", "scissors", "cart.fill", "stethoscope", "pill.fill", "cross.case.fill", "toilet.fill", "headphones", "tshirt.fill", "figure.2", "textformat.size", "lock.fill"
-    ]
 
     var body: some View {
         NavigationStack {
@@ -47,41 +43,8 @@ struct PhraseCategoryCreateView: View {
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
 
-                        Grid(horizontalSpacing: 24, verticalSpacing: 24) {
-                            ForEach(icons.chunks(ofCount: 6), id: \.self) { row in
-                                GridRow {
-                                    ForEach(row, id: \.self) { iconName in
-                                        Button {
-                                            phraseCategoryCreateViewModel.iconName = iconName
-                                        } label: {
-                                            ZStack {
-                                                if phraseCategoryCreateViewModel.iconName == iconName {
-                                                    Circle()
-                                                        .foregroundStyle(phraseCategoryCreateViewModel.iconColor)
-                                                        .scaleEffect(1.35)
-                                                        .frame(maxWidth: 44)
-
-                                                    Circle()
-                                                        .foregroundStyle(Color(.systemBackground))
-                                                        .scaleEffect(1.2)
-                                                        .frame(maxWidth: 44)
-                                                }
-
-                                                Circle()
-                                                    .foregroundStyle(phraseCategoryCreateViewModel.iconName == iconName ? phraseCategoryCreateViewModel.iconColor.opacity(0.2) :  Color(.secondarySystemBackground))
-                                                    .overlay {
-                                                        Image(systemName: iconName)
-                                                            .foregroundStyle(phraseCategoryCreateViewModel.iconName == iconName ? phraseCategoryCreateViewModel.iconColor : Color(.secondaryLabel))
-                                                            .scaleEffect(1.15)
-                                                            .dynamicTypeSize(.medium ... .xLarge)
-                                                    }
-                                                    .frame(maxWidth: 60)
-                                            }
-                                            .frame(maxWidth: .infinity)
-                                        }
-                                    }
-                                }
-                            }
+                        PhraseCategoryIconSelectGrid(icon: .init(name: phraseCategoryCreateViewModel.iconName, color: phraseCategoryCreateViewModel.iconColor)) {
+                            phraseCategoryCreateViewModel.iconName = $0
                         }
                         .padding(.horizontal, 8)
                     }

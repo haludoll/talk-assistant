@@ -8,14 +8,10 @@
 import SwiftUI
 import ConversationViewModel
 import ConversationEntity
-import Algorithms
 
 struct PhraseCategoryEditView: View {
     @State private var phraseCategoryEditViewModel: PhraseCategoryEditViewModel
     @Environment(\.dismiss) private var dismiss
-
-    private let icons = ["house.fill", "heart.fill", "clock.fill", "pencil.line", "sun.max.fill", "moon.fill", "building.2.fill", "laptopcomputer", "iphone.gen1", "gamecontroller.fill", "figure.walk", "dumbbell.fill", "text.bubble.fill", "phone.fill", "video.fill", "envelope.fill", "car.fill", "airplane", "bus", "tram.fill", "book.fill", "fork.knife", "wineglass.fill", "scissors", "cart.fill", "stethoscope", "pill.fill", "cross.case.fill", "toilet.fill", "headphones", "tshirt.fill", "figure.2", "textformat.size", "lock.fill"
-    ]
 
     init(phraseCategory: PhraseCategory) {
         self._phraseCategoryEditViewModel = .init(initialValue: .init(phraseCategory: phraseCategory))
@@ -52,41 +48,8 @@ struct PhraseCategoryEditView: View {
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
 
-                        Grid(horizontalSpacing: 24, verticalSpacing: 24) {
-                            ForEach(icons.chunks(ofCount: 6), id: \.self) { row in
-                                GridRow {
-                                    ForEach(row, id: \.self) { iconName in
-                                        Button {
-                                            phraseCategoryEditViewModel.iconName = iconName
-                                        } label: {
-                                            ZStack {
-                                                if phraseCategoryEditViewModel.iconName == iconName {
-                                                    Circle()
-                                                        .foregroundStyle(phraseCategoryEditViewModel.iconColor)
-                                                        .scaleEffect(1.35)
-                                                        .frame(maxWidth: 44)
-
-                                                    Circle()
-                                                        .foregroundStyle(Color(.systemBackground))
-                                                        .scaleEffect(1.2)
-                                                        .frame(maxWidth: 44)
-                                                }
-
-                                                Circle()
-                                                    .foregroundStyle(phraseCategoryEditViewModel.iconName == iconName ? phraseCategoryEditViewModel.iconColor.opacity(0.2) :  Color(.secondarySystemBackground))
-                                                    .overlay {
-                                                        Image(systemName: iconName)
-                                                            .foregroundStyle(phraseCategoryEditViewModel.iconName == iconName ? phraseCategoryEditViewModel.iconColor : Color(.secondaryLabel))
-                                                            .scaleEffect(1.15)
-                                                            .dynamicTypeSize(.medium ... .xLarge)
-                                                    }
-                                                    .frame(maxWidth: 60)
-                                            }
-                                            .frame(maxWidth: .infinity)
-                                        }
-                                    }
-                                }
-                            }
+                        PhraseCategoryIconSelectGrid(icon: .init(name: phraseCategoryEditViewModel.iconName, color: phraseCategoryEditViewModel.iconColor)) {
+                            phraseCategoryEditViewModel.iconName = $0
                         }
                         .padding(.horizontal, 8)
                     }

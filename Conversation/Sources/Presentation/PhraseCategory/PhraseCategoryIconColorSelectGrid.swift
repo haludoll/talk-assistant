@@ -11,6 +11,7 @@ import Algorithms
 struct PhraseCategoryIconColorSelectGrid: View {
     let selectedIconColor: Color
     let select: (Color) -> Void
+
     private let colors: [Color] = [.red, .pink, .orange, .yellow, .green, .purple, .indigo, .blue, .teal, .mint, .cyan, .brown, .gray]
 
     var body: some View {
