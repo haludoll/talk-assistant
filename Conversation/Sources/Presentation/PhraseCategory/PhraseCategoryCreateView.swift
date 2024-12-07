@@ -13,7 +13,6 @@ struct PhraseCategoryCreateView: View {
     @State private var phraseCategoryCreateViewModel = PhraseCategoryCreateViewModel()
     @Environment(\.dismiss) private var dismiss
 
-    private let colors: [Color] = [.red, .pink, .orange, .yellow, .green, .purple, .indigo, .blue, .teal, .mint, .cyan, .brown, .gray]
     private let icons = ["house.fill", "heart.fill", "clock.fill", "pencil.line", "sun.max.fill", "moon.fill", "building.2.fill", "laptopcomputer", "iphone.gen1", "gamecontroller.fill", "figure.walk", "dumbbell.fill", "text.bubble.fill", "phone.fill", "video.fill", "envelope.fill", "car.fill", "airplane", "bus", "tram.fill", "book.fill", "fork.knife", "wineglass.fill", "scissors", "cart.fill", "stethoscope", "pill.fill", "cross.case.fill", "toilet.fill", "headphones", "tshirt.fill", "figure.2", "textformat.size", "lock.fill"
     ]
 
@@ -41,56 +40,8 @@ struct PhraseCategoryCreateView: View {
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(8)
 
-                        Grid(horizontalSpacing: 20, verticalSpacing: 20) {
-                            ForEach(colors.chunks(ofCount: (colors.count / 2) + 1), id: \.self) { row in
-                                GridRow {
-                                    ForEach(row, id: \.self) { color in
-                                        ZStack {
-                                            if phraseCategoryCreateViewModel.iconColor == color {
-                                                Circle()
-                                                    .foregroundStyle(Color.secondary)
-                                                    .scaleEffect(1.35)
-                                                    .frame(maxWidth: 44)
-
-                                                Circle()
-                                                    .foregroundStyle(Color(.systemBackground))
-                                                    .scaleEffect(1.2)
-                                                    .frame(maxWidth: 44)
-                                            }
-
-                                            Button {
-                                                phraseCategoryCreateViewModel.iconColor = color
-                                            } label: {
-                                                Circle()
-                                                    .foregroundStyle(color)
-                                                    .frame(maxWidth: 44)
-                                            }
-                                        }
-
-                                        if let lastColor = colors.last,
-                                           lastColor == color {
-                                            ZStack {
-                                                if !colors.contains(phraseCategoryCreateViewModel.iconColor) {
-                                                    Circle()
-                                                        .foregroundStyle(Color.secondary)
-                                                        .scaleEffect(1.35)
-                                                        .frame(maxWidth: 44)
-
-                                                    Circle()
-                                                        .foregroundStyle(Color(.systemBackground))
-                                                        .scaleEffect(1.2)
-                                                        .frame(maxWidth: 44)
-                                                }
-                                                ColorPicker("", selection: $phraseCategoryCreateViewModel.iconColor)
-                                                    .scaleEffect(1.2)
-                                                    .labelsHidden()
-                                                    .frame(maxWidth: 44)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
+                        PhraseCategoryIconColorSelectGrid(selectedIconColor: phraseCategoryCreateViewModel.iconColor) {
+                            phraseCategoryCreateViewModel.iconColor = $0
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
