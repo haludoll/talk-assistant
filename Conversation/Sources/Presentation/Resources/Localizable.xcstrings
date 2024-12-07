@@ -84,6 +84,16 @@
         }
       }
     },
+    "Edit the Category" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カテゴリを編集"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "ja" : {

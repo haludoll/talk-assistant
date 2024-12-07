@@ -11,11 +11,13 @@ import ConversationEntity
 struct PhraseCategoryDetailView: View {
     let phraseCategory: PhraseCategory
 
+    @State private var showingPhraseCategoryEditView = false
+
     var body: some View {
         Form {
             Section {
                 Button {
-
+                    showingPhraseCategoryEditView.toggle()
                 } label: {
                     VStack {
                         Image(systemName: phraseCategory.metadata.icon.name)
@@ -44,6 +46,9 @@ struct PhraseCategoryDetailView: View {
             Button(String(localized: "Delete Category", bundle: .module), role: .destructive) {
 
             }
+        }
+        .sheet(isPresented: $showingPhraseCategoryEditView) {
+            PhraseCategoryEditView(phraseCategory: phraseCategory)
         }
     }
 }
