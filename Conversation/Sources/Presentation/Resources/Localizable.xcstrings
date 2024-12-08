@@ -4,6 +4,36 @@
     "" : {
 
     },
+    "Add New Phrase" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい語句を追加"
+          }
+        }
+      }
+    },
+    "Add Phrase" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句を追加"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        }
+      }
+    },
     "Category" : {
       "localizations" : {
         "ja" : {
@@ -120,6 +150,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "語句"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
           }
         }
       }

@@ -15,6 +15,7 @@ struct PhraseCategoryDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showingPhraseCategoryEditView = false
+    @State private var showingPhraseAddView = false
     @State private var showingDeleteAlert = false
     @State private var deletingPhraseCategory: PhraseCategory?
 
@@ -56,15 +57,14 @@ struct PhraseCategoryDetailView: View {
                     .listRowSeparator(.hidden)
 
                     Section {
-                        AddPhraseTextField(text: "") {
-                            phraseCategoryDetailViewModel.add(phrase: $0)
-                            phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                        Button(String(localized: "Add New Phrase", bundle: .module)) {
+                            showingPhraseAddView.toggle()
                         }
+                    }
+
+                    Section {
                         ForEach(phraseCategory.phrases.reversed()) { phrase in
-                            AddPhraseTextField(text: phrase.value) {
-                                phraseCategoryDetailViewModel.add(phrase: $0)
-                                phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
-                            }
+                            Text(phrase.value)
                         }
                     } header: {
                         Text("phrases", bundle: .module)
@@ -82,6 +82,11 @@ struct PhraseCategoryDetailView: View {
                 }) {
                     PhraseCategoryEditView(phraseCategory: phraseCategory)
                 }
+                .sheet(isPresented: $showingPhraseAddView, onDismiss: {
+                    phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                }) {
+                    PhraseAddView(phraseCategory: phraseCategory)
+                }
                 .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.metadata.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
                     Button(String(localized: "Delete", bundle: .module), role: .destructive) {
                         withAnimation {
@@ -97,24 +102,6 @@ struct PhraseCategoryDetailView: View {
         .task {
             phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
         }
-    }
-}
-
-struct AddPhraseTextField: View {
-    @State private var text: String
-    let onSubmit: (String) -> Void
-
-    init(text: String, onSubmit: @escaping (String) -> Void) {
-        self._text = .init(initialValue: text)
-        self.onSubmit = onSubmit
-    }
-
-    var body: some View {
-        TextField(String(localized: "Enter phrase", bundle: .module), text: $text)
-            .onSubmit {
-                onSubmit(text)
-                text = ""
-            }
     }
 }
 
