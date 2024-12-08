@@ -53,6 +53,6 @@ struct PhraseAddView: View {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true)) {
-            PhraseAddView(phraseCategory: .init(id: .init(), metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
+            PhraseAddView(phraseCategory: .init(id: .init(), sortOrder: 0, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
         }
 }

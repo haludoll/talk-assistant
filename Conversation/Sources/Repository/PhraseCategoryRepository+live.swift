@@ -20,7 +20,7 @@ extension PhraseCategoryRepository {
                 return category
             },
             fetchAll: {
-                try ModelContainer.appContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>())
+                try ModelContainer.appContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>(sortBy: [.init(\.sortOrder)]))
             },
             create: { phraseCategory in
                 ModelContainer.appContainer.mainContext.insert(phraseCategory)
