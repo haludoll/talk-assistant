@@ -9,8 +9,8 @@ import SwiftData
 import Foundation
 
 @Model
-package final class Phrase {
-    @Attribute(.unique) package var id: UUID
+public final class Phrase {
+    @Attribute(.unique) public var id: UUID
     package var value: String
     package var category: PhraseCategory?
 

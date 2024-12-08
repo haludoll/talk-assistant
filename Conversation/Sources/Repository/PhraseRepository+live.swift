@@ -6,15 +6,15 @@
 //
 
 import ConversationEntity
+import LocalStorage
 import SwiftData
-import Foundation
 
 extension PhraseRepository {
-    package static func live(modelContainer: ModelContainer = try! .init(for: Phrase.self, configurations: .init())) -> Self {
+    package static func live() -> Self {
         return Self(
             create: { phrase in
-                modelContainer.mainContext.insert(phrase)
-                try modelContainer.mainContext.save()
+                ModelContainer.appContainer.mainContext.insert(phrase)
+                try ModelContainer.appContainer.mainContext.save()
             }
         )
     }

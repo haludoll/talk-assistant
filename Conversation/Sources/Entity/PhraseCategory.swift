@@ -10,8 +10,8 @@ import Foundation
 import SwiftUI
 
 @Model
-package final class PhraseCategory: Identifiable {
-    @Attribute(.unique) package var id: UUID
+public final class PhraseCategory: Identifiable {
+    @Attribute(.unique) public var id: UUID
     package var metadata: Metadata
     @Relationship(deleteRule: .cascade, inverse: \Phrase.category) package var phrases: [Phrase] = []
 
