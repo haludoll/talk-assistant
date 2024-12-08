@@ -12,6 +12,7 @@ import ConversationViewModel
 struct PhraseCategoryDetailView: View {
     @State private var phraseCategoryDetailViewModel = PhraseCategoryDetailViewModel()
     @State private var phraseCategoryDeleteViewModel = PhraseCategoryDeleteViewModel()
+    @State private var phraseDeleteViewModel = PhraseDeleteViewModel()
     @Environment(\.dismiss) private var dismiss
 
     @State private var showingPhraseCategoryEditView = false
@@ -62,12 +63,23 @@ struct PhraseCategoryDetailView: View {
                         }
                     }
 
-                    Section {
-                        ForEach(phraseCategory.phrases.reversed()) { phrase in
-                            Text(phrase.value)
+                    if !phraseCategory.phrases.isEmpty {
+                        Section {
+                            ForEach(phraseCategory.phrases) { phrase in
+                                Text(phrase.value)
+                                    .swipeActions {
+                                        Button(String(localized: "Delete", bundle: .module)) {
+                                            withAnimation  {
+                                                phraseDeleteViewModel.delete(phrase)
+                                                phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                                            }
+                                        }
+                                        .tint(.red)
+                                    }
+                            }
+                        } header: {
+                            Text("phrases", bundle: .module)
                         }
-                    } header: {
-                        Text("phrases", bundle: .module)
                     }
 
                     Section {

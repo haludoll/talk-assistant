@@ -15,6 +15,10 @@ extension PhraseRepository {
             create: { phrase in
                 ModelContainer.appContainer.mainContext.insert(phrase)
                 try ModelContainer.appContainer.mainContext.save()
+            },
+            delete: { phrase in
+                ModelContainer.appContainer.mainContext.delete(phrase)
+                try ModelContainer.appContainer.mainContext.save()
             }
         )
     }

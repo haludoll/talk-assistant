@@ -20,9 +20,26 @@ package final class PhraseAddViewModel {
 
     package init() {}
 
-    package func add(phrase value: String, to category: PhraseCategory) {
+    package func add(_ text: String, to category: PhraseCategory) {
         do {
-            try phraseRepository.create(.init(id: .init(), value: value, category: category))
+            try phraseRepository.create(Phrase(id: .init(), value: text, category: category))
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
+}
+
+@Observable
+@MainActor
+package final class PhraseDeleteViewModel {
+    @ObservationIgnored
+    @Dependency(\.phraseRepository) private var phraseRepository
+
+    package init() {}
+
+    package func delete(_ phrase: Phrase) {
+        do {
+            try phraseRepository.delete(phrase)
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }

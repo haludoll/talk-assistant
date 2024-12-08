@@ -30,7 +30,7 @@ struct PhraseAddView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "Save", bundle: .module)) {
-                        phraseAddViewModel.add(phrase: text, to: phraseCategory)
+                        phraseAddViewModel.add(text, to: phraseCategory)
                         dismiss()
                     }
                 }
