@@ -6,13 +6,16 @@
 //
 
 import SwiftData
+import Foundation
 
 @Model
 package final class Phrase {
+    @Attribute(.unique) package var id: UUID
     package var value: String
     package var category: PhraseCategory?
 
-    package init(value: String, category: PhraseCategory? = nil) {
+    package init(id: UUID, value: String, category: PhraseCategory? = nil) {
+        self.id = id
         self.value = value
         self.category = category
     }

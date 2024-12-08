@@ -94,6 +94,9 @@
         }
       }
     },
+    "Enter phrase" : {
+
+    },
     "Name" : {
       "localizations" : {
         "ja" : {
@@ -103,6 +106,9 @@
           }
         }
       }
+    },
+    "phrases" : {
+
     },
     "This will delete all phrases in this category." : {
       "localizations" : {

@@ -10,7 +10,7 @@ import SwiftData
 import Foundation
 
 extension PhraseCategoryRepository {
-    package static func live(modelContainer: ModelContainer = try! .init(for: PhraseCategory.self, configurations: .init(isStoredInMemoryOnly: false))) -> Self {
+    package static func live(modelContainer: ModelContainer = try! .init(for: PhraseCategory.self, configurations: .init())) -> Self {
         Self(
             fetch: { id in
                 var descriptor = FetchDescriptor<PhraseCategory>(predicate: #Predicate { $0.id == id })

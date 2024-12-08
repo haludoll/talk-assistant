@@ -37,12 +37,22 @@ package final class PhraseCategoryDetailViewModel {
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
+    @ObservationIgnored
+    @Dependency(\.phraseRepository) private var phraseRepository
 
     package init() {}
 
     package func fetch(for id: PhraseCategory.ID) {
         do {
             phraseCategory = try phraseCategoryRepository.fetch(id)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
+
+    package func add(phrase value: String) {
+        do {
+            try phraseRepository.create(.init(id: .init(), value: value, category: phraseCategory))
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }

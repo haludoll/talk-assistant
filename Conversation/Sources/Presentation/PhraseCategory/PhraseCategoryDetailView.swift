@@ -55,10 +55,26 @@ struct PhraseCategoryDetailView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
 
+                    Section {
+                        AddPhraseTextField(text: "") {
+                            phraseCategoryDetailViewModel.add(phrase: $0)
+                            phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                        }
+                        ForEach(phraseCategory.phrases) { phrase in
+                            AddPhraseTextField(text: phrase.value) {
+                                phraseCategoryDetailViewModel.add(phrase: $0)
+                                phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                            }
+                        }
+                    } header: {
+                        Text("phrases", bundle: .module)
+                    }
 
-                    Button(String(localized: "Delete Category", bundle: .module), role: .destructive) {
-                        deletingPhraseCategory = phraseCategory
-                        showingDeleteAlert.toggle()
+                    Section {
+                        Button(String(localized: "Delete Category", bundle: .module), role: .destructive) {
+                            deletingPhraseCategory = phraseCategory
+                            showingDeleteAlert.toggle()
+                        }
                     }
                 }
                 .sheet(isPresented: $showingPhraseCategoryEditView, onDismiss: {
@@ -84,8 +100,25 @@ struct PhraseCategoryDetailView: View {
     }
 }
 
+struct AddPhraseTextField: View {
+    @State private var text: String
+    let onSubmit: (String) -> Void
+
+    init(text: String, onSubmit: @escaping (String) -> Void) {
+        self._text = .init(initialValue: text)
+        self.onSubmit = onSubmit
+    }
+
+    var body: some View {
+        TextField("Enter phrase", text: $text)
+            .onSubmit {
+                onSubmit(text)
+            }
+    }
+}
+
 #Preview {
     NavigationStack {
-        PhraseCategoryDetailView(phraseCategoryID: .init())
+        PhraseCategoryDetailView(phraseCategoryID: .init(0))
     }
 }
