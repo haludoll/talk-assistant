@@ -19,8 +19,8 @@ extension PhraseRepository: DependencyKey {
 
 extension PhraseCategoryRepository: TestDependencyKey {
     package static let previewValue = Self(
-        fetch: { _ in .init(id: .init(0), sortOrder: 0, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []) },
-        fetchAll: { [.init(id: .init(0), sortOrder: 0, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [])] },
+        fetch: { _ in .init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []) },
+        fetchAll: { [.init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [])] },
         create: { _ in },
         delete: { _ in },
         edit: { _ in }

@@ -22,7 +22,7 @@ package final class PhraseAddViewModel {
 
     package func add(_ text: String, to category: PhraseCategory) {
         do {
-            try phraseRepository.create(Phrase(id: .init(), value: text, category: category))
+            try phraseRepository.create(Phrase(id: .init(), createdAt: .now, value: text, category: category))
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }

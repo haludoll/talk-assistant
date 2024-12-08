@@ -17,10 +17,11 @@ extension PhraseCategoryRepository {
                 var descriptor = FetchDescriptor<PhraseCategory>(predicate: #Predicate { $0.id == id })
                 descriptor.fetchLimit = 1
                 guard let category = try ModelContainer.appContainer.mainContext.fetch(descriptor).first else { fatalError() }
+                category.phrases.sort(by: { $0.createdAt > $1.createdAt })
                 return category
             },
             fetchAll: {
-                try ModelContainer.appContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>(sortBy: [.init(\.sortOrder)]))
+                try ModelContainer.appContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>(sortBy: [.init(\.createdAt)]))
             },
             create: { phraseCategory in
                 ModelContainer.appContainer.mainContext.insert(phraseCategory)

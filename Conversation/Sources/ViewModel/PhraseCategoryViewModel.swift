@@ -63,9 +63,8 @@ package final class PhraseCategoryCreateViewModel {
 
     package func create() {
         do {
-            let sortOrder = try phraseCategoryRepository.fetchAll().count + 1
             try phraseCategoryRepository.create(.init(id: .init(),
-                                                      sortOrder: sortOrder,
+                                                      createdAt: .now,
                                                       metadata: .init(name: categoryName,
                                                                       icon: .init(name: iconName, color: iconColor)),
                                                       phrases: []))
@@ -97,7 +96,7 @@ package final class PhraseCategoryEditViewModel {
     package func edit() {
         do {
             try phraseCategoryRepository.edit(.init(id: phraseCategory.id,
-                                                    sortOrder: phraseCategory.sortOrder,
+                                                    createdAt: phraseCategory.createdAt,
                                                     metadata: .init(name: categoryName,
                                                                     icon: .init(name: iconName, color: iconColor)),
                                                     phrases: phraseCategory.phrases))

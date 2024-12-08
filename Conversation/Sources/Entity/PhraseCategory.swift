@@ -12,13 +12,13 @@ import SwiftUI
 @Model
 public final class PhraseCategory: Identifiable {
     @Attribute(.unique) public var id: UUID
-    package var sortOrder: Int
+    package var createdAt: Date
     package var metadata: Metadata
     @Relationship(deleteRule: .cascade, inverse: \Phrase.category) package var phrases: [Phrase] = []
 
-    package init(id: UUID, sortOrder: Int, metadata: Metadata, phrases: [Phrase]) {
+    package init(id: UUID, createdAt: Date, metadata: Metadata, phrases: [Phrase]) {
         self.id = id
-        self.sortOrder = sortOrder
+        self.createdAt = createdAt
         self.metadata = metadata
         self.phrases = phrases
     }
