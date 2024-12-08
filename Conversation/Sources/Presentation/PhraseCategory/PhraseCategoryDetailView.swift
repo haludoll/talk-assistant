@@ -60,7 +60,7 @@ struct PhraseCategoryDetailView: View {
                             phraseCategoryDetailViewModel.add(phrase: $0)
                             phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
                         }
-                        ForEach(phraseCategory.phrases) { phrase in
+                        ForEach(phraseCategory.phrases.reversed()) { phrase in
                             AddPhraseTextField(text: phrase.value) {
                                 phraseCategoryDetailViewModel.add(phrase: $0)
                                 phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
@@ -110,9 +110,10 @@ struct AddPhraseTextField: View {
     }
 
     var body: some View {
-        TextField("Enter phrase", text: $text)
+        TextField(String(localized: "Enter phrase", bundle: .module), text: $text)
             .onSubmit {
                 onSubmit(text)
+                text = ""
             }
     }
 }

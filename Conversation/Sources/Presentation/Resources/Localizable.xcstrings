@@ -95,7 +95,14 @@
       }
     },
     "Enter phrase" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句を入力"
+          }
+        }
+      }
     },
     "Name" : {
       "localizations" : {
@@ -108,7 +115,14 @@
       }
     },
     "phrases" : {
-
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "語句"
+          }
+        }
+      }
     },
     "This will delete all phrases in this category." : {
       "localizations" : {
