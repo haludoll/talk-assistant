@@ -13,12 +13,18 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:..\/Settings",
-        "identifier" : "SettingsPresentationTests",
-        "name" : "SettingsPresentationTests"
+        "identifier" : "SettingsViewModelTests",
+        "name" : "SettingsViewModelTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Conversation",
+        "identifier" : "ConversationViewModelTests",
+        "name" : "ConversationViewModelTests"
       }
     },
     {
@@ -31,19 +37,12 @@
       }
     },
     {
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:..\/Conversation",
-        "identifier" : "ConversationViewModelTests",
-        "name" : "ConversationViewModelTests"
-      }
-    },
-    {
+      "enabled" : false,
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:..\/Settings",
-        "identifier" : "SettingsViewModelTests",
-        "name" : "SettingsViewModelTests"
+        "identifier" : "SettingsPresentationTests",
+        "name" : "SettingsPresentationTests"
       }
     }
   ],

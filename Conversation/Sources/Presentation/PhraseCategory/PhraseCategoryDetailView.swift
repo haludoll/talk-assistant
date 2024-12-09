@@ -12,9 +12,11 @@ import ConversationViewModel
 struct PhraseCategoryDetailView: View {
     @State private var phraseCategoryDetailViewModel = PhraseCategoryDetailViewModel()
     @State private var phraseCategoryDeleteViewModel = PhraseCategoryDeleteViewModel()
+    @State private var phraseDeleteViewModel = PhraseDeleteViewModel()
     @Environment(\.dismiss) private var dismiss
 
     @State private var showingPhraseCategoryEditView = false
+    @State private var showingPhraseAddView = false
     @State private var showingDeleteAlert = false
     @State private var deletingPhraseCategory: PhraseCategory?
 
@@ -55,16 +57,47 @@ struct PhraseCategoryDetailView: View {
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
 
+                    Section {
+                        Button(String(localized: "Add New Phrase", bundle: .module)) {
+                            showingPhraseAddView.toggle()
+                        }
+                    }
 
-                    Button(String(localized: "Delete Category", bundle: .module), role: .destructive) {
-                        deletingPhraseCategory = phraseCategory
-                        showingDeleteAlert.toggle()
+                    if !phraseCategory.phrases.isEmpty {
+                        Section {
+                            ForEach(phraseCategory.phrases) { phrase in
+                                Text(phrase.value)
+                                    .swipeActions {
+                                        Button(String(localized: "Delete", bundle: .module)) {
+                                            withAnimation  {
+                                                phraseDeleteViewModel.delete(phrase)
+                                                phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                                            }
+                                        }
+                                        .tint(.red)
+                                    }
+                            }
+                        } header: {
+                            Text("phrases", bundle: .module)
+                        }
+                    }
+
+                    Section {
+                        Button(String(localized: "Delete Category", bundle: .module), role: .destructive) {
+                            deletingPhraseCategory = phraseCategory
+                            showingDeleteAlert.toggle()
+                        }
                     }
                 }
                 .sheet(isPresented: $showingPhraseCategoryEditView, onDismiss: {
                     phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
                 }) {
                     PhraseCategoryEditView(phraseCategory: phraseCategory)
+                }
+                .sheet(isPresented: $showingPhraseAddView, onDismiss: {
+                    phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
+                }) {
+                    PhraseAddView(phraseCategory: phraseCategory)
                 }
                 .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.metadata.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
                     Button(String(localized: "Delete", bundle: .module), role: .destructive) {
@@ -86,6 +119,6 @@ struct PhraseCategoryDetailView: View {
 
 #Preview {
     NavigationStack {
-        PhraseCategoryDetailView(phraseCategoryID: .init())
+        PhraseCategoryDetailView(phraseCategoryID: .init(0))
     }
 }

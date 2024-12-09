@@ -23,7 +23,7 @@ struct PhraseCategoryListView: View {
                     PhraseCategoryDetailView(phraseCategoryID: phraseCategory.id)
                 } label: {
                     Label {
-                        Text(phraseCategory.metadata.name)
+                        LabeledContent(phraseCategory.metadata.name, value: "\(phraseCategory.phrases.count)")
                     } icon: {
                         Image(systemName: phraseCategory.metadata.icon.name)
                             .foregroundStyle(phraseCategory.metadata.icon.color)

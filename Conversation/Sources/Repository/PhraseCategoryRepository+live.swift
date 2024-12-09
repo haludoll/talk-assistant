@@ -6,32 +6,34 @@
 //
 
 import ConversationEntity
+import LocalStorage
 import SwiftData
 import Foundation
 
 extension PhraseCategoryRepository {
-    package static func live(modelContainer: ModelContainer = try! .init(for: PhraseCategory.self, configurations: .init(isStoredInMemoryOnly: false))) -> Self {
+    package static func live() -> Self {
         Self(
             fetch: { id in
                 var descriptor = FetchDescriptor<PhraseCategory>(predicate: #Predicate { $0.id == id })
                 descriptor.fetchLimit = 1
-                guard let category = try modelContainer.mainContext.fetch(descriptor).first else { fatalError() }
+                guard let category = try ModelContainer.appContainer.mainContext.fetch(descriptor).first else { fatalError() }
+                category.phrases.sort(by: { $0.createdAt > $1.createdAt })
                 return category
             },
             fetchAll: {
-                try modelContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>())
+                try ModelContainer.appContainer.mainContext.fetch(FetchDescriptor<PhraseCategory>(sortBy: [.init(\.createdAt)]))
             },
             create: { phraseCategory in
-                modelContainer.mainContext.insert(phraseCategory)
-                try modelContainer.mainContext.save()
+                ModelContainer.appContainer.mainContext.insert(phraseCategory)
+                try ModelContainer.appContainer.mainContext.save()
             },
             delete: { phraseCategoryToDelete in
-                modelContainer.mainContext.delete(phraseCategoryToDelete)
-                try modelContainer.mainContext.save()
+                ModelContainer.appContainer.mainContext.delete(phraseCategoryToDelete)
+                try ModelContainer.appContainer.mainContext.save()
             },
             edit: { phraseCategoryToUpdate in
-                modelContainer.mainContext.insert(phraseCategoryToUpdate)
-                try modelContainer.mainContext.save()
+                ModelContainer.appContainer.mainContext.insert(phraseCategoryToUpdate)
+                try ModelContainer.appContainer.mainContext.save()
             }
         )
     }

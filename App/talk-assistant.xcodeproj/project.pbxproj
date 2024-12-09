@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0C2809B92CBDF35000DAA4ED /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2809B82CBDF35000DAA4ED /* Root */; };
-		CC9E340E2CB166C40057918C /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = CC9E340D2CB166C40057918C /* Root */; };
 		CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */; };
 		CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 /* End PBXBuildFile section */
@@ -89,7 +88,6 @@
 			files = (
 				0C2809B92CBDF35000DAA4ED /* Root in Frameworks */,
 				CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */,
-				CC9E340E2CB166C40057918C /* Root in Frameworks */,
 				CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

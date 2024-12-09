@@ -10,7 +10,7 @@ import Dependencies
 import ConversationEntity
 import ConversationDependency
 import FirebaseCrashlytics
-import SwiftUI
+import struct SwiftUI.Color
 
 //FIXME: When using the observation framework, the view may not be updated. (Detected when returning from the details screen with the category updated)
 @MainActor
@@ -64,6 +64,7 @@ package final class PhraseCategoryCreateViewModel {
     package func create() {
         do {
             try phraseCategoryRepository.create(.init(id: .init(),
+                                                      createdAt: .now,
                                                       metadata: .init(name: categoryName,
                                                                       icon: .init(name: iconName, color: iconColor)),
                                                       phrases: []))
@@ -80,15 +81,13 @@ package final class PhraseCategoryEditViewModel {
     public var iconName: String
     public var iconColor: Color
 
-    private let id: PhraseCategory.ID
-    private let phrases: [Phrase]
+    private let phraseCategory: PhraseCategory
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init(phraseCategory: PhraseCategory) {
-        self.id = phraseCategory.id
-        self.phrases = phraseCategory.phrases
+        self.phraseCategory = phraseCategory
         self.categoryName = phraseCategory.metadata.name
         self.iconName = phraseCategory.metadata.icon.name
         self.iconColor = phraseCategory.metadata.icon.color
@@ -96,10 +95,11 @@ package final class PhraseCategoryEditViewModel {
 
     package func edit() {
         do {
-            try phraseCategoryRepository.edit(.init(id: id,
+            try phraseCategoryRepository.edit(.init(id: phraseCategory.id,
+                                                    createdAt: phraseCategory.createdAt,
                                                     metadata: .init(name: categoryName,
                                                                     icon: .init(name: iconName, color: iconColor)),
-                                                    phrases: phrases))
+                                                    phrases: phraseCategory.phrases))
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }

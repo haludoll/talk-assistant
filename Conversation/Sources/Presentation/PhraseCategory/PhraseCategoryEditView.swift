@@ -90,6 +90,6 @@ struct PhraseCategoryEditView: View {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true)) {
-            PhraseCategoryEditView(phraseCategory: .init(id: .init(), metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
+            PhraseCategoryEditView(phraseCategory: .init(id: .init(), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
         }
 }
