@@ -12,6 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "LocalStorage",
+            type: .dynamic,
             targets: ["LocalStorage"]),
     ],
     dependencies: [
@@ -19,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "LocalStorage"
-        ),
+            name: "LocalStorage",
+            dependencies: [.product(name: "ConversationEntity", package: "Conversation")])
     ]
 )

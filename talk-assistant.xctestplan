@@ -13,15 +13,6 @@
   },
   "testTargets" : [
     {
-      "enabled" : false,
-      "parallelizable" : true,
-      "target" : {
-        "containerPath" : "container:..\/Settings",
-        "identifier" : "SettingsPresentationTests",
-        "name" : "SettingsPresentationTests"
-      }
-    },
-    {
       "parallelizable" : true,
       "target" : {
         "containerPath" : "container:..\/Settings",
@@ -43,6 +34,15 @@
         "containerPath" : "container:..\/Root",
         "identifier" : "RootTests",
         "name" : "RootTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/Settings",
+        "identifier" : "SettingsPresentationTests",
+        "name" : "SettingsPresentationTests"
       }
     }
   ],
