@@ -10,7 +10,7 @@ import Dependencies
 import ConversationEntity
 import ConversationDependency
 import FirebaseCrashlytics
-import SwiftUI
+import struct SwiftUI.Color
 
 //FIXME: When using the observation framework, the view may not be updated. (Detected when returning from the details screen with the category updated)
 @MainActor

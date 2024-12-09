@@ -10,7 +10,6 @@ import Dependencies
 import ConversationEntity
 import ConversationDependency
 import FirebaseCrashlytics
-import SwiftUI
 
 @Observable
 @MainActor

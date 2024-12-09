@@ -22,16 +22,14 @@
       }
     },
     {
-      "enabled" : false,
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:..\/Root",
-        "identifier" : "RootTests",
-        "name" : "RootTests"
+        "containerPath" : "container:..\/Settings",
+        "identifier" : "SettingsViewModelTests",
+        "name" : "SettingsViewModelTests"
       }
     },
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:..\/Conversation",
         "identifier" : "ConversationViewModelTests",
@@ -39,11 +37,12 @@
       }
     },
     {
+      "enabled" : false,
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:..\/Settings",
-        "identifier" : "SettingsViewModelTests",
-        "name" : "SettingsViewModelTests"
+        "containerPath" : "container:..\/Root",
+        "identifier" : "RootTests",
+        "name" : "RootTests"
       }
     }
   ],

@@ -19,14 +19,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "LocalStorage",
-            dependencies: [
-                .product(name: "ConversationEntity", package: "Conversation"),
-            ]
-        ),
-        .testTarget(
-            name: "LocalStorageTests",
-            dependencies: ["LocalStorage"]
+            name: "LocalStorage"
         ),
     ]
 )
