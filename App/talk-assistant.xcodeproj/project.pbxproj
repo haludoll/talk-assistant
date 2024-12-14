@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0C2809B92CBDF35000DAA4ED /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2809B82CBDF35000DAA4ED /* Root */; };
+		CC703A542D0D71A100813035 /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = CC9E340D2CB166C40057918C /* Root */; };
 		CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */; };
 		CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
 /* End PBXBuildFile section */
@@ -86,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC703A542D0D71A100813035 /* Root in Frameworks */,
 				0C2809B92CBDF35000DAA4ED /* Root in Frameworks */,
 				CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */,
 				CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -201,7 +203,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
-				LastUpgradeCheck = 1600;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					0CA1178C2CBDBE5D008C173C = {
 						CreatedOnToolsVersion = 16.0;
@@ -435,6 +437,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -464,6 +467,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -497,6 +501,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -526,6 +531,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -556,6 +562,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U2W9UR892A;
@@ -603,6 +610,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = U2W9UR892A;
 				ENABLE_HARDENED_RUNTIME = YES;
