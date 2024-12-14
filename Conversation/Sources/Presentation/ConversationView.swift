@@ -7,16 +7,18 @@
 
 import SwiftUI
 import ConversationViewModel
+import ConversationEntity
 
 public struct ConversationView: View {
     @State private var conversationViewModel = ConversationViewModel()
+    @StateObject private var phraseCategoryListViewModel = PhraseCategoryListViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
 
     public init() {}
 
     public var body: some View {
         VStack(alignment: .leading) {
-            PhraseCategoryListHeader()
+            PhraseCategoryListHeader(phraseCategories: phraseCategoryListViewModel.phraseCategories)
 
             Spacer()
 
@@ -29,9 +31,12 @@ public struct ConversationView: View {
 
                 PhraseTextField(conversationViewModel: conversationViewModel, focused: $phraseTextFieldFocused)
             }
+            .padding()
         }
         .contentShape(Rectangle())
-        .padding()
+        .background(
+            LinearGradient(gradient: Gradient(colors: [.mint, .white]), startPoint: .top, endPoint: .center)
+        )
         .onTapGesture {
             phraseTextFieldFocused = false
         }
@@ -40,12 +45,14 @@ public struct ConversationView: View {
         }
         .task {
             await conversationViewModel.observeSpeechDelegate()
+            phraseCategoryListViewModel.fetchAll()
         }
     }
 }
 
 private struct PhraseCategoryListHeader: View {
     @State private var showingPhraseCategoryListView = false
+    let phraseCategories: [PhraseCategory]
 
     var body: some View {
         VStack {
@@ -64,12 +71,55 @@ private struct PhraseCategoryListHeader: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .buttonStyle(.plain)
+            .padding(.horizontal)
+
+            ScrollView(.horizontal) {
+                HStack(spacing: 12) {
+                    ForEach(0..<5) { phraseCategory in
+                        Button {
+
+                        } label: {
+                            Label {
+                                //Text(phraseCategory.metadata.name)
+                                Text("home")
+                            } icon: {
+    //                            Image(systemName: phraseCategory.metadata.icon.name)
+    //                                .foregroundStyle(phraseCategory.metadata.icon.color)
+                                Image(systemName: "house.fill")
+                                    .foregroundStyle(.blue)
+                            }
+                            //.font(.headline)
+                            .foregroundStyle(phraseCategory == 1 ? Color.primary : Color(.secondaryLabel))
+                            .labelStyle(.phraseCategoryLabel)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(phraseCategory == 1 ? Color(.systemBackground) : Color(.systemGroupedBackground))
+                            .cornerRadius(4)
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
         }
         .navigationDestination(isPresented: $showingPhraseCategoryListView) {
             PhraseCategoryListView()
         }
     }
 }
+
+private struct PhraseCategoryLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: 4) {
+            configuration.icon
+            configuration.title
+        }
+    }
+}
+
+private extension LabelStyle where Self == PhraseCategoryLabelStyle {
+    static var phraseCategoryLabel: Self { Self() }
+}
+
 
 #Preview {
     NavigationStack {
