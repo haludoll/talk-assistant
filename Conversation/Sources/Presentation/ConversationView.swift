@@ -10,42 +10,41 @@ import ConversationViewModel
 import ConversationEntity
 
 public struct ConversationView: View {
-    @State private var conversationViewModel = ConversationViewModel()
-    @StateObject private var phraseCategoryListViewModel = PhraseCategoryListViewModel()
+    @State private var typeToSpeakViewModel = TypeToSpeakViewModel()
+    @State private var phraseCategorySpeakViewModel = PhraseCategorySpeakViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
 
     public init() {}
 
     public var body: some View {
         VStack(alignment: .leading) {
-            PhraseCategoryListHeader(phraseCategories: phraseCategoryListViewModel.phraseCategories)
+            PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
+                                     selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
+                                                                   set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
             Spacer()
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
-                    conversationViewModel.text = conversationViewModel.lastText
-                    conversationViewModel.speak()
+                    typeToSpeakViewModel.text = typeToSpeakViewModel.lastText
+                    typeToSpeakViewModel.speak()
                 }
-                .disabled(conversationViewModel.lastText.isEmpty)
+                .disabled(typeToSpeakViewModel.lastText.isEmpty)
 
-                PhraseTextField(conversationViewModel: conversationViewModel, focused: $phraseTextFieldFocused)
+                PhraseTextField(typeToSpeakViewModel: typeToSpeakViewModel, focused: $phraseTextFieldFocused)
             }
             .padding()
         }
         .contentShape(Rectangle())
-        .background(
-            LinearGradient(gradient: Gradient(colors: [.mint, .white]), startPoint: .top, endPoint: .center)
-        )
         .onTapGesture {
             phraseTextFieldFocused = false
         }
         .onAppear {
-            conversationViewModel.setupVoice()
+            typeToSpeakViewModel.setupVoice()
+            phraseCategorySpeakViewModel.fetchPhraseCategories()
         }
         .task {
-            await conversationViewModel.observeSpeechDelegate()
-            phraseCategoryListViewModel.fetchAll()
+            await typeToSpeakViewModel.observeSpeechDelegate()
         }
     }
 }
@@ -53,6 +52,7 @@ public struct ConversationView: View {
 private struct PhraseCategoryListHeader: View {
     @State private var showingPhraseCategoryListView = false
     let phraseCategories: [PhraseCategory]
+    @Binding var selectedPhraseCategory: PhraseCategory?
 
     var body: some View {
         VStack {
@@ -73,28 +73,27 @@ private struct PhraseCategoryListHeader: View {
             .buttonStyle(.plain)
             .padding(.horizontal)
 
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    ForEach(0..<5) { phraseCategory in
+                    ForEach(phraseCategories) { phraseCategory in
                         Button {
-
+                            self.selectedPhraseCategory = phraseCategory
                         } label: {
                             Label {
-                                //Text(phraseCategory.metadata.name)
-                                Text("home")
+                                Text(phraseCategory.metadata.name)
+                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.black : Color(.secondaryLabel))
+                                    .bold()
                             } icon: {
-    //                            Image(systemName: phraseCategory.metadata.icon.name)
-    //                                .foregroundStyle(phraseCategory.metadata.icon.color)
-                                Image(systemName: "house.fill")
-                                    .foregroundStyle(.blue)
+                                Image(systemName: phraseCategory.metadata.icon.name)
+                                    .foregroundStyle(phraseCategory.metadata.icon.color)
                             }
-                            //.font(.headline)
-                            .foregroundStyle(phraseCategory == 1 ? Color.primary : Color(.secondaryLabel))
+                            .font(.subheadline)
                             .labelStyle(.phraseCategoryLabel)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 10)
-                            .background(phraseCategory == 1 ? Color(.systemBackground) : Color(.systemGroupedBackground))
+                            .background(phraseCategory == selectedPhraseCategory ? Color.white : Color(.secondarySystemBackground))
                             .cornerRadius(4)
+                            .roundedBorder((phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondarySystemBackground)), width: 0.5, radius: 4)
                         }
                     }
                 }
@@ -120,6 +119,36 @@ private extension LabelStyle where Self == PhraseCategoryLabelStyle {
     static var phraseCategoryLabel: Self { Self() }
 }
 
+private struct RoundedBorderModifier<Style: ShapeStyle>: ViewModifier {
+    var style: Style, width: CGFloat = 0, radius: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .overlay {
+                RoundedRectangle(cornerRadius: radius)
+                    .stroke(lineWidth: width*2)
+                    .fill(style)
+            }
+            .mask {
+                RoundedRectangle(cornerRadius: radius)
+            }
+    }
+}
+
+private extension View {
+    func roundedBorder<S: ShapeStyle>(
+        _ style: S,
+        width: CGFloat,
+        radius: CGFloat
+    ) -> some View {
+        let modifier = RoundedBorderModifier(
+            style: style,
+            width: width,
+            radius: radius
+        )
+        return self.modifier(modifier)
+    }
+}
 
 #Preview {
     NavigationStack {

@@ -9,32 +9,32 @@ import SwiftUI
 import ConversationViewModel
 
 struct PhraseTextField: View {
-    var conversationViewModel: ConversationViewModel
+    var TypeToSpeakViewModel: TypeToSpeakViewModel
     let focused: FocusState<Bool>.Binding
 
-    init(conversationViewModel: ConversationViewModel, focused: FocusState<Bool>.Binding) {
-        self.conversationViewModel = conversationViewModel
+    init(typeToSpeakViewModel: TypeToSpeakViewModel, focused: FocusState<Bool>.Binding) {
+        self.TypeToSpeakViewModel = typeToSpeakViewModel
         self.focused = focused
     }
 
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                conversationViewModel.isSpeaking ? conversationViewModel.stop() : conversationViewModel.speak()
+                TypeToSpeakViewModel.isSpeaking ? TypeToSpeakViewModel.stop() : TypeToSpeakViewModel.speak()
             } label: {
-                Image(systemName: conversationViewModel.isSpeaking ? "stop.circle.fill" : "play.circle.fill")
+                Image(systemName: TypeToSpeakViewModel.isSpeaking ? "stop.circle.fill" : "play.circle.fill")
                     .font(.title)
-                    .foregroundStyle(.white, conversationViewModel.isSpeaking ? .pink : .blue)
+                    .foregroundStyle(.white, TypeToSpeakViewModel.isSpeaking ? .pink : .blue)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 8)
                     .contentShape(.rect)
             }
-            .disabled(conversationViewModel.text.isEmpty)
+            .disabled(TypeToSpeakViewModel.text.isEmpty)
             .buttonStyle(.plain)
 
             TextField("",
-                      text: .init(get: { conversationViewModel.text },
-                                  set: { conversationViewModel.text = $0 }),
+                      text: .init(get: { TypeToSpeakViewModel.text },
+                                  set: { TypeToSpeakViewModel.text = $0 }),
                       prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
                       axis: .vertical)
             .bold()
@@ -42,15 +42,15 @@ struct PhraseTextField: View {
             .font(.title3)
             .submitLabel(.done)
             .focused(focused)
-            .onNewlineBroken(of: conversationViewModel.text) { _, _ in
-                conversationViewModel.text.removeAll(where: \.isNewline)
-                conversationViewModel.speak()
+            .onNewlineBroken(of: TypeToSpeakViewModel.text) { _, _ in
+                TypeToSpeakViewModel.text.removeAll(where: \.isNewline)
+                TypeToSpeakViewModel.speak()
             }
             .padding(.vertical, 8)
 
-            if !conversationViewModel.text.isEmpty {
+            if !TypeToSpeakViewModel.text.isEmpty {
                 Button {
-                    conversationViewModel.text = ""
+                    TypeToSpeakViewModel.text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.white)
@@ -77,9 +77,9 @@ private extension View {
 }
 
 #Preview {
-    @Previewable @State var conversationViewModel1 = ConversationViewModel()
+    @Previewable @State var conversationViewModel = TypeToSpeakViewModel()
 
-    PhraseTextField(conversationViewModel: conversationViewModel1, focused: FocusState<Bool>.init().projectedValue)
+    PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
         .padding()
 }
 

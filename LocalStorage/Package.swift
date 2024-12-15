@@ -12,7 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "LocalStorage",
-            //type: .dynamic,
+            type: .dynamic,
             targets: ["LocalStorage"]),
     ],
     dependencies: [

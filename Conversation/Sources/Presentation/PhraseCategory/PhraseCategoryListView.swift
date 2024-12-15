@@ -10,7 +10,7 @@ import ConversationViewModel
 import ConversationEntity
 
 struct PhraseCategoryListView: View {
-    @StateObject private var phraseCategoryListViewModel = PhraseCategoryListViewModel()
+    @State private var phraseCategoryListViewModel = PhraseCategoryListViewModel()
     @State private var phraseCategoryDeleteViewModel = PhraseCategoryDeleteViewModel()
     @State private var showingPhraseCategoryCreateView = false
     @State private var showingDeleteAlert = false
@@ -61,7 +61,7 @@ struct PhraseCategoryListView: View {
         } message: { _ in
             Text("This will delete all phrases in this category.", bundle: .module)
         }
-        .task {
+        .onAppear {
             phraseCategoryListViewModel.fetchAll()
         }
     }
