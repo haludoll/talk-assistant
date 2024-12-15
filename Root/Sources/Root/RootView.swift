@@ -17,7 +17,6 @@ public struct RootView: View {
         NavigationStack {
             VStack {
                 ConversationView()
-                    .navigationTitle(Text("Talk Assistant", bundle: .module))
             }
             .toolbar {
                 ToolbarItem {
