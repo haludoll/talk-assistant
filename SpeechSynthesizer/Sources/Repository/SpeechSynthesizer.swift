@@ -8,7 +8,6 @@
 import AVFoundation
 import AsyncAlgorithms
 import SpeechSynthesizerEntity
-import Dependencies
 import FirebaseCrashlytics
 
 @MainActor

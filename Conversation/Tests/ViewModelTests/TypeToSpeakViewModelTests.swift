@@ -1,5 +1,5 @@
 //
-//  ConversationViewModelTests.swift
+//  TypeToSpeakViewModelTests.swift
 //  Conversation
 //
 //  Created by haludoll on 2024/10/24.
@@ -14,7 +14,7 @@ import AVFoundation
 
 @Observable
 @MainActor
-final class ConversationViewModelTests: XCTestCase {
+final class TypeToSpeakViewModelTests: XCTestCase {
     func test_speak_isSpeaking_true_notExecuted() async {
         let expectation = XCTestExpectation(description: #function)
         expectation.isInverted = true
@@ -22,7 +22,7 @@ final class ConversationViewModelTests: XCTestCase {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
             $0.voiceSettingsRepository = .testValue
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = true
         sut.setupVoice()
@@ -36,7 +36,7 @@ final class ConversationViewModelTests: XCTestCase {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
             $0.voiceSettingsRepository = .testValue
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = false
         sut.setupVoice()
@@ -51,7 +51,7 @@ final class ConversationViewModelTests: XCTestCase {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
             $0.voiceSettingsRepository = .testValue
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = false
         sut.speak()
@@ -64,7 +64,7 @@ final class ConversationViewModelTests: XCTestCase {
             $0.speechSynthesizer = SpeechSynthesizerMock(speakExpectation: expectation)
             $0.voiceSettingsRepository = .testValue
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = false
         sut.setupVoice()
@@ -77,7 +77,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock(stopExpectation: expectation)
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = true
         sut.stop()
@@ -90,7 +90,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock(stopExpectation: expectation)
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         sut.isSpeaking = false
         sut.stop()
@@ -101,7 +101,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         Task.detached {
             await sut.observeSpeechDelegate()
@@ -124,7 +124,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         Task.detached {
             await sut.observeSpeechDelegate()
@@ -148,7 +148,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         Task.detached {
             await sut.observeSpeechDelegate()
@@ -172,7 +172,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         Task.detached {
             await sut.observeSpeechDelegate()
@@ -196,7 +196,7 @@ final class ConversationViewModelTests: XCTestCase {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()
         } operation: {
-            ConversationViewModel()
+            TypeToSpeakViewModel()
         }
         Task.detached {
             await sut.observeSpeechDelegate()
