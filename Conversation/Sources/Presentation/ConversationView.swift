@@ -17,12 +17,38 @@ public struct ConversationView: View {
     public init() {}
 
     public var body: some View {
-        VStack(alignment: .leading) {
-            PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
-                                     selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
-                                                                   set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
+                                             selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
+                                                                           set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-            Spacer()
+                    Divider()
+                        .padding(.horizontal)
+
+                    VStack(spacing: 8) {
+                        if let selectedPhraseCategory = phraseCategorySpeakViewModel.selectedPhraseCategory {
+                            ForEach(selectedPhraseCategory.phrases) { phrase in
+                                Button {
+
+                                } label: {
+                                    Text(phrase.value)
+                                        .foregroundStyle(Color.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding()
+                                        .background(Color(.secondarySystemBackground))
+                                        .cornerRadius(8)
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 2)
+
+                    Spacer()
+                }
+            }
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
