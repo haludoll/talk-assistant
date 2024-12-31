@@ -49,6 +49,7 @@ public struct ConversationView: View {
                     Spacer()
                 }
             }
+            .blurNavigationBar()
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {

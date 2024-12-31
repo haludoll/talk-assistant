@@ -20,7 +20,7 @@ extension PhraseRepository: DependencyKey {
 extension PhraseCategoryRepository: TestDependencyKey {
     package static let previewValue = Self(
         fetch: { _ in .init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []) },
-        fetchAll: { [.init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [.init(id: .init(), createdAt: .now, value: "Hello")]),
+        fetchAll: { [.init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello")]),
                      .init(id: .init(2), createdAt: .now, metadata: .init(name: "Health", icon: .init(name: "heart.fill", color: .pink)), phrases: [])] },
         create: { _ in },
         delete: { _ in },
