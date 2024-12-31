@@ -41,6 +41,9 @@ public struct ConversationView: View {
                                         .cornerRadius(8)
                                 }
                             }
+
+                            Color(.systemBackground)
+                                .frame(height: 140)
                         }
                     }
                     .padding(.horizontal)

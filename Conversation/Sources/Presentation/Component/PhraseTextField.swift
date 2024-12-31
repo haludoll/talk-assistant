@@ -95,30 +95,35 @@ extension View {
             self
             BlurBackgroundView()
         }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
 public struct BlurBackgroundView: View {
-  public init() {}
+    public init() {}
 
-  let maxHeight: CGFloat = 240
+    let maxHeight: CGFloat = 140
 
-  public var body: some View {
-    ZStack {
-        Color(.systemBackground)
-        .frame(maxWidth: .infinity, maxHeight: maxHeight)
+    public var body: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                Color(.systemBackground)
+                    .frame(maxWidth: .infinity, maxHeight: maxHeight)
 
-      LinearGradient(
-        gradient: Gradient(colors: [.black.opacity(0), .black]),
-        startPoint: .bottom,
-        endPoint: .top
-      )
-      .blendMode(.destinationOut)
-      .frame(maxWidth: .infinity, maxHeight: maxHeight)
+                LinearGradient(
+                    gradient: Gradient(colors: [.black.opacity(0), .black]),
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+                .blendMode(.destinationOut)
+                .frame(maxWidth: .infinity, maxHeight: maxHeight)
+            }
+            .compositingGroup()
+            .frame(maxHeight: maxHeight)
+            .allowsHitTesting(false)
+
+            Color(.systemBackground)
+                .frame(height: 100)
+        }
     }
-    .compositingGroup()
-    .frame(maxHeight: maxHeight)
-    .ignoresSafeArea()
-    .allowsHitTesting(false)
-  }
 }
