@@ -79,22 +79,51 @@ private extension View {
 #Preview {
     @Previewable @State var conversationViewModel = TypeToSpeakViewModel()
 
-    PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
-        .padding()
+    ZStack(alignment: .bottom) {
+        Color(.systemBackground)
+            .blurNavigationBar()
+
+        PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
+            .padding()
+    }
 }
 
-private struct MaterialView: UIViewRepresentable {
-    let material: UIBlurEffect.Style
-
-    init(_ material: UIBlurEffect.Style) {
-        self.material = material
+extension View {
+    @ViewBuilder
+    public func blurNavigationBar() -> some View {
+        ZStack(alignment: .bottom) {
+            self
+            BlurBackgroundView()
+        }
+        .ignoresSafeArea(edges: .bottom)
     }
+}
 
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        UIVisualEffectView(effect: UIBlurEffect(style: material))
-    }
+public struct BlurBackgroundView: View {
+    public init() {}
 
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
-        uiView.effect = UIBlurEffect(style: material)
+    let maxHeight: CGFloat = 140
+
+    public var body: some View {
+        VStack(spacing: 0) {
+            ZStack {
+                Color(.systemBackground)
+                    .frame(maxWidth: .infinity, maxHeight: maxHeight)
+
+                LinearGradient(
+                    gradient: Gradient(colors: [.black.opacity(0), .black]),
+                    startPoint: .bottom,
+                    endPoint: .top
+                )
+                .blendMode(.destinationOut)
+                .frame(maxWidth: .infinity, maxHeight: maxHeight)
+            }
+            .compositingGroup()
+            .frame(maxHeight: maxHeight)
+            .allowsHitTesting(false)
+
+            Color(.systemBackground)
+                .frame(height: 100)
+        }
     }
 }

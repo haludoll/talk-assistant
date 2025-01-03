@@ -18,6 +18,8 @@ struct RepeatButton: View {
         }
         .buttonStyle(.bordered)
         .buttonBorderShape(.circle)
+        .background(Color(.systemBackground))
+        .clipShape(.circle)
     }
 }
 
