@@ -36,6 +36,7 @@ public struct ConversationView: View {
                                     Text(phrase.value)
                                         .foregroundStyle(Color.primary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
+                                        .multilineTextAlignment(.leading)
                                         .padding()
                                         .background(Color(.secondarySystemBackground))
                                         .cornerRadius(8)
@@ -43,7 +44,7 @@ public struct ConversationView: View {
                             }
 
                             Color(.systemBackground)
-                                .frame(height: 140)
+                                .frame(height: 100)
                         }
                     }
                     .padding(.horizontal)
@@ -52,7 +53,7 @@ public struct ConversationView: View {
                     Spacer()
                 }
             }
-            .blurNavigationBar()
+            .padding(.bottom)
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
@@ -64,6 +65,7 @@ public struct ConversationView: View {
                 PhraseTextField(typeToSpeakViewModel: typeToSpeakViewModel, focused: $phraseTextFieldFocused)
             }
             .padding()
+            .blurNavigationBar()
         }
         .contentShape(Rectangle())
         .onTapGesture {

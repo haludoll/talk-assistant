@@ -79,32 +79,26 @@ private extension View {
 #Preview {
     @Previewable @State var conversationViewModel = TypeToSpeakViewModel()
 
-    ZStack(alignment: .bottom) {
-        Color(.systemBackground)
-            .blurNavigationBar()
-
-        PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
-            .padding()
-    }
+    PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
+        .padding()
+        .blurNavigationBar()
 }
 
 extension View {
     @ViewBuilder
-    public func blurNavigationBar() -> some View {
+    func blurNavigationBar() -> some View {
         ZStack(alignment: .bottom) {
-            self
             BlurBackgroundView()
+            self
         }
         .ignoresSafeArea(edges: .bottom)
     }
 }
 
-public struct BlurBackgroundView: View {
-    public init() {}
+struct BlurBackgroundView: View {
+    let maxHeight: CGFloat = 100
 
-    let maxHeight: CGFloat = 140
-
-    public var body: some View {
+    var body: some View {
         VStack(spacing: 0) {
             ZStack {
                 Color(.systemBackground)
@@ -123,7 +117,7 @@ public struct BlurBackgroundView: View {
             .allowsHitTesting(false)
 
             Color(.systemBackground)
-                .frame(height: 100)
+                .frame(height: 80)
         }
     }
 }
