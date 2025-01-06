@@ -24,31 +24,38 @@ public struct ConversationView: View {
                                              selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
                                                                            set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-                    Divider()
-                        .padding(.horizontal)
-
-                    VStack(spacing: 8) {
+                    VStack(spacing: 0) {
                         if let selectedPhraseCategory = phraseCategorySpeakViewModel.selectedPhraseCategory {
                             ForEach(selectedPhraseCategory.phrases) { phrase in
-                                Button {
+                                VStack(spacing: 0) {
+                                    Button {
 
-                                } label: {
-                                    Text(phrase.value)
-                                        .foregroundStyle(Color.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .multilineTextAlignment(.leading)
-                                        .padding()
-                                        .background(Color(.secondarySystemBackground))
-                                        .cornerRadius(8)
+                                    } label: {
+                                        Text(phrase.value)
+                                            .foregroundStyle(Color.primary)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .multilineTextAlignment(.leading)
+                                            .padding(.horizontal)
+                                            .padding(.vertical, 12)
+                                    }
+
+                                    if let lastID = selectedPhraseCategory.phrases.last?.id,
+                                       phrase.id != lastID {
+                                        Divider()
+                                            .padding(.leading)
+                                    }
                                 }
-                            }
 
-                            Color(.systemBackground)
-                                .frame(height: 100)
+                            }
                         }
                     }
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .cornerRadius(12)
                     .padding(.horizontal)
                     .padding(.vertical, 2)
+
+                    Color(.systemGroupedBackground)
+                        .frame(height: 100)
 
                     Spacer()
                 }
@@ -67,6 +74,7 @@ public struct ConversationView: View {
             .padding()
             .blurNavigationBar()
         }
+        .background(Color(.systemGroupedBackground))
         .contentShape(Rectangle())
         .onTapGesture {
             phraseTextFieldFocused = false

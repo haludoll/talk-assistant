@@ -101,7 +101,7 @@ struct BlurBackgroundView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                Color(.systemBackground)
+                Color(.systemGroupedBackground)
                     .frame(maxWidth: .infinity, maxHeight: maxHeight)
 
                 LinearGradient(
@@ -116,7 +116,7 @@ struct BlurBackgroundView: View {
             .frame(maxHeight: maxHeight)
             .allowsHitTesting(false)
 
-            Color(.systemBackground)
+            Color(.systemGroupedBackground)
                 .frame(height: 80)
         }
     }
