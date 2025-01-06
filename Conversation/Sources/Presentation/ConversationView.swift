@@ -73,7 +73,7 @@ public struct ConversationView: View {
         }
         .onAppear {
             typeToSpeakViewModel.setupVoice()
-            phraseCategorySpeakViewModel.fetchPhraseCategories()
+            phraseCategorySpeakViewModel.fetchAll()
         }
         .task {
             await typeToSpeakViewModel.observeSpeechDelegate()

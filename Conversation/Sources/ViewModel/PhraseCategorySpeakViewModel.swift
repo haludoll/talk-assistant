@@ -21,7 +21,7 @@ package final class PhraseCategorySpeakViewModel {
 
     package init() {}
 
-    package func fetchPhraseCategories() {
+    package func fetchAll() {
         do {
             phraseCategories = try phraseCategoryRepository.fetchAll()
             selectedPhraseCategory = phraseCategories.first
