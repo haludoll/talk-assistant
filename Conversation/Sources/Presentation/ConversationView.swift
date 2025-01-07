@@ -10,7 +10,7 @@ import ConversationViewModel
 import ConversationEntity
 
 public struct ConversationView: View {
-    @State private var typeToSpeakViewModel = TypeToSpeakViewModel()
+    @State private var phraseSpeakViewModel = PhraseSpeakViewModel()
     @State private var phraseCategorySpeakViewModel = PhraseCategorySpeakViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
 
@@ -24,7 +24,7 @@ public struct ConversationView: View {
                                              selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
                                                                            set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory, typeToSpeakViewModel: typeToSpeakViewModel)
+                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory, phraseSpeakViewModel: phraseSpeakViewModel)
                         .padding(.horizontal)
 
                     Color(.systemGroupedBackground)
@@ -37,12 +37,12 @@ public struct ConversationView: View {
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
-                    typeToSpeakViewModel.text = typeToSpeakViewModel.lastText
-                    typeToSpeakViewModel.speak()
+                    phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
+                    phraseSpeakViewModel.speak()
                 }
-                .disabled(typeToSpeakViewModel.lastText.isEmpty)
+                .disabled(phraseSpeakViewModel.lastText.isEmpty)
 
-                PhraseTextField(typeToSpeakViewModel: typeToSpeakViewModel, focused: $phraseTextFieldFocused)
+                PhraseTextField(phraseSpeakViewModel: phraseSpeakViewModel, focused: $phraseTextFieldFocused)
             }
             .padding()
             .blurNavigationBar()
@@ -53,11 +53,11 @@ public struct ConversationView: View {
             phraseTextFieldFocused = false
         }
         .onAppear {
-            typeToSpeakViewModel.setupVoice()
+            phraseSpeakViewModel.setupVoice()
             phraseCategorySpeakViewModel.fetchAll()
         }
         .task {
-            await typeToSpeakViewModel.observeSpeechDelegate()
+            await phraseSpeakViewModel.observeSpeechDelegate()
         }
     }
 }

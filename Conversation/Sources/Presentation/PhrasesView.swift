@@ -11,7 +11,7 @@ import ConversationViewModel
 
 struct PhrasesView: View {
     let selectedPhraseCategory: PhraseCategory?
-    let typeToSpeakViewModel: TypeToSpeakViewModel
+    let phraseSpeakViewModel: PhraseSpeakViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -19,8 +19,8 @@ struct PhrasesView: View {
                 ForEach(selectedPhraseCategory.phrases) { phrase in
                     VStack(spacing: 0) {
                         Button {
-                            typeToSpeakViewModel.text = phrase.value
-                            typeToSpeakViewModel.speak()
+                            phraseSpeakViewModel.text = phrase.value
+                            phraseSpeakViewModel.speak()
                         } label: {
                             HStack {
                                 Text(phrase.value)

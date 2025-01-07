@@ -1,5 +1,5 @@
 //
-//  TypeToSpeakViewModel.swift
+//  PhraseSpeakViewModel.swift
 //  Conversation
 //
 //  Created by haludoll on 2024/10/24.
@@ -14,7 +14,7 @@ import FirebaseCrashlytics
 
 @Observable
 @MainActor
-package final class TypeToSpeakViewModel {
+package final class PhraseSpeakViewModel {
     public var text = ""
     public private(set) var lastText = ""
     public var isSpeaking = false
