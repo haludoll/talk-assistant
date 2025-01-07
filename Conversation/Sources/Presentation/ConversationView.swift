@@ -24,35 +24,8 @@ public struct ConversationView: View {
                                              selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
                                                                            set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-                    VStack(spacing: 0) {
-                        if let selectedPhraseCategory = phraseCategorySpeakViewModel.selectedPhraseCategory {
-                            ForEach(selectedPhraseCategory.phrases) { phrase in
-                                VStack(spacing: 0) {
-                                    Button {
-
-                                    } label: {
-                                        Text(phrase.value)
-                                            .foregroundStyle(Color.primary)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .multilineTextAlignment(.leading)
-                                            .padding(.horizontal)
-                                            .padding(.vertical, 12)
-                                    }
-
-                                    if let lastID = selectedPhraseCategory.phrases.last?.id,
-                                       phrase.id != lastID {
-                                        Divider()
-                                            .padding(.leading)
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                    .background(Color(.secondarySystemGroupedBackground))
-                    .cornerRadius(12)
-                    .padding(.horizontal)
-                    .padding(.vertical, 2)
+                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory)
+                        .padding(.horizontal)
 
                     Color(.systemGroupedBackground)
                         .frame(height: 100)
