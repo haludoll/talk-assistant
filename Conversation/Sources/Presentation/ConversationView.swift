@@ -24,7 +24,7 @@ public struct ConversationView: View {
                                              selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
                                                                            set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory)
+                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory, typeToSpeakViewModel: typeToSpeakViewModel)
                         .padding(.horizontal)
 
                     Color(.systemGroupedBackground)

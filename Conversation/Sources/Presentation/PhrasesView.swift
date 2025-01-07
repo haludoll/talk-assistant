@@ -7,9 +7,11 @@
 
 import SwiftUI
 import ConversationEntity
+import ConversationViewModel
 
 struct PhrasesView: View {
     let selectedPhraseCategory: PhraseCategory?
+    let typeToSpeakViewModel: TypeToSpeakViewModel
 
     var body: some View {
         VStack(spacing: 0) {
@@ -17,13 +19,12 @@ struct PhrasesView: View {
                 ForEach(selectedPhraseCategory.phrases) { phrase in
                     VStack(spacing: 0) {
                         Button {
+                            typeToSpeakViewModel.text = phrase.value
+                            typeToSpeakViewModel.speak()
                         } label: {
                             HStack {
                                 Text(phrase.value)
                                     .foregroundStyle(Color.primary)
-
-                                Image(systemName: "waveform")
-                                    //.symbolEffect(.bounce, value: tapped)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .multilineTextAlignment(.leading)
