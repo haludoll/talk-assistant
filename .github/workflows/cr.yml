@@ -19,12 +19,12 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LANGUAGE: Japan
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
-          MODEL: o1-mini # https://platform.openai.com/docs/models
+          MODEL: gpt-4o-mini # https://platform.openai.com/docs/models
           PROMPT: |
             渡されたコードをレビューしてください。
             改善点がない場合には絶対にコメントをしないでください。
             レビュー対象とするファイルは `**.swift` と `**.yml` ファイルです。それ以外のファイルには絶対にコメントしないでください.
           top_p: 1
           temperature: 1
-          max_tokens: 65,536
-          MAX_PATCH_LENGTH: 65,536
+          max_tokens: 16,384
+          MAX_PATCH_LENGTH: 16,384
