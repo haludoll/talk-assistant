@@ -58,6 +58,8 @@ struct PhraseTextField: View {
                         .padding(.horizontal, 4)
                         .padding(.vertical, 4)
                 }
+                .disabled(typeToSpeakViewModel.isSpeaking)
+                .opacity(typeToSpeakViewModel.isSpeaking ? 0.5 : 1.0)
             }
         }
         .padding(8)
