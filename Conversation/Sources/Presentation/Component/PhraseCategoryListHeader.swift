@@ -39,7 +39,7 @@ struct PhraseCategoryListHeader: View {
                         } label: {
                             Label {
                                 Text(phraseCategory.metadata.name)
-                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.black : Color(.secondaryLabel))
+                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondaryLabel))
                                     .bold()
                             } icon: {
                                 Image(systemName: phraseCategory.metadata.icon.name)
@@ -49,7 +49,7 @@ struct PhraseCategoryListHeader: View {
                             .labelStyle(.phraseCategoryLabel)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 10)
-                            .background(phraseCategory == selectedPhraseCategory ? Color.white : Color(.systemGroupedBackground))
+                            .background(phraseCategory == selectedPhraseCategory ? Color(.secondarySystemGroupedBackground) : Color(.systemGroupedBackground))
                             .cornerRadius(4)
                         }
                     }
