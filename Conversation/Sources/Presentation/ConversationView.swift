@@ -10,7 +10,7 @@ import ConversationViewModel
 import ConversationEntity
 
 public struct ConversationView: View {
-    @State private var typeToSpeakViewModel = TypeToSpeakViewModel()
+    @State private var phraseSpeakViewModel = PhraseSpeakViewModel()
     @State private var phraseCategorySpeakViewModel = PhraseCategorySpeakViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
 
@@ -24,31 +24,11 @@ public struct ConversationView: View {
                                              selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
                                                                            set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
 
-                    Divider()
+                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory, phraseSpeakViewModel: phraseSpeakViewModel)
                         .padding(.horizontal)
 
-                    VStack(spacing: 8) {
-                        if let selectedPhraseCategory = phraseCategorySpeakViewModel.selectedPhraseCategory {
-                            ForEach(selectedPhraseCategory.phrases) { phrase in
-                                Button {
-
-                                } label: {
-                                    Text(phrase.value)
-                                        .foregroundStyle(Color.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .multilineTextAlignment(.leading)
-                                        .padding()
-                                        .background(Color(.secondarySystemBackground))
-                                        .cornerRadius(8)
-                                }
-                            }
-
-                            Color(.systemBackground)
-                                .frame(height: 100)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 2)
+                    Color(.systemGroupedBackground)
+                        .frame(height: 100)
 
                     Spacer()
                 }
@@ -57,26 +37,27 @@ public struct ConversationView: View {
 
             VStack(alignment: .trailing, spacing: 4) {
                 RepeatButton {
-                    typeToSpeakViewModel.text = typeToSpeakViewModel.lastText
-                    typeToSpeakViewModel.speak()
+                    phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
+                    phraseSpeakViewModel.speak()
                 }
-                .disabled(typeToSpeakViewModel.lastText.isEmpty)
+                .disabled(phraseSpeakViewModel.lastText.isEmpty)
 
-                PhraseTextField(typeToSpeakViewModel: typeToSpeakViewModel, focused: $phraseTextFieldFocused)
+                PhraseTextField(phraseSpeakViewModel: phraseSpeakViewModel, focused: $phraseTextFieldFocused)
             }
             .padding()
             .blurNavigationBar()
         }
+        .background(Color(.systemGroupedBackground))
         .contentShape(Rectangle())
         .onTapGesture {
             phraseTextFieldFocused = false
         }
         .onAppear {
-            typeToSpeakViewModel.setupVoice()
-            phraseCategorySpeakViewModel.fetchPhraseCategories()
+            phraseSpeakViewModel.setupVoice()
+            phraseCategorySpeakViewModel.fetchAll()
         }
         .task {
-            await typeToSpeakViewModel.observeSpeechDelegate()
+            await phraseSpeakViewModel.observeSpeechDelegate()
         }
     }
 }

@@ -9,32 +9,32 @@ import SwiftUI
 import ConversationViewModel
 
 struct PhraseTextField: View {
-    var TypeToSpeakViewModel: TypeToSpeakViewModel
+    var phraseSpeakViewModel: PhraseSpeakViewModel
     let focused: FocusState<Bool>.Binding
 
-    init(typeToSpeakViewModel: TypeToSpeakViewModel, focused: FocusState<Bool>.Binding) {
-        self.TypeToSpeakViewModel = typeToSpeakViewModel
+    init(phraseSpeakViewModel: PhraseSpeakViewModel, focused: FocusState<Bool>.Binding) {
+        self.phraseSpeakViewModel = phraseSpeakViewModel
         self.focused = focused
     }
 
     var body: some View {
         HStack(spacing: 0) {
             Button {
-                TypeToSpeakViewModel.isSpeaking ? TypeToSpeakViewModel.stop() : TypeToSpeakViewModel.speak()
+                phraseSpeakViewModel.isSpeaking ? phraseSpeakViewModel.stop() : phraseSpeakViewModel.speak()
             } label: {
-                Image(systemName: TypeToSpeakViewModel.isSpeaking ? "stop.circle.fill" : "play.circle.fill")
+                Image(systemName: phraseSpeakViewModel.isSpeaking ? "stop.circle.fill" : "play.circle.fill")
                     .font(.title)
-                    .foregroundStyle(.white, TypeToSpeakViewModel.isSpeaking ? .pink : .blue)
+                    .foregroundStyle(.white, phraseSpeakViewModel.isSpeaking ? .pink : .blue)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 8)
                     .contentShape(.rect)
             }
-            .disabled(TypeToSpeakViewModel.text.isEmpty)
+            .disabled(phraseSpeakViewModel.text.isEmpty)
             .buttonStyle(.plain)
 
             TextField("",
-                      text: .init(get: { TypeToSpeakViewModel.text },
-                                  set: { TypeToSpeakViewModel.text = $0 }),
+                      text: .init(get: { phraseSpeakViewModel.text },
+                                  set: { phraseSpeakViewModel.text = $0 }),
                       prompt: Text("Type to Speak…", bundle: .module).foregroundStyle(.white.opacity(0.4)),
                       axis: .vertical)
             .bold()
@@ -42,15 +42,15 @@ struct PhraseTextField: View {
             .font(.title3)
             .submitLabel(.done)
             .focused(focused)
-            .onNewlineBroken(of: TypeToSpeakViewModel.text) { _, _ in
-                TypeToSpeakViewModel.text.removeAll(where: \.isNewline)
-                TypeToSpeakViewModel.speak()
+            .onNewlineBroken(of: phraseSpeakViewModel.text) { _, _ in
+                phraseSpeakViewModel.text.removeAll(where: \.isNewline)
+                phraseSpeakViewModel.speak()
             }
             .padding(.vertical, 8)
 
-            if !TypeToSpeakViewModel.text.isEmpty {
+            if !phraseSpeakViewModel.text.isEmpty {
                 Button {
-                    TypeToSpeakViewModel.text = ""
+                    phraseSpeakViewModel.text = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.white)
@@ -58,6 +58,8 @@ struct PhraseTextField: View {
                         .padding(.horizontal, 4)
                         .padding(.vertical, 4)
                 }
+                .disabled(phraseSpeakViewModel.isSpeaking)
+                .opacity(phraseSpeakViewModel.isSpeaking ? 0.5 : 1.0)
             }
         }
         .padding(8)
@@ -77,9 +79,9 @@ private extension View {
 }
 
 #Preview {
-    @Previewable @State var conversationViewModel = TypeToSpeakViewModel()
+    @Previewable @State var phraseSpeakViewModel = PhraseSpeakViewModel()
 
-    PhraseTextField(typeToSpeakViewModel: conversationViewModel, focused: FocusState<Bool>.init().projectedValue)
+    PhraseTextField(phraseSpeakViewModel: phraseSpeakViewModel, focused: FocusState<Bool>.init().projectedValue)
         .padding()
         .blurNavigationBar()
 }
@@ -101,7 +103,7 @@ struct BlurBackgroundView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                Color(.systemBackground)
+                Color(.systemGroupedBackground)
                     .frame(maxWidth: .infinity, maxHeight: maxHeight)
 
                 LinearGradient(
@@ -116,7 +118,7 @@ struct BlurBackgroundView: View {
             .frame(maxHeight: maxHeight)
             .allowsHitTesting(false)
 
-            Color(.systemBackground)
+            Color(.systemGroupedBackground)
                 .frame(height: 80)
         }
     }

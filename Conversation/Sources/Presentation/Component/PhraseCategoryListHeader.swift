@@ -39,7 +39,7 @@ struct PhraseCategoryListHeader: View {
                         } label: {
                             Label {
                                 Text(phraseCategory.metadata.name)
-                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.black : Color(.secondaryLabel))
+                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondaryLabel))
                                     .bold()
                             } icon: {
                                 Image(systemName: phraseCategory.metadata.icon.name)
@@ -49,9 +49,8 @@ struct PhraseCategoryListHeader: View {
                             .labelStyle(.phraseCategoryLabel)
                             .padding(.vertical, 8)
                             .padding(.horizontal, 10)
-                            .background(phraseCategory == selectedPhraseCategory ? Color.white : Color(.secondarySystemBackground))
+                            .background(phraseCategory == selectedPhraseCategory ? Color(.secondarySystemGroupedBackground) : Color(.systemGroupedBackground))
                             .cornerRadius(4)
-                            .roundedBorder((phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondarySystemBackground)), width: 0.5, radius: 4)
                         }
                     }
                 }
@@ -75,37 +74,6 @@ private struct PhraseCategoryLabelStyle: LabelStyle {
 
 private extension LabelStyle where Self == PhraseCategoryLabelStyle {
     static var phraseCategoryLabel: Self { Self() }
-}
-
-private struct RoundedBorderModifier<Style: ShapeStyle>: ViewModifier {
-    var style: Style, width: CGFloat = 0, radius: CGFloat
-
-    func body(content: Content) -> some View {
-        content
-            .overlay {
-                RoundedRectangle(cornerRadius: radius)
-                    .stroke(lineWidth: width*2)
-                    .fill(style)
-            }
-            .mask {
-                RoundedRectangle(cornerRadius: radius)
-            }
-    }
-}
-
-private extension View {
-    func roundedBorder<S: ShapeStyle>(
-        _ style: S,
-        width: CGFloat,
-        radius: CGFloat
-    ) -> some View {
-        let modifier = RoundedBorderModifier(
-            style: style,
-            width: width,
-            radius: radius
-        )
-        return self.modifier(modifier)
-    }
 }
 
 #Preview {
