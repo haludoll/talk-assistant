@@ -19,18 +19,19 @@ public struct ConversationView: View {
     public var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
-                VStack(alignment: .leading) {
-                    PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
-                                             selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
-                                                                           set: { phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
+                VStack(alignment: .leading, spacing: 0) {
+                    PhraseCategoryHeaderTitle()
 
-                    PhrasesView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory, phraseSpeakViewModel: phraseSpeakViewModel)
-                        .padding(.horizontal)
-
-                    Color(.systemGroupedBackground)
-                        .frame(height: 100)
-
-                    Spacer()
+                    LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
+                        Section {
+                            PhrasesPageView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory,
+                                            phraseSpeakViewModel: phraseSpeakViewModel)
+                        } header: {
+                            PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
+                                                     selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
+                                                                                   set: {  phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
+                        }
+                    }
                 }
             }
             .padding(.bottom)
@@ -58,6 +59,77 @@ public struct ConversationView: View {
         }
         .task {
             await phraseSpeakViewModel.observeSpeechDelegate()
+        }
+    }
+}
+
+private struct PhraseCategoryHeaderTitle: View {
+    @State private var showingPhraseCategoryListView = false
+
+    var body: some View {
+        Button {
+            showingPhraseCategoryListView.toggle()
+        } label: {
+            HStack {
+                Text("Category", bundle: .module)
+                    .font(.title2)
+
+                Image(systemName: "chevron.right")
+                    .font(.headline)
+                    .foregroundStyle(Color(.secondaryLabel))
+            }
+            .bold()
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal)
+        .navigationDestination(isPresented: $showingPhraseCategoryListView) {
+            PhraseCategoryListView()
+        }
+    }
+}
+
+private struct PhrasesPageView: View {
+    let selectedPhraseCategory: PhraseCategory?
+    let phraseSpeakViewModel: PhraseSpeakViewModel
+
+    var body: some View {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
+                if let selectedPhraseCategory {
+                    ForEach(selectedPhraseCategory.phrases) { phrase in
+                        VStack(spacing: 0) {
+                            Button {
+                                phraseSpeakViewModel.text = phrase.value
+                                phraseSpeakViewModel.speak()
+                            } label: {
+                                HStack {
+                                    Text(phrase.value)
+                                        .foregroundStyle(Color.primary)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                                .padding(.horizontal)
+                                .padding(.vertical, 12)
+                            }
+
+                            if let lastID = selectedPhraseCategory.phrases.last?.id,
+                               phrase.id != lastID {
+                                Divider()
+                                    .padding(.leading)
+                            }
+                        }
+                    }
+                }
+            }
+            .background(Color(.secondarySystemGroupedBackground))
+            .cornerRadius(12)
+            .padding(.horizontal)
+
+            Color(.systemGroupedBackground)
+                .frame(height: 100)
+
+            Spacer()
         }
     }
 }
