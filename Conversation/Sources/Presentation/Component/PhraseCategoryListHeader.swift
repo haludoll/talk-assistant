@@ -8,58 +8,37 @@ import SwiftUI
 import ConversationEntity
 
 struct PhraseCategoryListHeader: View {
-    @State private var showingPhraseCategoryListView = false
     let phraseCategories: [PhraseCategory]
     @Binding var selectedPhraseCategory: PhraseCategory?
 
     var body: some View {
-        VStack {
-            Button {
-                showingPhraseCategoryListView.toggle()
-            } label: {
-                HStack {
-                    Text("Category", bundle: .module)
-                        .font(.title2)
-
-                    Image(systemName: "chevron.right")
-                        .font(.headline)
-                        .foregroundStyle(Color(.secondaryLabel))
-                }
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .buttonStyle(.plain)
-            .padding(.horizontal)
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(phraseCategories) { phraseCategory in
-                        Button {
-                            self.selectedPhraseCategory = phraseCategory
-                        } label: {
-                            Label {
-                                Text(phraseCategory.metadata.name)
-                                    .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondaryLabel))
-                                    .bold()
-                            } icon: {
-                                Image(systemName: phraseCategory.metadata.icon.name)
-                                    .foregroundStyle(phraseCategory.metadata.icon.color)
-                            }
-                            .font(.subheadline)
-                            .labelStyle(.phraseCategoryLabel)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(phraseCategory == selectedPhraseCategory ? Color(.secondarySystemGroupedBackground) : Color(.systemGroupedBackground))
-                            .cornerRadius(4)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(phraseCategories) { phraseCategory in
+                    Button {
+                        self.selectedPhraseCategory = phraseCategory
+                    } label: {
+                        Label {
+                            Text(phraseCategory.metadata.name)
+                                .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondaryLabel))
+                                .bold()
+                        } icon: {
+                            Image(systemName: phraseCategory.metadata.icon.name)
+                                .foregroundStyle(phraseCategory.metadata.icon.color)
                         }
+                        .font(.subheadline)
+                        .labelStyle(.phraseCategoryLabel)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .background(phraseCategory == selectedPhraseCategory ? Color(.secondarySystemGroupedBackground) : Color(.systemGroupedBackground))
+                        .cornerRadius(4)
                     }
                 }
-                .padding(.horizontal)
             }
+            .padding(.horizontal)
         }
-        .navigationDestination(isPresented: $showingPhraseCategoryListView) {
-            PhraseCategoryListView()
-        }
+        .padding(.vertical, 8)
+        .background(Color(.systemGroupedBackground))
     }
 }
 
