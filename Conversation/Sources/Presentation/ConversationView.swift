@@ -37,11 +37,18 @@ public struct ConversationView: View {
             .padding(.bottom)
 
             VStack(alignment: .trailing, spacing: 4) {
-                RepeatButton {
-                    phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
-                    phraseSpeakViewModel.speak()
+                HStack(spacing: 0) {
+                    RepeatButton {
+                        phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
+                        phraseSpeakViewModel.speak()
+                    }
+                    .disabled(phraseSpeakViewModel.lastText.isEmpty)
+
+                    KeyboardDismissButton {
+                        phraseTextFieldFocused = false
+                    }
+                    .disabled(!phraseTextFieldFocused)
                 }
-                .disabled(phraseSpeakViewModel.lastText.isEmpty)
 
                 PhraseTextField(phraseSpeakViewModel: phraseSpeakViewModel, focused: $phraseTextFieldFocused)
             }
