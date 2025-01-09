@@ -14,7 +14,7 @@ struct PhraseCategoryListHeader: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(phraseCategories) { phraseCategory in
+                ForEach(phraseCategories, id: \.persistentModelID.id) { phraseCategory in
                     Button {
                         self.selectedPhraseCategory = phraseCategory
                     } label: {

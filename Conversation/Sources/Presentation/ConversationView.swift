@@ -97,7 +97,8 @@ private struct PhrasesPageView: View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
                 if let selectedPhraseCategory {
-                    ForEach(selectedPhraseCategory.phrases) { phrase in
+                    // WORKAROUND: If you change the `phraseCategory` retrieved from SwiftData outside of View, there is a bug that for some reason the same data is retrieved more than once, so sort it here.
+                    ForEach(selectedPhraseCategory.phrases.sorted(by: { $0.createdAt > $1.createdAt })) { phrase in
                         VStack(spacing: 0) {
                             Button {
                                 phraseSpeakViewModel.text = phrase.value
