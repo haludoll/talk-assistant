@@ -101,12 +101,14 @@ private struct PhrasesPageView: View {
                     ForEach(selectedPhraseCategory.phrases.sorted(by: { $0.createdAt > $1.createdAt })) { phrase in
                         VStack(spacing: 0) {
                             Button {
+                                phraseSpeakViewModel.stop()
                                 phraseSpeakViewModel.text = phrase.value
                                 phraseSpeakViewModel.speak()
                             } label: {
                                 HStack {
                                     Text(phrase.value)
                                         .foregroundStyle(Color.primary)
+                                        .opacity(phraseSpeakViewModel.isSpeaking && phrase.value == phraseSpeakViewModel.text ? 0.3 : 1.0)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .multilineTextAlignment(.leading)

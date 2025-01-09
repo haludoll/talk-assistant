@@ -30,12 +30,11 @@ package final class PhraseSpeakViewModel {
     package init() {}
 
     package func speak() {
-        guard !isSpeaking, let voice, let voiceParameter else { return }
+        guard let voice, let voiceParameter else { return }
         speechSynthesizer.speak(text: text, in: voice, using: voiceParameter)
     }
 
     package func stop() {
-        guard isSpeaking else { return }
         speechSynthesizer.stop()
     }
 
