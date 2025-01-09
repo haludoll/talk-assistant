@@ -35,6 +35,7 @@ package final class PhraseSpeakViewModel {
     }
 
     package func stop() {
+        guard isSpeaking else { return }
         speechSynthesizer.stop()
     }
 

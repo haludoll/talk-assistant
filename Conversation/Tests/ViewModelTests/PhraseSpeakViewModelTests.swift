@@ -43,6 +43,31 @@ final class PhraseSpeakViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 0.1)
     }
 
+    func test_stop_isSpeaking_true_executed() async {
+        let expectation = XCTestExpectation(description: #function)
+        let sut = withDependencies {
+            $0.speechSynthesizer = SpeechSynthesizerMock(stopExpectation: expectation)
+        } operation: {
+            PhraseSpeakViewModel()
+        }
+        sut.isSpeaking = true
+        sut.stop()
+        await fulfillment(of: [expectation], timeout: 0.1)
+    }
+
+    func test_stop_isSpeaking_false_notExecuted() async {
+        let expectation = XCTestExpectation(description: #function)
+        expectation.isInverted = true
+        let sut = withDependencies {
+            $0.speechSynthesizer = SpeechSynthesizerMock(stopExpectation: expectation)
+        } operation: {
+            PhraseSpeakViewModel()
+        }
+        sut.isSpeaking = false
+        sut.stop()
+        await fulfillment(of: [expectation], timeout: 0.1)
+    }
+
     func test_didStart_isSpeaking_true() async {
         let sut = withDependencies {
             $0.speechSynthesizer = SpeechSynthesizerMock()

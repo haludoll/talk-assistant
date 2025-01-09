@@ -92,35 +92,41 @@ private struct PhraseCategoryHeaderTitle: View {
 private struct PhrasesPageView: View {
     let selectedPhraseCategory: PhraseCategory?
     let phraseSpeakViewModel: PhraseSpeakViewModel
+    
+    private var sortedPhrases: [Phrase] {
+        guard let selectedPhraseCategory else { return [] }
+        return selectedPhraseCategory.phrases.sorted(by: { $0.createdAt > $1.createdAt })
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                if let selectedPhraseCategory {
-                    // WORKAROUND: If you change the `phraseCategory` retrieved from SwiftData outside of View, there is a bug that for some reason the same data is retrieved more than once, so sort it here.
-                    ForEach(selectedPhraseCategory.phrases.sorted(by: { $0.createdAt > $1.createdAt })) { phrase in
-                        VStack(spacing: 0) {
-                            Button {
-                                phraseSpeakViewModel.stop()
+                // WORKAROUND: If you change the `phraseCategory` retrieved from SwiftData outside of View, there is a bug that for some reason the same data is retrieved more than once, so sort it here.
+                ForEach(sortedPhrases) { phrase in
+                    VStack(spacing: 0) {
+                        Button {
+                            phraseSpeakViewModel.stop()
+
+                            if phrase.value != phraseSpeakViewModel.text || !phraseSpeakViewModel.isSpeaking {
                                 phraseSpeakViewModel.text = phrase.value
                                 phraseSpeakViewModel.speak()
-                            } label: {
-                                HStack {
-                                    Text(phrase.value)
-                                        .foregroundStyle(Color.primary)
-                                        .opacity(phraseSpeakViewModel.isSpeaking && phrase.value == phraseSpeakViewModel.text ? 0.3 : 1.0)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .multilineTextAlignment(.leading)
-                                .padding(.horizontal)
-                                .padding(.vertical, 12)
                             }
+                        } label: {
+                            HStack {
+                                Text(phrase.value)
+                                    .foregroundStyle(Color.primary)
+                                    .opacity(phraseSpeakViewModel.isSpeaking && phrase.value == phraseSpeakViewModel.text ? 0.3 : 1.0)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .padding(.horizontal)
+                            .padding(.vertical, 12)
+                        }
 
-                            if let lastID = selectedPhraseCategory.phrases.last?.id,
-                               phrase.id != lastID {
-                                Divider()
-                                    .padding(.leading)
-                            }
+                        if let lastID = sortedPhrases.last?.id,
+                           phrase.id != lastID {
+                            Divider()
+                                .padding(.leading)
                         }
                     }
                 }
