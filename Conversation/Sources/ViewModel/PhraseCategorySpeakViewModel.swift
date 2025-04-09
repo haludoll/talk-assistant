@@ -29,4 +29,12 @@ package final class PhraseCategorySpeakViewModel {
             Crashlytics.crashlytics().record(error: error)
         }
     }
+
+    package func createDefault() {
+        do {
+            try PhraseCategoryRepository.createDefault()
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+        }
+    }
 }

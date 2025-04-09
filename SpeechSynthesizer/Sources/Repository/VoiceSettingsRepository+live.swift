@@ -15,7 +15,7 @@ extension VoiceSettingsRepository {
     package static let live = live()
 
     private static func live(userDefaults: UserDefaults = .standard) -> Self {
-        return .init(
+        .init(
             fetchVoiceParameter: {
                 if let data = userDefaults.data(forKey: Self.voiceParameterUserDefaultsKey) {
                     return try JSONDecoder().decode(VoiceParameter.self, from: data)

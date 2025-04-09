@@ -11,6 +11,8 @@ import SwiftData
 import Foundation
 
 extension PhraseCategoryRepository {
+    private static let setDefaultPhraseCategoryUserDefaultsKey = "set_default_phrase_category"
+
     package static func live() -> Self {
         Self(
             fetch: { id in
@@ -36,5 +38,31 @@ extension PhraseCategoryRepository {
                 try ModelContainer.appContainer.mainContext.save()
             }
         )
+    }
+
+    @MainActor
+    package static func createDefault(userDefaults: UserDefaults = .standard) throws {
+        if !userDefaults.bool(forKey: Self.setDefaultPhraseCategoryUserDefaultsKey) {
+            let defaultPhraseCategory = PhraseCategory(id: .init(),
+                                                       createdAt: .now,
+                                                       metadata: .init(name: .init(localized: "Common Phrases", bundle: .module),
+                                                                       icon: .init(name: "heart.fill", color: .pink)),
+                                                       phrases: [
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Goodbye", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Please say that again", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "I'm okay", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Excuse me", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Thank you", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "No", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Yes", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Good evening", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Hello", bundle: .module)),
+                                                        .init(id: .init(), createdAt: .now, value: .init(localized: "Good morning", bundle: .module))
+                                                       ])
+            ModelContainer.appContainer.mainContext.insert(defaultPhraseCategory)
+            try ModelContainer.appContainer.mainContext.save()
+            userDefaults.set(true, forKey: Self.setDefaultPhraseCategoryUserDefaultsKey)
+            return
+        }
     }
 }

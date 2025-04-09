@@ -62,6 +62,7 @@ public struct ConversationView: View {
         }
         .onAppear {
             phraseSpeakViewModel.setupVoice()
+            phraseCategorySpeakViewModel.createDefault()
             phraseCategorySpeakViewModel.fetchAll()
         }
         .task {
