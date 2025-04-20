@@ -31,6 +31,26 @@
         }
       }
     },
+    "https://haludoll.github.io/talk-assistant/privacy-policy-en.html" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://haludoll.github.io/talk-assistant/privacy-policy-ja.html"
+          }
+        }
+      }
+    },
+    "https://haludoll.github.io/talk-assistant/terms-of-use-en.html" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "https://haludoll.github.io/talk-assistant/terms-of-use-ja.html"
+          }
+        }
+      }
+    },
     "Male" : {
       "localizations" : {
         "ja" : {
@@ -61,6 +81,16 @@
         }
       }
     },
+    "Privacy Policy" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プライバシーポリシー"
+          }
+        }
+      }
+    },
     "Rate" : {
       "localizations" : {
         "ja" : {
@@ -77,6 +107,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : " 設定"
+          }
+        }
+      }
+    },
+    "Terms of Use" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "利用規約"
           }
         }
       }
