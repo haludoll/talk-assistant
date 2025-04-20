@@ -66,6 +66,16 @@ public struct SettingsView: View {
                         }
                         .foregroundStyle(Color(.secondaryLabel))
                     }
+
+                    Section {
+                        Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/terms-of-use-en.html", bundle: .module))!) {
+                            Label(String(localized: "Terms of Use", bundle: .module), systemImage: "safari")
+                        }
+                        Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/privacy-policy-en.html", bundle: .module))!) {
+                            Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "safari")
+                        }
+                    }
+                    .foregroundStyle(Color.primary)
                 }
             }
             .navigationTitle(Text("Settings", bundle: .module))
