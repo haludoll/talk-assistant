@@ -51,12 +51,32 @@
         }
       }
     },
+    "Licenses" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンス"
+          }
+        }
+      }
+    },
     "Male" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "男性"
+          }
+        }
+      }
+    },
+    "Open source Licenses" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オープンソースライセンス"
           }
         }
       }
