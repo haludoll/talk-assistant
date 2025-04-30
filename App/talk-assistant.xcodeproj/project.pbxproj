@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0C2809B92CBDF35000DAA4ED /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = 0C2809B82CBDF35000DAA4ED /* Root */; };
-		0CE4FC8A2DC1F42F005D95F9 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0CE4FC882DC1F42F005D95F9 /* ci_post_clone.sh */; };
 		CC703A542D0D71A100813035 /* Root in Frameworks */ = {isa = PBXBuildFile; productRef = CC9E340D2CB166C40057918C /* Root */; };
 		CC9F1C152CC66E8A002A35EF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C142CC66E8A002A35EF /* FirebaseCrashlytics */; };
 		CC9F1C212CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CC9F1C202CC6746A002A35EF /* FirebaseAnalyticsWithoutAdIdSupport */; };
@@ -35,7 +34,7 @@
 		0CC28A182CBDE427000059D0 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "talk-assistant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CE4FC882DC1F42F005D95F9 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		0CE4FC8C2DC1F52D005D95F9 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		CC9F1C1E2CC67300002A35EF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -99,18 +98,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0CE4FC892DC1F42F005D95F9 /* ci_scripts */ = {
+		0CE4FC8B2DC1F4DC005D95F9 /* ci_scripts */ = {
 			isa = PBXGroup;
 			children = (
-				0CE4FC882DC1F42F005D95F9 /* ci_post_clone.sh */,
+				0CE4FC8C2DC1F52D005D95F9 /* ci_post_clone.sh */,
 			);
-			name = ci_scripts;
-			path = ../ci_scripts;
-			sourceTree = SOURCE_ROOT;
+			path = ci_scripts;
+			sourceTree = "<group>";
 		};
 		CC0C20762CB159E000102C15 = {
 			isa = PBXGroup;
 			children = (
+				0CE4FC8B2DC1F4DC005D95F9 /* ci_scripts */,
 				CC0C20812CB159E000102C15 /* talk-assistant */,
 				0CA1178E2CBDBE5D008C173C /* talk-assistantTests */,
 				0CA1179B2CBDBE94008C173C /* talk-assistantUITests */,
@@ -118,7 +117,6 @@
 				0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */,
 				0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */,
 				CC9F1C162CC66F38002A35EF /* Frameworks */,
-				0CE4FC892DC1F42F005D95F9 /* ci_scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -275,7 +273,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0CE4FC8A2DC1F42F005D95F9 /* ci_post_clone.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
