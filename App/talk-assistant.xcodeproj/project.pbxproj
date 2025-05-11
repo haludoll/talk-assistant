@@ -34,7 +34,6 @@
 		0CC28A182CBDE427000059D0 /* talk-assistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "talk-assistant.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A192CBDE427000059D0 /* talk-assistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC28A1A2CBDE427000059D0 /* talk-assistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "talk-assistantUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0CE4FC8C2DC1F52D005D95F9 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		CC9F1C1E2CC67300002A35EF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -98,18 +97,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0CE4FC8B2DC1F4DC005D95F9 /* ci_scripts */ = {
-			isa = PBXGroup;
-			children = (
-				0CE4FC8C2DC1F52D005D95F9 /* ci_post_clone.sh */,
-			);
-			path = ci_scripts;
-			sourceTree = "<group>";
-		};
 		CC0C20762CB159E000102C15 = {
 			isa = PBXGroup;
 			children = (
-				0CE4FC8B2DC1F4DC005D95F9 /* ci_scripts */,
 				CC0C20812CB159E000102C15 /* talk-assistant */,
 				0CA1178E2CBDBE5D008C173C /* talk-assistantTests */,
 				0CA1179B2CBDBE94008C173C /* talk-assistantUITests */,
