@@ -23,6 +23,6 @@
       location = "group:SpeechSynthesizer">
    </FileRef>
    <FileRef
-      location = "container:ViewExtension">
+      location = "container:ViewExtensions">
    </FileRef>
 </Workspace>

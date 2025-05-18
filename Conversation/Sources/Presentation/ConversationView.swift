@@ -8,6 +8,7 @@
 import SwiftUI
 import ConversationViewModel
 import ConversationEntity
+import ViewExtensions
 
 public struct ConversationView: View {
     @State private var phraseSpeakViewModel = PhraseSpeakViewModel()
@@ -65,7 +66,7 @@ public struct ConversationView: View {
             phraseCategorySpeakViewModel.createDefault()
             phraseCategorySpeakViewModel.fetchAll()
         }
-        .task {
+        .sceneCancellableTask {
             await phraseSpeakViewModel.observeSpeechDelegate()
         }
     }

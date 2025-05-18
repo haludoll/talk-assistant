@@ -9,6 +9,7 @@ import SwiftUI
 import SettingsViewModel
 import AVFoundation
 import TipKit
+import ViewExtensions
 
 struct VoiceSelectionView: View {
     let voiceSettingsViewModel: VoiceSettingsViewModel
@@ -61,7 +62,7 @@ struct VoiceSelectionView: View {
         }
         .navigationTitle(Text("Voice", bundle: .module))
         .navigationBarTitleDisplayMode(.inline)
-        .task {
+        .sceneCancellableTask {
             await speechSampleViewModel.observeSpeechDelegate()
         }
     }

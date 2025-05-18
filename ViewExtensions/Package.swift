@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ViewExtension",
+    name: "ViewExtensions",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
@@ -11,11 +11,11 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "ViewExtension",
-            targets: ["ViewExtension"]),
+            name: "ViewExtensions",
+            targets: ["ViewExtensions"]),
     ],
     targets: [
         .target(
-            name: "ViewExtension"),
+            name: "ViewExtensions"),
     ]
 )
