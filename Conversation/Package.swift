@@ -29,6 +29,7 @@ let package = Package(
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
         .package(name: "LocalStorage", path: "../LocalStorage"),
+        .package(name: "ViewExtensions", path: "../ViewExtensions"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.1"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "11.4.0"),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
@@ -52,7 +53,8 @@ let package = Package(
             name: "ConversationPresentation",
             dependencies: [
                 "ConversationViewModel",
-                .product(name: "Algorithms", package: "swift-algorithms")
+                .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "ViewExtensions", package: "ViewExtensions")
             ],
             path: "Sources/Presentation"
         ),

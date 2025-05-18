@@ -8,6 +8,7 @@
 import SwiftUI
 import SettingsViewModel
 import LicenseList
+import ViewExtensions
 import enum AVFoundation.AVSpeechSynthesisVoiceGender
 
 public struct SettingsView: View {
@@ -89,6 +90,8 @@ public struct SettingsView: View {
                 voiceSettingsViewModel.fetchVoiceParameter()
                 voiceSettingsViewModel.fetchAvailableVoices()
                 voiceSettingsViewModel.fetchSelectedVoice()
+            }
+            .sceneCancellableTask {
                 await speechSampleViewModel.observeSpeechDelegate()
             }
             .onChange(of: [voiceSettingsViewModel.rate,

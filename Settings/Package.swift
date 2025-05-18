@@ -19,6 +19,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "SpeechSynthesizer", path: "../SpeechSynthesizer"),
+        .package(name: "ViewExtensions", path: "../ViewExtensions"),
         .package(url: "https://github.com/cybozu/LicenseList.git", from: "2.0.1")
     ],
     targets: [
@@ -27,6 +28,7 @@ let package = Package(
             dependencies: [
                 "SettingsViewModel",
                 .product(name: "SpeechSynthesizerDependency", package: "SpeechSynthesizer"),
+                .product(name: "ViewExtensions", package: "ViewExtensions"),
                 .product(name: "LicenseList", package: "LicenseList")
             ],
             path: "Sources/Presentation"
