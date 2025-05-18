@@ -67,22 +67,22 @@ public struct SettingsView: View {
                         }
                         .foregroundStyle(Color(.secondaryLabel))
                     }
-
-                    Section {
-                        Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/terms-of-use-en.html", bundle: .module))!) {
-                            Label(String(localized: "Terms of Use", bundle: .module), systemImage: "safari")
-                        }
-                        Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/privacy-policy-en.html", bundle: .module))!) {
-                            Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "safari")
-                        }
-                        NavigationLink(String(localized: "Licenses", bundle: .module)) {
-                            LicenseListView()
-                                .licenseViewStyle(.withRepositoryAnchorLink)
-                                .navigationTitle(Text("Open source Licenses", bundle: .module))
-                        }
-                    }
-                    .foregroundStyle(Color.primary)
                 }
+
+                Section {
+                    Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/terms-of-use-en.html", bundle: .module))!) {
+                        Label(String(localized: "Terms of Use", bundle: .module), systemImage: "safari")
+                    }
+                    Link(destination: URL(string: String(localized: "https://haludoll.github.io/talk-assistant/privacy-policy-en.html", bundle: .module))!) {
+                        Label(String(localized: "Privacy Policy", bundle: .module), systemImage: "safari")
+                    }
+                    NavigationLink(String(localized: "Licenses", bundle: .module)) {
+                        LicenseListView()
+                            .licenseViewStyle(.withRepositoryAnchorLink)
+                            .navigationTitle(Text("Open source Licenses", bundle: .module))
+                    }
+                }
+                .foregroundStyle(Color.primary)
             }
             .navigationTitle(Text("Settings", bundle: .module))
             .task {
