@@ -6,15 +6,15 @@
 //
 
 import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 
 @Observable
 @MainActor
 package final class PhraseCategoryListViewModel {
-    public private(set) var phraseCategories: [PhraseCategory] = []
+    public private(set) var phraseCategories: [PhraseCategoryAggregate] = []
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
@@ -22,10 +22,12 @@ package final class PhraseCategoryListViewModel {
     package init() {}
 
     package func fetchAll() {
-        do {
-            phraseCategories = try phraseCategoryRepository.fetchAll()
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+        Task {
+            do {
+                phraseCategories = try await phraseCategoryRepository.listCategories()
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

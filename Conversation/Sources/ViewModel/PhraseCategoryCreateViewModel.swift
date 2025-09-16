@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 import struct SwiftUI.Color
 
@@ -25,14 +25,19 @@ package final class PhraseCategoryCreateViewModel {
     package init() {}
 
     package func create() {
-        do {
-            try phraseCategoryRepository.create(.init(id: .init(),
-                                                      createdAt: .now,
-                                                      metadata: .init(name: categoryName,
-                                                                      icon: .init(name: iconName, color: iconColor)),
-                                                      phrases: []))
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+        Task {
+            do {
+                let aggregate = PhraseCategoryAggregate(
+                    id: .init(),
+                    createdAt: .now,
+                    name: categoryName,
+                    icon: .init(systemName: iconName, color: .init(color: iconColor)),
+                    phrases: []
+                )
+                try await phraseCategoryRepository.saveCategory(aggregate)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

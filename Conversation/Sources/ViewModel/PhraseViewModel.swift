@@ -1,29 +1,30 @@
-//
-//  PhraseViewModel.swift
-//  Conversation
-//
-//  Created by haludoll on 2024/12/08.
-//
-
-import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
+import Foundation
 
 @Observable
 @MainActor
 package final class PhraseAddViewModel {
     @ObservationIgnored
-    @Dependency(\.phraseRepository) private var phraseRepository
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
 
-    package func add(_ text: String, to category: PhraseCategory) {
-        do {
-            try phraseRepository.create(Phrase(id: .init(), createdAt: .now, value: text, category: category))
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+    package func add(_ text: String, to categoryID: PhraseCategoryAggregate.ID) {
+        Task {
+            do {
+                let newPhrase = PhraseCategoryAggregate.Phrase(
+                    id: .init(),
+                    createdAt: .now,
+                    value: text,
+                    categoryID: categoryID
+                )
+                try await phraseCategoryRepository.appendPhrase(categoryID, newPhrase)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }
@@ -32,15 +33,17 @@ package final class PhraseAddViewModel {
 @MainActor
 package final class PhraseDeleteViewModel {
     @ObservationIgnored
-    @Dependency(\.phraseRepository) private var phraseRepository
+    @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
 
-    package func delete(_ phrase: Phrase) {
-        do {
-            try phraseRepository.delete(phrase)
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+    package func delete(_ phraseID: PhraseCategoryAggregate.Phrase.ID, in categoryID: PhraseCategoryAggregate.ID) {
+        Task {
+            do {
+                try await phraseCategoryRepository.removePhrase(categoryID, phraseID)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

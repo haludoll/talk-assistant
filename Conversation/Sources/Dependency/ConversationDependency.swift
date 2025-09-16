@@ -5,27 +5,50 @@
 //  Created by haludoll on 2024/11/04.
 //
 
-import Dependencies
 import ConversationEntity
 import ConversationRepository
+import Dependencies
 
 extension PhraseCategoryRepository: DependencyKey {
     package static let liveValue = PhraseCategoryRepository.live()
 }
 
-extension PhraseRepository: DependencyKey {
-    package static let liveValue = PhraseRepository.live()
-}
-
 extension PhraseCategoryRepository: TestDependencyKey {
     package static let previewValue = Self(
-        fetch: { _ in .init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [.init(id: .init(), createdAt: .now, value: "Hello")]) },
-        fetchAll: { [.init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello"),.init(id: .init(), createdAt: .now, value: "Hello")]),
-                     .init(id: .init(2), createdAt: .now, metadata: .init(name: "Health", icon: .init(name: "heart.fill", color: .pink)), phrases: [])] },
-        create: { _ in },
-        delete: { _ in },
-        edit: { _ in }
+        findCategory: { id in
+            guard let category = previewCategories.first(where: { $0.id == id }) else {
+                return previewCategories[0]
+            }
+            return category
+        },
+        listCategories: {
+            previewCategories
+        },
+        saveCategory: { _ in },
+        deleteCategory: { _ in },
+        createDefaultCategoryIfNeeded: {},
+        appendPhrase: { _, _ in },
+        removePhrase: { _, _ in }
     )
+
+    private static let previewCategories: [PhraseCategoryAggregate] = [
+        .init(
+            id: .init(0),
+            createdAt: .now,
+            name: "home",
+            icon: .init(systemName: "house.fill", color: .init(red: 0.0, green: 0.478, blue: 1.0)),
+            phrases: [
+                .init(id: .init(), createdAt: .now, value: "Hello", categoryID: .init(0))
+            ]
+        ),
+        .init(
+            id: .init(2),
+            createdAt: .now,
+            name: "Health",
+            icon: .init(systemName: "heart.fill", color: .init(red: 1.0, green: 0.2, blue: 0.5)),
+            phrases: []
+        )
+    ]
 }
 
 extension DependencyValues {
@@ -33,10 +56,4 @@ extension DependencyValues {
         get { self[PhraseCategoryRepository.self] }
         set { self[PhraseCategoryRepository.self] = newValue }
     }
-
-    package var phraseRepository: PhraseRepository {
-        get { self[PhraseRepository.self] }
-        set { self[PhraseRepository.self] = newValue }
-    }
 }
-

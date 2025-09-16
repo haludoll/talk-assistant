@@ -13,7 +13,7 @@ struct PhraseCategoryEditView: View {
     @State private var phraseCategoryEditViewModel: PhraseCategoryEditViewModel
     @Environment(\.dismiss) private var dismiss
 
-    init(phraseCategory: PhraseCategory) {
+    init(phraseCategory: PhraseCategoryAggregate) {
         self._phraseCategoryEditViewModel = .init(initialValue: .init(phraseCategory: phraseCategory))
     }
 
@@ -48,7 +48,8 @@ struct PhraseCategoryEditView: View {
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
 
-                        PhraseCategoryIconSelectGrid(icon: .init(name: phraseCategoryEditViewModel.iconName, color: phraseCategoryEditViewModel.iconColor)) {
+                        PhraseCategoryIconSelectGrid(iconName: phraseCategoryEditViewModel.iconName,
+                                                     iconColor: phraseCategoryEditViewModel.iconColor) {
                             phraseCategoryEditViewModel.iconName = $0
                         }
                         .padding(.horizontal, 8)
@@ -90,6 +91,6 @@ struct PhraseCategoryEditView: View {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true)) {
-            PhraseCategoryEditView(phraseCategory: .init(id: .init(), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
+            PhraseCategoryEditView(phraseCategory: .init(id: .init(), createdAt: .now, name: "home", icon: .init(systemName: "house.fill", color: .init(red: 0.0, green: 0.478, blue: 1.0)), phrases: []))
         }
 }

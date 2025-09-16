@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import ConversationViewModel
 import ConversationEntity
+import ConversationViewModel
 import ViewExtensions
 
 public struct ConversationView: View {
@@ -63,8 +63,10 @@ public struct ConversationView: View {
         }
         .onAppear {
             phraseSpeakViewModel.setupVoice()
-            phraseCategorySpeakViewModel.createDefault()
-            phraseCategorySpeakViewModel.fetchAll()
+            Task {
+                await phraseCategorySpeakViewModel.createDefault()
+                await phraseCategorySpeakViewModel.fetchAll()
+            }
         }
         .sceneCancellableTask {
             await phraseSpeakViewModel.observeSpeechDelegate()
@@ -99,19 +101,18 @@ private struct PhraseCategoryHeaderTitle: View {
 }
 
 private struct PhrasesPageView: View {
-    let selectedPhraseCategory: PhraseCategory?
+    let selectedPhraseCategory: PhraseCategoryAggregate?
     let phraseSpeakViewModel: PhraseSpeakViewModel
-    
-    private var sortedPhrases: [Phrase] {
+
+    private var phrases: [PhraseCategoryAggregate.Phrase] {
         guard let selectedPhraseCategory else { return [] }
-        return selectedPhraseCategory.phrases.sorted(by: { $0.createdAt > $1.createdAt })
+        return selectedPhraseCategory.phrases
     }
 
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                // WORKAROUND: If you change the `phraseCategory` retrieved from SwiftData outside of View, there is a bug that for some reason the same data is retrieved more than once, so sort it here.
-                ForEach(sortedPhrases) { phrase in
+                ForEach(phrases) { phrase in
                     VStack(spacing: 0) {
                         Button {
                             phraseSpeakViewModel.stop()
@@ -132,7 +133,7 @@ private struct PhrasesPageView: View {
                             .padding(.vertical, 12)
                         }
 
-                        if let lastID = sortedPhrases.last?.id,
+                        if let lastID = phrases.last?.id,
                            phrase.id != lastID {
                             Divider()
                                 .padding(.leading)

@@ -6,21 +6,27 @@
 //
 
 package struct PhraseCategoryRepository: Sendable {
-    package let fetch: @MainActor (PhraseCategory.ID) throws -> PhraseCategory
-    package let fetchAll: @MainActor () throws -> [PhraseCategory]
-    package let create: @MainActor (PhraseCategory) throws -> Void
-    package let delete: @MainActor (PhraseCategory) throws -> Void
-    package let edit: @MainActor (PhraseCategory) throws -> Void
+    package let findCategory: @Sendable (PhraseCategoryAggregate.ID) async throws -> PhraseCategoryAggregate
+    package let listCategories: @Sendable () async throws -> [PhraseCategoryAggregate]
+    package let saveCategory: @Sendable (PhraseCategoryAggregate) async throws -> Void
+    package let deleteCategory: @Sendable (PhraseCategoryAggregate.ID) async throws -> Void
+    package let createDefaultCategoryIfNeeded: @Sendable () async throws -> Void
+    package let appendPhrase: @Sendable (PhraseCategoryAggregate.ID, PhraseCategoryAggregate.Phrase) async throws -> Void
+    package let removePhrase: @Sendable (PhraseCategoryAggregate.ID, PhraseCategoryAggregate.Phrase.ID) async throws -> Void
 
-    package init(fetch: @escaping @MainActor (PhraseCategory.ID) throws -> PhraseCategory,
-                 fetchAll: @escaping @MainActor () throws -> [PhraseCategory],
-                 create: @escaping @MainActor (PhraseCategory) throws -> Void,
-                 delete: @escaping @MainActor (PhraseCategory) throws -> Void,
-                 edit: @escaping @MainActor (PhraseCategory) throws -> Void) {
-        self.fetch = fetch
-        self.fetchAll = fetchAll
-        self.create = create
-        self.delete = delete
-        self.edit = edit
+    package init(findCategory: @escaping @Sendable (PhraseCategoryAggregate.ID) async throws -> PhraseCategoryAggregate,
+                 listCategories: @escaping @Sendable () async throws -> [PhraseCategoryAggregate],
+                 saveCategory: @escaping @Sendable (PhraseCategoryAggregate) async throws -> Void,
+                 deleteCategory: @escaping @Sendable (PhraseCategoryAggregate.ID) async throws -> Void,
+                 createDefaultCategoryIfNeeded: @escaping @Sendable () async throws -> Void,
+                 appendPhrase: @escaping @Sendable (PhraseCategoryAggregate.ID, PhraseCategoryAggregate.Phrase) async throws -> Void,
+                 removePhrase: @escaping @Sendable (PhraseCategoryAggregate.ID, PhraseCategoryAggregate.Phrase.ID) async throws -> Void) {
+        self.findCategory = findCategory
+        self.listCategories = listCategories
+        self.saveCategory = saveCategory
+        self.deleteCategory = deleteCategory
+        self.createDefaultCategoryIfNeeded = createDefaultCategoryIfNeeded
+        self.appendPhrase = appendPhrase
+        self.removePhrase = removePhrase
     }
 }

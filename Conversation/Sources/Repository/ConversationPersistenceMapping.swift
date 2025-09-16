@@ -1,10 +1,11 @@
 import ConversationEntity
 import ConversationPersistenceModel
+import SwiftData
 import SwiftUI
 import UIKit
 
 extension ConversationEntity.PhraseCategoryAggregate {
-    func makePersistenceCategory() -> ConversationPersistenceModel.PhraseCategory {
+    func makePersistenceCategory(in context: ModelContext) -> ConversationPersistenceModel.PhraseCategory {
         let swiftUIColor = Color(
             red: icon.color.red,
             green: icon.color.green,
@@ -32,6 +33,7 @@ extension ConversationEntity.PhraseCategoryAggregate {
         for phrase in category.phrases {
             phrase.category = category
         }
+        context.insert(category)
         return category
     }
 }
@@ -46,7 +48,9 @@ extension ConversationPersistenceModel.PhraseCategory {
             alpha: rgba.alpha
         )
         let icon = ConversationEntity.PhraseCategoryAggregate.Icon(systemName: metadata.icon.name, color: iconColor)
-        let mappedPhrases = phrases.map { phrase in
+        let mappedPhrases = phrases
+            .sorted(by: { $0.createdAt > $1.createdAt })
+            .map { phrase in
             ConversationEntity.PhraseCategoryAggregate.Phrase(
                 id: phrase.id,
                 createdAt: phrase.createdAt,
@@ -61,6 +65,50 @@ extension ConversationPersistenceModel.PhraseCategory {
             icon: icon,
             phrases: mappedPhrases
         )
+    }
+}
+
+extension ConversationPersistenceModel.PhraseCategory {
+    func apply(_ aggregate: ConversationEntity.PhraseCategoryAggregate, in context: ModelContext) {
+        createdAt = aggregate.createdAt
+        metadata = .init(
+            name: aggregate.name,
+            icon: .init(
+                name: aggregate.icon.systemName,
+                color: Color(
+                    red: aggregate.icon.color.red,
+                    green: aggregate.icon.color.green,
+                    blue: aggregate.icon.color.blue,
+                    opacity: aggregate.icon.color.alpha
+                )
+            )
+        )
+
+        var existing = Dictionary(uniqueKeysWithValues: phrases.map { ($0.id, $0) })
+        var next: [ConversationPersistenceModel.Phrase] = []
+
+        for phrase in aggregate.phrases {
+            if let current = existing.removeValue(forKey: phrase.id) {
+                current.createdAt = phrase.createdAt
+                current.value = phrase.value
+                current.category = self
+                next.append(current)
+            } else {
+                let created = ConversationPersistenceModel.Phrase(
+                    id: phrase.id,
+                    createdAt: phrase.createdAt,
+                    value: phrase.value,
+                    category: self
+                )
+                next.append(created)
+            }
+        }
+
+        for orphan in existing.values {
+            context.delete(orphan)
+        }
+
+        phrases = next.sorted(by: { $0.createdAt > $1.createdAt })
     }
 }
 

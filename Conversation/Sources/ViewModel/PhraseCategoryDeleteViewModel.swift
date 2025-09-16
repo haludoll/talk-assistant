@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 
 @Observable
@@ -19,11 +19,13 @@ package final class PhraseCategoryDeleteViewModel {
 
     package init() {}
 
-    package func delete(_ phraseCategory: PhraseCategory) {
-        do {
-            try phraseCategoryRepository.delete(phraseCategory)
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+    package func delete(_ phraseCategory: PhraseCategoryAggregate) {
+        Task {
+            do {
+                try await phraseCategoryRepository.deleteCategory(phraseCategory.id)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

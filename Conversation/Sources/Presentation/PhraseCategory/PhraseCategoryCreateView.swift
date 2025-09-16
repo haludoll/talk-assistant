@@ -43,7 +43,8 @@ struct PhraseCategoryCreateView: View {
                         .background(Color(.secondarySystemBackground))
                         .cornerRadius(8)
 
-                        PhraseCategoryIconSelectGrid(icon: .init(name: phraseCategoryCreateViewModel.iconName, color: phraseCategoryCreateViewModel.iconColor)) {
+                        PhraseCategoryIconSelectGrid(iconName: phraseCategoryCreateViewModel.iconName,
+                                                     iconColor: phraseCategoryCreateViewModel.iconColor) {
                             phraseCategoryCreateViewModel.iconName = $0
                         }
                         .padding(.horizontal, 8)

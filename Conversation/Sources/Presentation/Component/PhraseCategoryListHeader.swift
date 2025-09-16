@@ -8,23 +8,23 @@ import SwiftUI
 import ConversationEntity
 
 struct PhraseCategoryListHeader: View {
-    let phraseCategories: [PhraseCategory]
-    @Binding var selectedPhraseCategory: PhraseCategory?
+    let phraseCategories: [PhraseCategoryAggregate]
+    @Binding var selectedPhraseCategory: PhraseCategoryAggregate?
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(phraseCategories, id: \.persistentModelID.id) { phraseCategory in
+                ForEach(phraseCategories) { phraseCategory in
                     Button {
                         self.selectedPhraseCategory = phraseCategory
                     } label: {
                         Label {
-                            Text(phraseCategory.metadata.name)
+                            Text(phraseCategory.name)
                                 .foregroundStyle(phraseCategory == selectedPhraseCategory ? Color.primary : Color(.secondaryLabel))
                                 .bold()
                         } icon: {
-                            Image(systemName: phraseCategory.metadata.icon.name)
-                                .foregroundStyle(phraseCategory.metadata.icon.color)
+                            Image(systemName: phraseCategory.icon.systemName)
+                                .foregroundStyle(phraseCategory.icon.color.toColor())
                         }
                         .font(.subheadline)
                         .labelStyle(.phraseCategoryLabel)
@@ -56,7 +56,16 @@ private extension LabelStyle where Self == PhraseCategoryLabelStyle {
 }
 
 #Preview {
-    @Previewable @State var selectedCategory: PhraseCategory? = .init(id: .init(0), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: [])
-    let phraseCategories: [PhraseCategory] = [selectedCategory!, .init(id: .init(2), createdAt: .now, metadata: .init(name: "Health", icon: .init(name: "heart.fill", color: .pink)), phrases: [])]
+    @Previewable @State var selectedCategory: PhraseCategoryAggregate? = .init(
+        id: .init(0),
+        createdAt: .now,
+        name: "home",
+        icon: .init(systemName: "house.fill", color: .init(red: 0.0, green: 0.478, blue: 1.0)),
+        phrases: []
+    )
+    let phraseCategories: [PhraseCategoryAggregate] = [
+        selectedCategory!,
+        .init(id: .init(2), createdAt: .now, name: "Health", icon: .init(systemName: "heart.fill", color: .init(red: 1.0, green: 0.2, blue: 0.5)), phrases: [])
+    ]
     PhraseCategoryListHeader(phraseCategories: phraseCategories, selectedPhraseCategory: $selectedCategory)
 }

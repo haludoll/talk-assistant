@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import ConversationEntity
 import ConversationViewModel
+import ConversationEntity
 
 struct PhraseCategoryDetailView: View {
     @State private var phraseCategoryDetailViewModel = PhraseCategoryDetailViewModel()
@@ -18,11 +18,11 @@ struct PhraseCategoryDetailView: View {
     @State private var showingPhraseCategoryEditView = false
     @State private var showingPhraseAddView = false
     @State private var showingDeleteAlert = false
-    @State private var deletingPhraseCategory: PhraseCategory?
+    @State private var deletingPhraseCategory: PhraseCategoryAggregate?
 
-    private let phraseCategoryID: PhraseCategory.ID
+    private let phraseCategoryID: PhraseCategoryAggregate.ID
 
-    init(phraseCategoryID: PhraseCategory.ID) {
+    init(phraseCategoryID: PhraseCategoryAggregate.ID) {
         self.phraseCategoryID = phraseCategoryID
     }
 
@@ -35,13 +35,13 @@ struct PhraseCategoryDetailView: View {
                             showingPhraseCategoryEditView.toggle()
                         } label: {
                             VStack {
-                                Image(systemName: phraseCategory.metadata.icon.name)
+                                Image(systemName: phraseCategory.icon.systemName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 80, height: 80)
-                                    .foregroundStyle(phraseCategory.metadata.icon.color)
+                                    .foregroundStyle(phraseCategory.icon.color.toColor())
 
-                                Text(phraseCategory.metadata.name)
+                                Text(phraseCategory.name)
                                     .font(.title2)
                                     .bold()
                                     .multilineTextAlignment(.center)
@@ -70,7 +70,7 @@ struct PhraseCategoryDetailView: View {
                                     .swipeActions {
                                         Button(String(localized: "Delete", bundle: .module)) {
                                             withAnimation  {
-                                                phraseDeleteViewModel.delete(phrase)
+                                                phraseDeleteViewModel.delete(phrase.id, in: phraseCategoryID)
                                                 phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
                                             }
                                         }
@@ -97,9 +97,9 @@ struct PhraseCategoryDetailView: View {
                 .sheet(isPresented: $showingPhraseAddView, onDismiss: {
                     phraseCategoryDetailViewModel.fetch(for: phraseCategoryID)
                 }) {
-                    PhraseAddView(phraseCategory: phraseCategory)
+                    PhraseAddView(phraseCategoryID: phraseCategoryID)
                 }
-                .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.metadata.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
+                .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
                     Button(String(localized: "Delete", bundle: .module), role: .destructive) {
                         withAnimation {
                             phraseCategoryDeleteViewModel.delete(phraseCategoryToDelete)
