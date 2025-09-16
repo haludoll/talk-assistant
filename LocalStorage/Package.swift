@@ -19,7 +19,6 @@ let package = Package(
             targets: ["ConversationPersistenceModel"]),
     ],
     dependencies: [
-        .package(name: "Conversation", path: "../Conversation"),
     ],
     targets: [
         .target(
@@ -28,7 +27,7 @@ let package = Package(
         .target(
             name: "LocalStorage",
             dependencies: [
-                .product(name: "ConversationEntity", package: "Conversation")
+                "ConversationPersistenceModel"
             ])
     ]
 )

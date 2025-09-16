@@ -63,6 +63,7 @@ let package = Package(
             dependencies: [
                 "ConversationEntity",
                 .product(name: "LocalStorage", package: "LocalStorage"),
+                .product(name: "ConversationPersistenceModel", package: "LocalStorage")
             ],
             path: "Sources/Repository"
         ),
