@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 
 @Observable
@@ -22,10 +22,12 @@ package final class PhraseCategoryDetailViewModel {
     package init() {}
 
     package func fetch(for id: PhraseCategory.ID) {
-        do {
-            phraseCategory = try phraseCategoryRepository.fetch(id)
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+        Task {
+            do {
+                phraseCategory = try await phraseCategoryRepository.findCategory(id)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

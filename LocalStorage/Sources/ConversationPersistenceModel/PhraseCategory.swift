@@ -1,41 +1,41 @@
 //
 //  PhraseCategory.swift
-//  Conversation
+//  ConversationPersistenceModel
 //
-//  Created by haludoll on 2024/11/04.
+//  Created by ChatGPT on 2025/09/16.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 import SwiftUI
 
 @Model
 public final class PhraseCategory: Identifiable {
     @Attribute(.unique) public var id: UUID
-    package var createdAt: Date
-    package var metadata: Metadata
-    @Relationship(deleteRule: .cascade, inverse: \Phrase.category) package var phrases: [Phrase] = []
+    public var createdAt: Date
+    public var metadata: Metadata
+    @Relationship(deleteRule: .cascade, inverse: \Phrase.category) public var phrases: [Phrase] = []
 
-    package init(id: UUID, createdAt: Date, metadata: Metadata, phrases: [Phrase]) {
+    public init(id: UUID, createdAt: Date, metadata: Metadata, phrases: [Phrase]) {
         self.id = id
         self.createdAt = createdAt
         self.metadata = metadata
         self.phrases = phrases
     }
 
-    package struct Metadata: Codable {
-        package var name: String
-        package var icon: Icon
+    public struct Metadata: Codable {
+        public var name: String
+        public var icon: Icon
 
-        package init(name: String, icon: Icon) {
+        public init(name: String, icon: Icon) {
             self.name = name
             self.icon = icon
         }
 
-        package struct Icon: Codable {
-            package var name: String
-            package var colorData: Data
-            package var color: Color {
+        public struct Icon: Codable {
+            public var name: String
+            public var colorData: Data
+            public var color: Color {
                 get {
                     try! JSONDecoder().decode(Color.self, from: colorData)
                 }
@@ -44,7 +44,7 @@ public final class PhraseCategory: Identifiable {
                 }
             }
 
-            package init(name: String, color: Color) {
+            public init(name: String, color: Color) {
                 self.name = name
                 self.colorData = try! JSONEncoder().encode(color)
             }

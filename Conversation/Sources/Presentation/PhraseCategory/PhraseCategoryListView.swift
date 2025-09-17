@@ -23,10 +23,10 @@ struct PhraseCategoryListView: View {
                     PhraseCategoryDetailView(phraseCategoryID: phraseCategory.id)
                 } label: {
                     Label {
-                        LabeledContent(phraseCategory.metadata.name, value: "\(phraseCategory.phrases.count)")
+                        LabeledContent(phraseCategory.name, value: "\(phraseCategory.phrases.count)")
                     } icon: {
-                        Image(systemName: phraseCategory.metadata.icon.name)
-                            .foregroundStyle(phraseCategory.metadata.icon.color)
+                        Image(systemName: phraseCategory.icon.systemName)
+                            .foregroundStyle(phraseCategory.icon.color.toColor())
                     }
                     .swipeActions {
                         Button(String(localized: "Delete", bundle: .module)) {
@@ -51,7 +51,7 @@ struct PhraseCategoryListView: View {
         }) {
             PhraseCategoryCreateView()
         }
-        .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.metadata.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
+        .alert(String(localized: "Delete Category \"\(deletingPhraseCategory?.name ?? "")\"?", bundle: .module), isPresented: $showingDeleteAlert, presenting: deletingPhraseCategory) { phraseCategoryToDelete in
             Button(String(localized: "Delete", bundle: .module), role: .destructive) {
                 withAnimation {
                     phraseCategoryDeleteViewModel.delete(phraseCategoryToDelete)

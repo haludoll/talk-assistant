@@ -6,7 +6,7 @@
 //
 
 @preconcurrency import SwiftData
-import ConversationEntity
+import ConversationPersistenceModel
 
 extension ModelContainer {
     static let configurations = ModelConfiguration(for: PhraseCategory.self, Phrase.self)

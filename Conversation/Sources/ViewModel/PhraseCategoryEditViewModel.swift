@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Dependencies
-import ConversationEntity
 import ConversationDependency
+import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 import struct SwiftUI.Color
 
@@ -19,27 +19,27 @@ package final class PhraseCategoryEditViewModel {
     public var iconName: String
     public var iconColor: Color
 
-    private let phraseCategory: PhraseCategory
+    private var phraseCategory: PhraseCategory
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init(phraseCategory: PhraseCategory) {
         self.phraseCategory = phraseCategory
-        self.categoryName = phraseCategory.metadata.name
-        self.iconName = phraseCategory.metadata.icon.name
-        self.iconColor = phraseCategory.metadata.icon.color
+        self.categoryName = phraseCategory.name
+        self.iconName = phraseCategory.icon.systemName
+        self.iconColor = phraseCategory.icon.color.toColor()
     }
 
     package func edit() {
-        do {
-            try phraseCategoryRepository.edit(.init(id: phraseCategory.id,
-                                                    createdAt: phraseCategory.createdAt,
-                                                    metadata: .init(name: categoryName,
-                                                                    icon: .init(name: iconName, color: iconColor)),
-                                                    phrases: phraseCategory.phrases))
-        } catch {
-            Crashlytics.crashlytics().record(error: error)
+        Task {
+            do {
+                phraseCategory.name = categoryName
+                phraseCategory.icon = .init(systemName: iconName, color: .init(color: iconColor))
+                try await phraseCategoryRepository.saveCategory(phraseCategory)
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+            }
         }
     }
 }

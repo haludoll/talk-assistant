@@ -14,13 +14,20 @@ let package = Package(
             name: "LocalStorage",
             type: .dynamic,
             targets: ["LocalStorage"]),
+        .library(
+            name: "ConversationPersistenceModel",
+            targets: ["ConversationPersistenceModel"]),
     ],
     dependencies: [
-        .package(name: "Conversation", path: "../Conversation"),
     ],
     targets: [
         .target(
+            name: "ConversationPersistenceModel"
+        ),
+        .target(
             name: "LocalStorage",
-            dependencies: [.product(name: "ConversationEntity", package: "Conversation")])
+            dependencies: [
+                "ConversationPersistenceModel"
+            ])
     ]
 )

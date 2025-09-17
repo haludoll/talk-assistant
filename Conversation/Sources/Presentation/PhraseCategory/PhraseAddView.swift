@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import ConversationEntity
 import ConversationViewModel
+import ConversationEntity
 
 struct PhraseAddView: View {
     @State private var text = ""
@@ -15,7 +15,7 @@ struct PhraseAddView: View {
     @FocusState private var focused: Bool
     @Environment(\.dismiss) private var dismiss
 
-    let phraseCategory: PhraseCategory
+    let phraseCategoryID: PhraseCategory.ID
 
     var body: some View {
         NavigationStack {
@@ -30,7 +30,7 @@ struct PhraseAddView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "Save", bundle: .module)) {
-                        phraseAddViewModel.add(text, to: phraseCategory)
+                        phraseAddViewModel.add(text, to: phraseCategoryID)
                         dismiss()
                     }
                 }
@@ -53,6 +53,6 @@ struct PhraseAddView: View {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true)) {
-            PhraseAddView(phraseCategory: .init(id: .init(), createdAt: .now, metadata: .init(name: "home", icon: .init(name: "house.fill", color: .blue)), phrases: []))
+            PhraseAddView(phraseCategoryID: .init())
         }
 }

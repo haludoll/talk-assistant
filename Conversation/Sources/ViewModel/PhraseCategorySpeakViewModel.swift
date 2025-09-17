@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import Dependencies
+import ConversationDependency
 import ConversationEntity
+import Dependencies
 import FirebaseCrashlytics
 
 @Observable
@@ -21,18 +22,18 @@ package final class PhraseCategorySpeakViewModel {
 
     package init() {}
 
-    package func fetchAll() {
+    package func fetchAll() async {
         do {
-            phraseCategories = try phraseCategoryRepository.fetchAll()
+            phraseCategories = try await phraseCategoryRepository.listCategories()
             selectedPhraseCategory = phraseCategories.first
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
     }
 
-    package func createDefault() {
+    package func createDefault() async {
         do {
-            try PhraseCategoryRepository.createDefault()
+            try await phraseCategoryRepository.createDefaultCategoryIfNeeded()
         } catch {
             Crashlytics.crashlytics().record(error: error)
         }
