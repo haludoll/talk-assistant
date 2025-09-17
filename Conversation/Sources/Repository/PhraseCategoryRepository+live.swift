@@ -48,8 +48,8 @@ extension PhraseCategoryRepository {
             createDefaultCategoryIfNeeded: {
                 guard !userDefaults.bool(forKey: setDefaultPhraseCategoryUserDefaultsKey) else { return }
                 try await store.withContext { context in
-                    let iconColor = PhraseCategoryAggregate.Icon.Color(color: Color.pink)
-                    let category = PhraseCategoryAggregate(
+                    let iconColor = PhraseCategory.Icon.Color(color: Color.pink)
+                    let category = PhraseCategory(
                         id: .init(),
                         createdAt: .now,
                         name: String(localized: "Common Phrases", bundle: .module),
@@ -108,23 +108,23 @@ private func fetchCategory(id: UUID, context: ModelContext) throws -> Conversati
 }
 
 private extension PhraseCategoryRepository {
-    static func defaultPhrases() -> [PhraseCategoryAggregate.Phrase] {
+    static func defaultPhrases() -> [ConversationEntity.PhraseCategory.Phrase] {
         [
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Goodbye", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Please say that again", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "I'm okay", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Excuse me", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Thank you", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "No", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Yes", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Good evening", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Hello", bundle: .module), categoryID: nil),
-            PhraseCategoryAggregate.Phrase(id: .init(), createdAt: .now, value: String(localized: "Good morning", bundle: .module), categoryID: nil)
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Goodbye", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Please say that again", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "I'm okay", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Excuse me", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Thank you", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "No", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Yes", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Good evening", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Hello", bundle: .module), categoryID: nil),
+            ConversationEntity.PhraseCategory.Phrase(id: .init(), createdAt: .now, value: String(localized: "Good morning", bundle: .module), categoryID: nil)
         ]
     }
 }
 
-private extension PhraseCategoryAggregate.Icon.Color {
+private extension ConversationEntity.PhraseCategory.Icon.Color {
     init(color: Color) {
         var red: CGFloat = 0
         var green: CGFloat = 0

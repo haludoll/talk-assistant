@@ -8,8 +8,8 @@ import SwiftUI
 import ConversationEntity
 
 struct PhraseCategoryListHeader: View {
-    let phraseCategories: [PhraseCategoryAggregate]
-    @Binding var selectedPhraseCategory: PhraseCategoryAggregate?
+    let phraseCategories: [PhraseCategory]
+    @Binding var selectedPhraseCategory: PhraseCategory?
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -56,14 +56,14 @@ private extension LabelStyle where Self == PhraseCategoryLabelStyle {
 }
 
 #Preview {
-    @Previewable @State var selectedCategory: PhraseCategoryAggregate? = .init(
+    @Previewable @State var selectedCategory: PhraseCategory? = .init(
         id: .init(0),
         createdAt: .now,
         name: "home",
         icon: .init(systemName: "house.fill", color: .init(red: 0.0, green: 0.478, blue: 1.0)),
         phrases: []
     )
-    let phraseCategories: [PhraseCategoryAggregate] = [
+    let phraseCategories: [PhraseCategory] = [
         selectedCategory!,
         .init(id: .init(2), createdAt: .now, name: "Health", icon: .init(systemName: "heart.fill", color: .init(red: 1.0, green: 0.2, blue: 0.5)), phrases: [])
     ]

@@ -14,14 +14,14 @@ import FirebaseCrashlytics
 @Observable
 @MainActor
 package final class PhraseCategoryDetailViewModel {
-    public var phraseCategory: PhraseCategoryAggregate?
+    public var phraseCategory: PhraseCategory?
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
     package init() {}
 
-    package func fetch(for id: PhraseCategoryAggregate.ID) {
+    package func fetch(for id: PhraseCategory.ID) {
         Task {
             do {
                 phraseCategory = try await phraseCategoryRepository.findCategory(id)

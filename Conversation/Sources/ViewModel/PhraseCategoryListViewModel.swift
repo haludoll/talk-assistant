@@ -14,7 +14,7 @@ import FirebaseCrashlytics
 @Observable
 @MainActor
 package final class PhraseCategoryListViewModel {
-    public private(set) var phraseCategories: [PhraseCategoryAggregate] = []
+    public private(set) var phraseCategories: [PhraseCategory] = []
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository

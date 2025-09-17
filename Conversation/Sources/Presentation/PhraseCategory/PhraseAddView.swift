@@ -15,7 +15,7 @@ struct PhraseAddView: View {
     @FocusState private var focused: Bool
     @Environment(\.dismiss) private var dismiss
 
-    let phraseCategoryID: PhraseCategoryAggregate.ID
+    let phraseCategoryID: PhraseCategory.ID
 
     var body: some View {
         NavigationStack {

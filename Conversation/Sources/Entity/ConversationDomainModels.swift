@@ -1,7 +1,7 @@
 import Foundation
 
 /// 会話領域のカテゴリ集約。カテゴリ本体と配下のフレーズを一体で扱う。
-public struct PhraseCategoryAggregate: Identifiable, Hashable, Sendable {
+public struct PhraseCategory: Identifiable, Hashable, Sendable {
     /// カテゴリが持つアイコン情報。
     public struct Icon: Hashable, Sendable {
         /// UI層に依存しない RGBA 色表現。
@@ -33,12 +33,12 @@ public struct PhraseCategoryAggregate: Identifiable, Hashable, Sendable {
         public var id: UUID
         public var createdAt: Date
         public var value: String
-        public var categoryID: PhraseCategoryAggregate.ID?
+        public var categoryID: PhraseCategory.ID?
 
         public init(id: UUID = UUID(),
                     createdAt: Date = Date(),
                     value: String,
-                    categoryID: PhraseCategoryAggregate.ID?) {
+                    categoryID: PhraseCategory.ID?) {
             self.id = id
             self.createdAt = createdAt
             self.value = value

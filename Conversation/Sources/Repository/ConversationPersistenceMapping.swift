@@ -4,7 +4,7 @@ import SwiftData
 import SwiftUI
 import UIKit
 
-extension ConversationEntity.PhraseCategoryAggregate {
+extension ConversationEntity.PhraseCategory {
     func makePersistenceCategory(in context: ModelContext) -> ConversationPersistenceModel.PhraseCategory {
         let swiftUIColor = Color(
             red: icon.color.red,
@@ -39,26 +39,26 @@ extension ConversationEntity.PhraseCategoryAggregate {
 }
 
 extension ConversationPersistenceModel.PhraseCategory {
-    func toAggregate() -> ConversationEntity.PhraseCategoryAggregate {
+    func toAggregate() -> ConversationEntity.PhraseCategory {
         let rgba = metadata.icon.color.rgbaComponents
-        let iconColor = ConversationEntity.PhraseCategoryAggregate.Icon.Color(
+        let iconColor = ConversationEntity.PhraseCategory.Icon.Color(
             red: rgba.red,
             green: rgba.green,
             blue: rgba.blue,
             alpha: rgba.alpha
         )
-        let icon = ConversationEntity.PhraseCategoryAggregate.Icon(systemName: metadata.icon.name, color: iconColor)
+        let icon = ConversationEntity.PhraseCategory.Icon(systemName: metadata.icon.name, color: iconColor)
         let mappedPhrases = phrases
             .sorted(by: { $0.createdAt > $1.createdAt })
             .map { phrase in
-            ConversationEntity.PhraseCategoryAggregate.Phrase(
+            ConversationEntity.PhraseCategory.Phrase(
                 id: phrase.id,
                 createdAt: phrase.createdAt,
                 value: phrase.value,
                 categoryID: phrase.category?.id
             )
         }
-        return ConversationEntity.PhraseCategoryAggregate(
+        return ConversationEntity.PhraseCategory(
             id: id,
             createdAt: createdAt,
             name: metadata.name,
@@ -69,7 +69,7 @@ extension ConversationPersistenceModel.PhraseCategory {
 }
 
 extension ConversationPersistenceModel.PhraseCategory {
-    func apply(_ aggregate: ConversationEntity.PhraseCategoryAggregate, in context: ModelContext) {
+    func apply(_ aggregate: ConversationEntity.PhraseCategory, in context: ModelContext) {
         createdAt = aggregate.createdAt
         metadata = .init(
             name: aggregate.name,

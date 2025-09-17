@@ -19,12 +19,12 @@ package final class PhraseCategoryEditViewModel {
     public var iconName: String
     public var iconColor: Color
 
-    private var phraseCategory: PhraseCategoryAggregate
+    private var phraseCategory: PhraseCategory
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository
 
-    package init(phraseCategory: PhraseCategoryAggregate) {
+    package init(phraseCategory: PhraseCategory) {
         self.phraseCategory = phraseCategory
         self.categoryName = phraseCategory.name
         self.iconName = phraseCategory.icon.systemName

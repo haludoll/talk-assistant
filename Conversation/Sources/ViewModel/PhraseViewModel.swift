@@ -12,10 +12,10 @@ package final class PhraseAddViewModel {
 
     package init() {}
 
-    package func add(_ text: String, to categoryID: PhraseCategoryAggregate.ID) {
+    package func add(_ text: String, to categoryID: PhraseCategory.ID) {
         Task {
             do {
-                let newPhrase = PhraseCategoryAggregate.Phrase(
+                let newPhrase = PhraseCategory.Phrase(
                     id: .init(),
                     createdAt: .now,
                     value: text,
@@ -37,7 +37,7 @@ package final class PhraseDeleteViewModel {
 
     package init() {}
 
-    package func delete(_ phraseID: PhraseCategoryAggregate.Phrase.ID, in categoryID: PhraseCategoryAggregate.ID) {
+    package func delete(_ phraseID: PhraseCategory.Phrase.ID, in categoryID: PhraseCategory.ID) {
         Task {
             do {
                 try await phraseCategoryRepository.removePhrase(categoryID, phraseID)

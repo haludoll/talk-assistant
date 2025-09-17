@@ -101,10 +101,10 @@ private struct PhraseCategoryHeaderTitle: View {
 }
 
 private struct PhrasesPageView: View {
-    let selectedPhraseCategory: PhraseCategoryAggregate?
+    let selectedPhraseCategory: PhraseCategory?
     let phraseSpeakViewModel: PhraseSpeakViewModel
 
-    private var phrases: [PhraseCategoryAggregate.Phrase] {
+    private var phrases: [PhraseCategory.Phrase] {
         guard let selectedPhraseCategory else { return [] }
         return selectedPhraseCategory.phrases
     }

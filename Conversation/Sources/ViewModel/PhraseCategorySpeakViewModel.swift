@@ -14,8 +14,8 @@ import FirebaseCrashlytics
 @Observable
 @MainActor
 package final class PhraseCategorySpeakViewModel {
-    public private(set) var phraseCategories: [PhraseCategoryAggregate] = []
-    public var selectedPhraseCategory: PhraseCategoryAggregate?
+    public private(set) var phraseCategories: [PhraseCategory] = []
+    public var selectedPhraseCategory: PhraseCategory?
 
     @ObservationIgnored
     @Dependency(\.phraseCategoryRepository) private var phraseCategoryRepository

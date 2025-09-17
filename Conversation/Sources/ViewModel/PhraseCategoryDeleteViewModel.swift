@@ -19,7 +19,7 @@ package final class PhraseCategoryDeleteViewModel {
 
     package init() {}
 
-    package func delete(_ phraseCategory: PhraseCategoryAggregate) {
+    package func delete(_ phraseCategory: PhraseCategory) {
         Task {
             do {
                 try await phraseCategoryRepository.deleteCategory(phraseCategory.id)

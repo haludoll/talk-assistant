@@ -27,7 +27,7 @@ package final class PhraseCategoryCreateViewModel {
     package func create() {
         Task {
             do {
-                let aggregate = PhraseCategoryAggregate(
+                let aggregate = PhraseCategory(
                     id: .init(),
                     createdAt: .now,
                     name: categoryName,

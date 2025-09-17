@@ -14,7 +14,7 @@ struct PhraseCategoryListView: View {
     @State private var phraseCategoryDeleteViewModel = PhraseCategoryDeleteViewModel()
     @State private var showingPhraseCategoryCreateView = false
     @State private var showingDeleteAlert = false
-    @State private var deletingPhraseCategory: PhraseCategoryAggregate?
+    @State private var deletingPhraseCategory: PhraseCategory?
 
     var body: some View {
         List {

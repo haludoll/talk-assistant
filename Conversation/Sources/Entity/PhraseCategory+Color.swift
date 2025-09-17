@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-public extension PhraseCategoryAggregate.Icon.Color {
+public extension PhraseCategory.Icon.Color {
     func toColor() -> Color {
         Color(red: red, green: green, blue: blue, opacity: alpha)
     }

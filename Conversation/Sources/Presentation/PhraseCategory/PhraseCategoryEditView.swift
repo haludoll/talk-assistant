@@ -13,7 +13,7 @@ struct PhraseCategoryEditView: View {
     @State private var phraseCategoryEditViewModel: PhraseCategoryEditViewModel
     @Environment(\.dismiss) private var dismiss
 
-    init(phraseCategory: PhraseCategoryAggregate) {
+    init(phraseCategory: PhraseCategory) {
         self._phraseCategoryEditViewModel = .init(initialValue: .init(phraseCategory: phraseCategory))
     }
 

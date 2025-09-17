@@ -31,15 +31,13 @@ extension PhraseCategoryRepository: TestDependencyKey {
         removePhrase: { _, _ in }
     )
 
-    private static let previewCategories: [PhraseCategoryAggregate] = [
+    private static let previewCategories: [PhraseCategory] = [
         .init(
             id: .init(0),
             createdAt: .now,
             name: "home",
             icon: .init(systemName: "house.fill", color: .init(red: 0.0, green: 0.478, blue: 1.0)),
-            phrases: [
-                .init(id: .init(), createdAt: .now, value: "Hello", categoryID: .init(0))
-            ]
+            phrases: [.init(id: .init(), createdAt: .now, value: "Hello", categoryID: .init(0))]
         ),
         .init(
             id: .init(2),

@@ -18,11 +18,11 @@ struct PhraseCategoryDetailView: View {
     @State private var showingPhraseCategoryEditView = false
     @State private var showingPhraseAddView = false
     @State private var showingDeleteAlert = false
-    @State private var deletingPhraseCategory: PhraseCategoryAggregate?
+    @State private var deletingPhraseCategory: PhraseCategory?
 
-    private let phraseCategoryID: PhraseCategoryAggregate.ID
+    private let phraseCategoryID: PhraseCategory.ID
 
-    init(phraseCategoryID: PhraseCategoryAggregate.ID) {
+    init(phraseCategoryID: PhraseCategory.ID) {
         self.phraseCategoryID = phraseCategoryID
     }
 
@@ -66,7 +66,7 @@ struct PhraseCategoryDetailView: View {
                     if !phraseCategory.phrases.isEmpty {
                         Section {
                             ForEach(phraseCategory.phrases) { phrase in
-                                Text(phrase.value)
+                        Text(phrase.value)
                                     .swipeActions {
                                         Button(String(localized: "Delete", bundle: .module)) {
                                             withAnimation  {
