@@ -50,17 +50,20 @@ public struct PhraseCategory: Identifiable, Hashable, Sendable {
     public var createdAt: Date
     public var name: String
     public var icon: Icon
+    public var sortOrder: Int
     public var phrases: [Phrase]
 
     public init(id: UUID = UUID(),
                 createdAt: Date = Date(),
                 name: String,
                 icon: Icon,
+                sortOrder: Int = 0,
                 phrases: [Phrase] = []) {
         self.id = id
         self.createdAt = createdAt
         self.name = name
         self.icon = icon
+        self.sortOrder = sortOrder
         self.phrases = phrases
     }
 }

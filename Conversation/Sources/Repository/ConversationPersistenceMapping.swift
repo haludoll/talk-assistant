@@ -28,6 +28,7 @@ extension ConversationEntity.PhraseCategory {
             id: id,
             createdAt: createdAt,
             metadata: metadata,
+            sortOrder: sortOrder,
             phrases: persistencePhrases
         )
         for phrase in category.phrases {
@@ -63,6 +64,7 @@ extension ConversationPersistenceModel.PhraseCategory {
             createdAt: createdAt,
             name: metadata.name,
             icon: icon,
+            sortOrder: sortOrder,
             phrases: mappedPhrases
         )
     }
@@ -83,6 +85,7 @@ extension ConversationPersistenceModel.PhraseCategory {
                 )
             )
         )
+        sortOrder = aggregate.sortOrder
 
         var existing = Dictionary(uniqueKeysWithValues: phrases.map { ($0.id, $0) })
         var next: [ConversationPersistenceModel.Phrase] = []
