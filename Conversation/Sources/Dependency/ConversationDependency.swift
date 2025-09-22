@@ -28,7 +28,8 @@ extension PhraseCategoryRepository: TestDependencyKey {
         deleteCategory: { _ in },
         createDefaultCategoryIfNeeded: {},
         appendPhrase: { _, _ in },
-        removePhrase: { _, _ in }
+        removePhrase: { _, _ in },
+        reorderCategories: { _ in }
     )
 
     private static let previewCategories: [PhraseCategory] = [

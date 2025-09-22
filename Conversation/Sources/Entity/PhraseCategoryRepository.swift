@@ -13,6 +13,7 @@ package struct PhraseCategoryRepository: Sendable {
     package let createDefaultCategoryIfNeeded: @Sendable () async throws -> Void
     package let appendPhrase: @Sendable (PhraseCategory.ID, PhraseCategory.Phrase) async throws -> Void
     package let removePhrase: @Sendable (PhraseCategory.ID, PhraseCategory.Phrase.ID) async throws -> Void
+    package let reorderCategories: @Sendable ([PhraseCategory.ID]) async throws -> Void
 
     package init(findCategory: @escaping @Sendable (PhraseCategory.ID) async throws -> PhraseCategory,
                  listCategories: @escaping @Sendable () async throws -> [PhraseCategory],
@@ -20,7 +21,8 @@ package struct PhraseCategoryRepository: Sendable {
                  deleteCategory: @escaping @Sendable (PhraseCategory.ID) async throws -> Void,
                  createDefaultCategoryIfNeeded: @escaping @Sendable () async throws -> Void,
                  appendPhrase: @escaping @Sendable (PhraseCategory.ID, PhraseCategory.Phrase) async throws -> Void,
-                 removePhrase: @escaping @Sendable (PhraseCategory.ID, PhraseCategory.Phrase.ID) async throws -> Void) {
+                 removePhrase: @escaping @Sendable (PhraseCategory.ID, PhraseCategory.Phrase.ID) async throws -> Void,
+                 reorderCategories: @escaping @Sendable ([PhraseCategory.ID]) async throws -> Void) {
         self.findCategory = findCategory
         self.listCategories = listCategories
         self.saveCategory = saveCategory
@@ -28,5 +30,6 @@ package struct PhraseCategoryRepository: Sendable {
         self.createDefaultCategoryIfNeeded = createDefaultCategoryIfNeeded
         self.appendPhrase = appendPhrase
         self.removePhrase = removePhrase
+        self.reorderCategories = reorderCategories
     }
 }
