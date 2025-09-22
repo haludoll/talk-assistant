@@ -174,6 +174,7 @@ final class PhraseSpeakViewModelTests: XCTestCase {
         }
         await Task.yield()
 
+        sut.isSpeaking = true
         let expectation = XCTestExpectation(description: #function)
         withObservationTracking {
             _ = sut.isSpeaking

@@ -52,7 +52,9 @@ public final class PhraseCategory: Identifiable {
     }
 }
 
-extension Color: Codable {
+extension Color: @retroactive Decodable {}
+extension Color: @retroactive Encodable {}
+extension Color {
     enum CodingKeys: String, CodingKey {
         case red
         case green

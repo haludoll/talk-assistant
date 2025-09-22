@@ -33,7 +33,7 @@ final class SpeechSampleViewModelTests: XCTestCase {
         } onChange: {
             expectation.fulfill()
         }
-        let sampleVoice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)!
+        let sampleVoice = AVSpeechSynthesisVoice(language: "en-US")!
         sut.speakSample(text: "This is sample.", with: sampleVoice)
         await sut.speechSynthesizer.delegateAsyncChannel.send(.didStart)
         await fulfillment(of: [expectation], timeout: 0.1)
@@ -104,7 +104,7 @@ final class SpeechSampleViewModelTests: XCTestCase {
         } operation: {
             SpeechSampleViewModel()
         }
-        let voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)!
+        let voice = AVSpeechSynthesisVoice(language: "en-US")!
         sut.speakingVoice = voice
         XCTAssertEqual(sut.speakingStatus(for: voice), .speaking)
     }
@@ -115,7 +115,7 @@ final class SpeechSampleViewModelTests: XCTestCase {
         } operation: {
             SpeechSampleViewModel()
         }
-        let voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)!
+        let voice = AVSpeechSynthesisVoice(language: "en-US")!
         sut.speakingVoice = voice
         XCTAssertEqual(sut.speakingStatus(for: .init(identifier: "com.apple.speech.synthesis.voice.Albert")!), .speakingSomeoneElse)
     }
