@@ -3,7 +3,7 @@ import SwiftData
 @testable import ConversationRepository
 import ConversationEntity
 import ConversationPersistenceModel
-import LocalStorage
+import LocalStorageCore
 import Foundation
 import XCTest
 
@@ -148,15 +148,15 @@ private final class TestHarness: @unchecked Sendable {
     let repository: PhraseCategoryRepository
 
     init() throws {
+        let schema = Schema(versionedSchema: Schemas.V1_1_0.self)
         let configuration = ModelConfiguration(
-            for: ConversationPersistenceModel.PhraseCategory.self,
-            ConversationPersistenceModel.Phrase.self,
+            schema: schema,
             isStoredInMemoryOnly: true
         )
         container = try ModelContainer(
-            for: ConversationPersistenceModel.PhraseCategory.self,
-            ConversationPersistenceModel.Phrase.self,
-            configurations: configuration
+            for: schema,
+            migrationPlan: MigrationPlan.self,
+            configurations: [configuration]
         )
         store = PersistentStoreActor(modelContainer: container)
 

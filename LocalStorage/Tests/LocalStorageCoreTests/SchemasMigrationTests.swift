@@ -1,0 +1,34 @@
+import Testing
+import SwiftData
+@testable import LocalStorageCore
+import ConversationPersistenceModel
+
+@Suite
+struct SchemasMigrationTests {
+    @Test
+    func willMigrateFromV1_0_0toV1_1_0_assignsSequentialSortOrder() throws {
+        let schema = Schema(versionedSchema: Schemas.V1_0_0.self)
+        let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: schema, configurations: [configuration])
+        let context = ModelContext(container)
+
+        let categories: [ConversationPersistenceModel.PhraseCategory] = [
+            .init(id: UUID(), createdAt: Date(timeIntervalSince1970: 10), metadata: .init(name: "First", icon: .init(name: "a", color: .init(red: 0, green: 0, blue: 0))), sortOrder: 42),
+            .init(id: UUID(), createdAt: Date(timeIntervalSince1970: 5), metadata: .init(name: "Second", icon: .init(name: "b", color: .init(red: 0, green: 0, blue: 0))), sortOrder: 42)
+        ]
+        for category in categories {
+            context.insert(category)
+        }
+        try context.save()
+
+        try Schemas.willMigrateFromV1_0_0toV1_1_0(context)
+
+        let fetchDescriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
+            sortBy: [
+                .init(\.createdAt, order: .forward)
+            ]
+        )
+        let migrated = try context.fetch(fetchDescriptor)
+        #expect(migrated.map(\.sortOrder) == [0, 1])
+    }
+}

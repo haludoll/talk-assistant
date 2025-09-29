@@ -1,7 +1,7 @@
 import ConversationEntity
 import ConversationPersistenceModel
 import Foundation
-import LocalStorage
+import LocalStorageCore
 import SwiftData
 import SwiftUI
 import UIKit
@@ -15,7 +15,7 @@ extension PhraseCategoryRepository {
         store: PersistentStoreActor = .shared,
         userDefaults: UserDefaults = .standard
     ) -> Self {
-        Self(
+        return Self(
             findCategory: { id in
                 try await store.withContext { context in
                     try fetchCategory(id: id, context: context).toAggregate()
