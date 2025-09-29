@@ -30,6 +30,11 @@ let package = Package(
                 "ConversationPersistenceModel"
             ],
             path: "Sources/LocalStorageCore"
+        ),
+        .testTarget(
+            name: "LocalStorageCoreTests",
+            dependencies: ["LocalStorageCore"],
+            path: "Tests/LocalStorageCoreTests"
         )
     ]
 )

@@ -16,16 +16,25 @@
       "enabled" : false,
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:..\/Settings",
-        "identifier" : "SettingsPresentationTests",
-        "name" : "SettingsPresentationTests"
+        "containerPath" : "container:..\/Root",
+        "identifier" : "RootTests",
+        "name" : "RootTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:..\/Conversation",
-        "identifier" : "ConversationRepositoryTests",
-        "name" : "ConversationRepositoryTests"
+        "identifier" : "ConversationViewModelTests",
+        "name" : "ConversationViewModelTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/Settings",
+        "identifier" : "SettingsPresentationTests",
+        "name" : "SettingsPresentationTests"
       }
     },
     {
@@ -37,19 +46,17 @@
       }
     },
     {
-      "enabled" : false,
-      "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:..\/Root",
-        "identifier" : "RootTests",
-        "name" : "RootTests"
+        "containerPath" : "container:..\/LocalStorage",
+        "identifier" : "LocalStorageCoreTests",
+        "name" : "LocalStorageCoreTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:..\/Conversation",
-        "identifier" : "ConversationViewModelTests",
-        "name" : "ConversationViewModelTests"
+        "identifier" : "ConversationRepositoryTests",
+        "name" : "ConversationRepositoryTests"
       }
     }
   ],
