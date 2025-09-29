@@ -83,6 +83,15 @@ let package = Package(
             name: "ConversationViewModelTests",
             dependencies: ["ConversationViewModel"],
             path: "Tests/ViewModelTests"
+        ),
+        .testTarget(
+            name: "ConversationRepositoryTests",
+            dependencies: [
+                "ConversationRepository",
+                "ConversationEntity",
+                .product(name: "LocalStorage", package: "LocalStorage")
+            ],
+            path: "Tests/RepositoryTests"
         )
     ]
 )

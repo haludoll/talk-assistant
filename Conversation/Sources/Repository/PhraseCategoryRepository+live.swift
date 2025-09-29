@@ -111,7 +111,7 @@ extension PhraseCategoryRepository {
             },
             reorderCategories: { orderedIDs in
                 try await store.withContext { context in
-                    try reorderCategories(with: orderedIDs, in: context)
+                    try applyCategoryOrder(orderedIDs, in: context)
                 }
             }
         )
@@ -146,11 +146,11 @@ private extension PhraseCategoryRepository {
     }
 }
 
-private func reorderCategories(with orderedIDs: [UUID], in context: ModelContext) throws {
+private func applyCategoryOrder(_ orderedIDs: [UUID], in context: ModelContext) throws {
     let categories = try context.fetch(FetchDescriptor<ConversationPersistenceModel.PhraseCategory>())
     guard !categories.isEmpty else { return }
 
-    var lookup = Dictionary(uniqueKeysWithValues: categories.map { ($0.id, $0) })
+    let lookup = Dictionary(uniqueKeysWithValues: categories.map { ($0.id, $0) })
     var seen = Set<UUID>()
 
     for (index, id) in orderedIDs.enumerated() {
@@ -213,13 +213,13 @@ private extension ConversationEntity.PhraseCategory.Icon.Color {
 }
 
 private func nextSortOrder(in context: ModelContext) throws -> Int {
-    let descriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
+    var descriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
         sortBy: [
             .init(\.sortOrder, order: .reverse),
             .init(\.createdAt, order: .reverse)
-        ],
-        fetchLimit: 1
+        ]
     )
+    descriptor.fetchLimit = 1
     if let last = try context.fetch(descriptor).first {
         return max(last.sortOrder + 1, 0)
     }
