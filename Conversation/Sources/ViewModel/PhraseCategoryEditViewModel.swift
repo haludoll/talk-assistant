@@ -36,7 +36,7 @@ package final class PhraseCategoryEditViewModel {
             do {
                 phraseCategory.name = categoryName
                 phraseCategory.icon = .init(systemName: iconName, color: .init(color: iconColor))
-                try await phraseCategoryRepository.saveCategory(phraseCategory)
+                try await phraseCategoryRepository.updateCategory(phraseCategory)
             } catch {
                 Crashlytics.crashlytics().record(error: error)
             }

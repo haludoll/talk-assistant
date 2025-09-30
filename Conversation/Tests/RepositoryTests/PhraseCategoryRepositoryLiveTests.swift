@@ -10,14 +10,14 @@ import XCTest
 @Suite
 struct PhraseCategoryRepositoryLiveTests {
     @Test(.harnessTrait)
-    func saveCategoryAssignsSequentialSortOrder() async throws {
+    func createCategoryAssignsSequentialSortOrder() async throws {
         let harness = try HarnessTrait.harness()
 
         let first = harness.makeCategory(name: "Home")
         let second = harness.makeCategory(name: "Health")
 
-        try await harness.repository.saveCategory(first)
-        try await harness.repository.saveCategory(second)
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
 
         let categories = try await harness.repository.listCategories()
         #expect(categories.map(\.name) == ["Home", "Health"])
@@ -30,8 +30,8 @@ struct PhraseCategoryRepositoryLiveTests {
 
         let first = harness.makeCategory(name: "A")
         let second = harness.makeCategory(name: "B")
-        try await harness.repository.saveCategory(first)
-        try await harness.repository.saveCategory(second)
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
 
         let initial = try await harness.repository.listCategories()
         #expect(initial.map(\.id) == [first.id, second.id])
@@ -44,13 +44,13 @@ struct PhraseCategoryRepositoryLiveTests {
     }
 
     @Test(.harnessTrait)
-    func listCategoriesNormalizesOutOfSequenceOrder() async throws {
+    func listCategoriesReturnsPersistedSortOrder() async throws {
         let harness = try HarnessTrait.harness()
 
         let first = harness.makeCategory(name: "Category 1")
         let second = harness.makeCategory(name: "Category 2")
-        try await harness.repository.saveCategory(first)
-        try await harness.repository.saveCategory(second)
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
 
         try await harness.store.withContext { context in
             let models = try context.fetch(FetchDescriptor<ConversationPersistenceModel.PhraseCategory>())
@@ -60,8 +60,8 @@ struct PhraseCategoryRepositoryLiveTests {
             try context.save()
         }
 
-        let normalized = try await harness.repository.listCategories()
-        #expect(normalized.map(\.sortOrder) == [0, 1])
+        let categories = try await harness.repository.listCategories()
+        #expect(categories.map(\.sortOrder) == [10, 10])
     }
 
     @Test(.harnessTrait)
@@ -72,9 +72,9 @@ struct PhraseCategoryRepositoryLiveTests {
         let second = harness.makeCategory(name: "Second")
         let third = harness.makeCategory(name: "Third")
 
-        try await harness.repository.saveCategory(first)
-        try await harness.repository.saveCategory(second)
-        try await harness.repository.saveCategory(third)
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
+        try await harness.repository.createCategory(third)
 
         try await harness.repository.reorderCategories([second.id])
 
@@ -84,36 +84,61 @@ struct PhraseCategoryRepositoryLiveTests {
     }
 
     @Test(.harnessTrait)
-    func listCategoriesOrdersByCreatedAtWhenSortOrderMatches() async throws {
+    func updateCategoryKeepsExistingSortOrder() async throws {
         let harness = try HarnessTrait.harness()
 
-        var first = harness.makeCategory(name: "First")
-        first.createdAt = Date(timeIntervalSince1970: 2)
-        var second = harness.makeCategory(name: "Second")
-        second.createdAt = Date(timeIntervalSince1970: 1)
+        let first = harness.makeCategory(name: "A")
+        let second = harness.makeCategory(name: "B")
 
-        try await harness.repository.saveCategory(first)
-        try await harness.repository.saveCategory(second)
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
 
-        let firstID = first.id
-        let secondID = second.id
-        let firstCreatedAt = first.createdAt
-        let secondCreatedAt = second.createdAt
+        try await harness.repository.reorderCategories([second.id, first.id])
 
-        try await harness.store.withContext { context in
-            let models = try context.fetch(FetchDescriptor<ConversationPersistenceModel.PhraseCategory>())
-            let firstModel = try #require(models.first(where: { $0.id == firstID }))
-            let secondModel = try #require(models.first(where: { $0.id == secondID }))
-            firstModel.sortOrder = 10
-            secondModel.sortOrder = 10
-            firstModel.createdAt = firstCreatedAt
-            secondModel.createdAt = secondCreatedAt
-            try context.save()
+        var editedFirst = first
+        editedFirst.name = "Edited"
+
+        try await harness.repository.updateCategory(editedFirst)
+
+        let categories = try await harness.repository.listCategories()
+        #expect(categories.map(\.id) == [second.id, first.id])
+        #expect(categories.map(\.name) == ["B", "Edited"])
+        #expect(categories.map(\.sortOrder) == [0, 1])
+    }
+
+    @Test(.harnessTrait)
+    func nextSortOrderReturnsNextIndex() async throws {
+        let harness = try HarnessTrait.harness()
+
+        try await harness.repository.createCategory(harness.makeCategory(name: "One"))
+        try await harness.repository.createCategory(harness.makeCategory(name: "Two"))
+
+        let next = try await harness.store.withContext { context -> Int in
+            try PhraseCategoryRepository.nextSortOrder(in: context)
         }
 
-        let normalized = try await harness.repository.listCategories()
-        #expect(normalized.map(\.id) == [second.id, first.id])
-        #expect(normalized.map(\.sortOrder) == [0, 1])
+        #expect(next == 2)
+    }
+
+    @Test(.harnessTrait)
+    func applyCategoryOrderDirectlyReordersAndAppends() async throws {
+        let harness = try HarnessTrait.harness()
+
+        let first = harness.makeCategory(name: "A")
+        let second = harness.makeCategory(name: "B")
+        let third = harness.makeCategory(name: "C")
+
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
+        try await harness.repository.createCategory(third)
+
+        try await harness.store.withContext { context in
+            try PhraseCategoryRepository.applyCategoryOrder([third.id, first.id], in: context)
+        }
+
+        let categories = try await harness.repository.listCategories()
+        #expect(categories.map(\.id) == [third.id, first.id, second.id])
+        #expect(categories.map(\.sortOrder) == [0, 1, 2])
     }
 }
 

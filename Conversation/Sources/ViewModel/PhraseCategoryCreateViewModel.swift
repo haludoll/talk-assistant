@@ -34,7 +34,7 @@ package final class PhraseCategoryCreateViewModel {
                     icon: .init(systemName: iconName, color: .init(color: iconColor)),
                     phrases: []
                 )
-                try await phraseCategoryRepository.saveCategory(aggregate)
+                try await phraseCategoryRepository.createCategory(aggregate)
             } catch {
                 Crashlytics.crashlytics().record(error: error)
             }
