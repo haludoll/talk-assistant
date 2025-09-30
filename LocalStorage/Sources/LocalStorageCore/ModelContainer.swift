@@ -5,7 +5,7 @@
 //  Created by haludoll on 2024/12/08.
 //
 
-@preconcurrency import SwiftData
+import SwiftData
 
 extension ModelContainer {
     private static let schema = Schema(versionedSchema: Schemas.V1_1_0.self)

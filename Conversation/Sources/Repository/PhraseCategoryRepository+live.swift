@@ -47,7 +47,7 @@ extension PhraseCategoryRepository {
                         newAggregate.sortOrder = try nextSortOrder(in: context)
                         _ = newAggregate.makePersistenceCategory(in: context)
                     }
-                    var categories = try context.fetch(FetchDescriptor<ConversationPersistenceModel.PhraseCategory>())
+                    let categories = try context.fetch(FetchDescriptor<ConversationPersistenceModel.PhraseCategory>())
                     if needsSequentialSortOrder(categories) {
                         normalizeSortOrder(for: categories)
                     }
