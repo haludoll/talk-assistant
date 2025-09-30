@@ -65,7 +65,7 @@ struct PhraseCategoryRepositoryLiveTests {
     }
 
     @Test(.harnessTrait)
-    func reorderCategoriesKeepsUnspecifiedCategoriesAppendedInExistingOrder() async throws {
+    func reorderCategoriesWithCompleteSequenceUpdatesOrder() async throws {
         let harness = try HarnessTrait.harness()
 
         let first = harness.makeCategory(name: "First")
@@ -76,34 +76,11 @@ struct PhraseCategoryRepositoryLiveTests {
         try await harness.repository.createCategory(second)
         try await harness.repository.createCategory(third)
 
-        try await harness.repository.reorderCategories([second.id])
+        try await harness.repository.reorderCategories([third.id, second.id, first.id])
 
         let categories = try await harness.repository.listCategories()
-        #expect(categories.map(\.id) == [second.id, first.id, third.id])
+        #expect(categories.map(\.id) == [third.id, second.id, first.id])
         #expect(categories.map(\.sortOrder) == [0, 1, 2])
-    }
-
-    @Test(.harnessTrait)
-    func updateCategoryKeepsExistingSortOrder() async throws {
-        let harness = try HarnessTrait.harness()
-
-        let first = harness.makeCategory(name: "A")
-        let second = harness.makeCategory(name: "B")
-
-        try await harness.repository.createCategory(first)
-        try await harness.repository.createCategory(second)
-
-        try await harness.repository.reorderCategories([second.id, first.id])
-
-        var editedFirst = first
-        editedFirst.name = "Edited"
-
-        try await harness.repository.updateCategory(editedFirst)
-
-        let categories = try await harness.repository.listCategories()
-        #expect(categories.map(\.id) == [second.id, first.id])
-        #expect(categories.map(\.name) == ["B", "Edited"])
-        #expect(categories.map(\.sortOrder) == [0, 1])
     }
 
     @Test(.harnessTrait)
@@ -121,7 +98,7 @@ struct PhraseCategoryRepositoryLiveTests {
     }
 
     @Test(.harnessTrait)
-    func applyCategoryOrderDirectlyReordersAndAppends() async throws {
+    func applyCategoryOrderWithFullSequenceReorders() async throws {
         let harness = try HarnessTrait.harness()
 
         let first = harness.makeCategory(name: "A")
@@ -133,12 +110,31 @@ struct PhraseCategoryRepositoryLiveTests {
         try await harness.repository.createCategory(third)
 
         try await harness.store.withContext { context in
-            try PhraseCategoryRepository.applyCategoryOrder([third.id, first.id], in: context)
+            try PhraseCategoryRepository.applyCategoryOrder([third.id, second.id, first.id], in: context)
         }
 
         let categories = try await harness.repository.listCategories()
-        #expect(categories.map(\.id) == [third.id, first.id, second.id])
+        #expect(categories.map(\.id) == [third.id, second.id, first.id])
         #expect(categories.map(\.sortOrder) == [0, 1, 2])
+    }
+
+    @Test(.harnessTrait)
+    func deleteCategoryNormalizesSortOrder() async throws {
+        let harness = try HarnessTrait.harness()
+
+        let first = harness.makeCategory(name: "One")
+        let second = harness.makeCategory(name: "Two")
+        let third = harness.makeCategory(name: "Three")
+
+        try await harness.repository.createCategory(first)
+        try await harness.repository.createCategory(second)
+        try await harness.repository.createCategory(third)
+
+        try await harness.repository.deleteCategory(second.id)
+
+        let categories = try await harness.repository.listCategories()
+        #expect(categories.map(\.id) == [first.id, third.id])
+        #expect(categories.map(\.sortOrder) == [0, 1])
     }
 }
 

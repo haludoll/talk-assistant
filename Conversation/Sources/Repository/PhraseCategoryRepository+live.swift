@@ -47,6 +47,7 @@ extension PhraseCategoryRepository {
                 try await store.withContext { context in
                     let category = try fetchCategory(id: id, context: context)
                     context.delete(category)
+                    try normalizeSortOrder(in: context)
                     try context.save()
                 }
             },
@@ -122,6 +123,19 @@ extension PhraseCategoryRepository {
         descriptor.fetchLimit = 1
         guard let category = try context.fetch(descriptor).first else { fatalError() }
         return category
+    }
+
+    static func normalizeSortOrder(in context: ModelContext) throws {
+        let descriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
+            sortBy: [
+                .init(\.sortOrder, order: .forward),
+                .init(\.createdAt, order: .forward)
+            ]
+        )
+        let categories = try context.fetch(descriptor)
+        for (index, category) in categories.enumerated() {
+            category.sortOrder = index
+        }
     }
 
     private static func makeDefaultCategory() -> ConversationEntity.PhraseCategory {
