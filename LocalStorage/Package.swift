@@ -12,7 +12,6 @@ let package = Package(
     products: [
         .library(
             name: "LocalStorageCore",
-            type: .dynamic,
             targets: ["LocalStorageCore"]),
         .library(
             name: "ConversationPersistenceModel",
