@@ -28,13 +28,13 @@ struct PhraseCategoryListView: View {
                         Image(systemName: phraseCategory.icon.systemName)
                             .foregroundStyle(phraseCategory.icon.color.toColor())
                     }
-                    .swipeActions {
-                        Button(String(localized: "Delete", bundle: .module)) {
-                            deletingPhraseCategory = phraseCategory
-                            showingDeleteAlert.toggle()
-                        }
-                        .tint(.red)
+                }
+                .swipeActions {
+                    Button(String(localized: "Delete", bundle: .module)) {
+                        deletingPhraseCategory = phraseCategory
+                        showingDeleteAlert.toggle()
                     }
+                    .tint(.red)
                 }
             }
             .onMove { indices, newOffset in

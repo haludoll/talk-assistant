@@ -17,20 +17,20 @@ public enum Schemas {
         }
     }
 
-    public enum V1_0_0: VersionedSchema {
-        public static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
-        public static var models: [any PersistentModel.Type] {
+    enum V1_0_0: VersionedSchema {
+        static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
+        static var models: [any PersistentModel.Type] {
             [PhraseCategory.self, Phrase.self]
         }
 
         @Model
-        public final class PhraseCategory {
-            @Attribute(.unique) public var id: UUID
-            public var createdAt: Date
-            public var metadata: ConversationPersistenceModel.PhraseCategory.Metadata
-            @Relationship(deleteRule: .cascade, inverse: \Phrase.category) public var phrases: [Phrase] = []
+        final class PhraseCategory {
+            @Attribute(.unique) var id: UUID
+            var createdAt: Date
+            var metadata: ConversationPersistenceModel.PhraseCategory.Metadata
+            @Relationship(deleteRule: .cascade, inverse: \Phrase.category) var phrases: [Phrase] = []
 
-            public init(id: UUID, createdAt: Date, metadata: ConversationPersistenceModel.PhraseCategory.Metadata, phrases: [Phrase]) {
+            init(id: UUID, createdAt: Date, metadata: ConversationPersistenceModel.PhraseCategory.Metadata, phrases: [Phrase]) {
                 self.id = id
                 self.createdAt = createdAt
                 self.metadata = metadata
@@ -39,13 +39,13 @@ public enum Schemas {
         }
 
         @Model
-        public final class Phrase {
-            @Attribute(.unique) public var id: UUID
-            public var createdAt: Date
-            public var value: String
-            public var category: PhraseCategory?
+        final class Phrase {
+            @Attribute(.unique) var id: UUID
+            var createdAt: Date
+            var value: String
+            var category: PhraseCategory?
 
-            public init(id: UUID, createdAt: Date, value: String, category: PhraseCategory? = nil) {
+            init(id: UUID, createdAt: Date, value: String, category: PhraseCategory? = nil) {
                 self.id = id
                 self.createdAt = createdAt
                 self.value = value
@@ -56,7 +56,7 @@ public enum Schemas {
 }
 
 extension Schemas {
-    static func willMigrateFromV1_0_0toV1_1_0(_ context: ModelContext) throws {
+    static func didMigrateFromV1_0_0toV1_1_0(_ context: ModelContext) throws {
         let descriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
             sortBy: [
                 .init(\.createdAt, order: .forward)
@@ -82,10 +82,10 @@ public enum MigrationPlan: SchemaMigrationPlan {
             .custom(
                 fromVersion: Schemas.V1_0_0.self,
                 toVersion: Schemas.V1_1_0.self,
-                willMigrate: { context in
-                    try Schemas.willMigrateFromV1_0_0toV1_1_0(context)
-                },
-                didMigrate: nil
+                willMigrate: nil,
+                didMigrate: { context in
+                    try Schemas.didMigrateFromV1_0_0toV1_1_0(context)
+                }
             )
         ]
     }

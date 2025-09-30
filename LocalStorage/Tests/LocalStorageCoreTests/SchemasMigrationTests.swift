@@ -1,8 +1,8 @@
+import Foundation
 import Testing
 import SwiftData
 @testable import LocalStorageCore
 import ConversationPersistenceModel
-import Foundation
 
 @Suite
 struct SchemasMigrationTests {
@@ -17,19 +17,21 @@ struct SchemasMigrationTests {
             .init(id: UUID(), createdAt: Date(timeIntervalSince1970: 10), metadata: .init(name: "First", icon: .init(name: "a", color: .init(red: 0, green: 0, blue: 0))), sortOrder: 42, phrases: []),
             .init(id: UUID(), createdAt: Date(timeIntervalSince1970: 5), metadata: .init(name: "Second", icon: .init(name: "b", color: .init(red: 0, green: 0, blue: 0))), sortOrder: 42, phrases: [])
         ]
+
         for category in categories {
             context.insert(category)
         }
         try context.save()
 
-        try Schemas.willMigrateFromV1_0_0toV1_1_0(context)
+        try Schemas.didMigrateFromV1_0_0toV1_1_0(context)
 
-        let fetchDescriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
+        let descriptor = FetchDescriptor<ConversationPersistenceModel.PhraseCategory>(
             sortBy: [
                 .init(\.createdAt, order: .forward)
             ]
         )
-        let migrated = try context.fetch(fetchDescriptor)
+        let migrated = try context.fetch(descriptor)
+
         #expect(migrated.map(\.sortOrder) == [0, 1])
     }
 }
