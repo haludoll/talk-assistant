@@ -37,13 +37,22 @@ struct PhraseCategoryListView: View {
                     }
                 }
             }
+            .onMove { indices, newOffset in
+                phraseCategoryListViewModel.moveCategory(from: indices, to: newOffset)
+            }
+            .onDelete { _ in
+                // WORKAROUND: .swipeActionの方に処理が流れてしまうので、ここでは何もしない
+            }
         }
         .navigationTitle(Text("Category List", bundle: .module))
         .toolbar {
-            ToolbarItem {
+            ToolbarItem(placement: .navigationBarTrailing) {
                 Button("", systemImage: "folder.badge.plus") {
                     showingPhraseCategoryCreateView.toggle()
                 }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
             }
         }
         .sheet(isPresented: $showingPhraseCategoryCreateView, onDismiss: {

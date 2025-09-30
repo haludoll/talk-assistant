@@ -23,11 +23,31 @@ package final class PhraseCategoryListViewModel {
 
     package func fetchAll() {
         Task {
+            await loadCategories()
+        }
+    }
+
+    package func moveCategory(from source: IndexSet, to destination: Int) {
+        var updated = phraseCategories
+        updated.move(fromOffsets: source, toOffset: destination)
+        phraseCategories = updated
+
+        Task {
             do {
-                phraseCategories = try await phraseCategoryRepository.listCategories()
+                let orderedIDs = updated.map(\.id)
+                try await phraseCategoryRepository.reorderCategories(orderedIDs)
             } catch {
                 Crashlytics.crashlytics().record(error: error)
+                await loadCategories()
             }
+        }
+    }
+
+    private func loadCategories() async {
+        do {
+            phraseCategories = try await phraseCategoryRepository.listCategories()
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
         }
     }
 }
