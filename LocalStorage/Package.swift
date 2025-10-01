@@ -11,9 +11,8 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "LocalStorage",
-            type: .dynamic,
-            targets: ["LocalStorage"]),
+            name: "LocalStorageCore",
+            targets: ["LocalStorageCore"]),
         .library(
             name: "ConversationPersistenceModel",
             targets: ["ConversationPersistenceModel"]),
@@ -25,9 +24,16 @@ let package = Package(
             name: "ConversationPersistenceModel"
         ),
         .target(
-            name: "LocalStorage",
+            name: "LocalStorageCore",
             dependencies: [
                 "ConversationPersistenceModel"
-            ])
+            ],
+            path: "Sources/LocalStorageCore"
+        ),
+        .testTarget(
+            name: "LocalStorageCoreTests",
+            dependencies: ["LocalStorageCore"],
+            path: "Tests/LocalStorageCoreTests"
+        )
     ]
 )

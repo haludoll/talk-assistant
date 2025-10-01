@@ -24,11 +24,13 @@ extension PhraseCategoryRepository: TestDependencyKey {
         listCategories: {
             previewCategories
         },
-        saveCategory: { _ in },
+        createCategory: { _ in },
+        updateCategory: { _ in },
         deleteCategory: { _ in },
         createDefaultCategoryIfNeeded: {},
         appendPhrase: { _, _ in },
-        removePhrase: { _, _ in }
+        removePhrase: { _, _ in },
+        reorderCategories: { _ in }
     )
 
     private static let previewCategories: [PhraseCategory] = [

@@ -14,12 +14,14 @@ public final class PhraseCategory: Identifiable {
     @Attribute(.unique) public var id: UUID
     public var createdAt: Date
     public var metadata: Metadata
+    public var sortOrder: Int = 0
     @Relationship(deleteRule: .cascade, inverse: \Phrase.category) public var phrases: [Phrase] = []
 
-    public init(id: UUID, createdAt: Date, metadata: Metadata, phrases: [Phrase]) {
+    public init(id: UUID, createdAt: Date, metadata: Metadata, sortOrder: Int, phrases: [Phrase]) {
         self.id = id
         self.createdAt = createdAt
         self.metadata = metadata
+        self.sortOrder = sortOrder
         self.phrases = phrases
     }
 
