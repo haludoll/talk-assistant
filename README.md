@@ -23,3 +23,14 @@ git clone git@github.com:haludoll/talk-assistant.git
 cd talk-assistant
 open talk-assistant.xcworkspace
 ```
+
+## Technical Overview
+- UI framework: SwiftUI
+- Asynchronous programming: async/await with Swift Concurrency
+- Dependency injection: [`swift-dependencies`](https://github.com/pointfreeco/swift-dependencies)
+- Database: SwiftData
+- Supporting libraries: AVFoundation, swift-async-algorithms
+- Testing: Swift Testing, XCTest
+- Analytics and logging: Firebase Analytics, Crashlytics
+- CI/CD: Xcode Cloud (Pull Request, Deploy, Release workflows)
+- Architecture: Domain-Driven package contexts with MVVM + layered modules inside each package
