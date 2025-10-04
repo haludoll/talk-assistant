@@ -27,7 +27,7 @@ open talk-assistant.xcworkspace
 ## Technical Overview
 - UI framework: SwiftUI
 - Asynchronous programming: async/await with Swift Concurrency
-- Architecture: Domain-Driven package contexts with MVVM + layered modules inside each package
+- Architecture: Domain-driven package contexts with layered MVVM modules (see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md))
 - Dependency injection: [`swift-dependencies`](https://github.com/pointfreeco/swift-dependencies)
 - Database: SwiftData
 - Testing: Swift Testing, XCTest
