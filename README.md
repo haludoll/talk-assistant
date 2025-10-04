@@ -25,6 +25,7 @@ open talk-assistant.xcworkspace
 ```
 
 ## Technical Overview
+- Localization: English (main), Japanese
 - UI framework: SwiftUI
 - Asynchronous programming: async/await with Swift Concurrency
 - Dependency injection: [`swift-dependencies`](https://github.com/pointfreeco/swift-dependencies)
