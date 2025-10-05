@@ -14,6 +14,7 @@ public struct ConversationView: View {
     @State private var phraseSpeakViewModel = PhraseSpeakViewModel()
     @State private var phraseCategorySpeakViewModel = PhraseCategorySpeakViewModel()
     @FocusState private var phraseTextFieldFocused: Bool
+    @Namespace private var speechInputAccessoryViewUnionNamespace
 
     public init() {}
 
@@ -36,20 +37,12 @@ public struct ConversationView: View {
                 }
             }
             .padding(.bottom)
+            .onTapGesture {
+                phraseTextFieldFocused = false
+            }
 
             VStack(alignment: .trailing, spacing: 4) {
-                HStack(spacing: 0) {
-                    RepeatButton {
-                        phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
-                        phraseSpeakViewModel.speak()
-                    }
-                    .disabled(phraseSpeakViewModel.lastText.isEmpty)
-
-                    KeyboardDismissButton {
-                        phraseTextFieldFocused = false
-                    }
-                    .disabled(!phraseTextFieldFocused)
-                }
+                SpeechInputAccessoryView()
 
                 PhraseTextField(phraseSpeakViewModel: phraseSpeakViewModel, focused: $phraseTextFieldFocused)
             }
@@ -58,19 +51,51 @@ public struct ConversationView: View {
         }
         .background(Color(.systemGroupedBackground))
         .contentShape(Rectangle())
-        .onTapGesture {
-            phraseTextFieldFocused = false
-        }
-        .onAppear {
+        .task {
             phraseSpeakViewModel.setupVoice()
-            Task {
-                await phraseCategorySpeakViewModel.createDefault()
-                await phraseCategorySpeakViewModel.fetchAll()
-            }
+            await phraseCategorySpeakViewModel.createDefault()
+            await phraseCategorySpeakViewModel.fetchAll()
         }
         .sceneCancellableTask {
             await phraseSpeakViewModel.observeSpeechDelegate()
         }
+    }
+
+    @ViewBuilder
+    func SpeechInputAccessoryView() -> some View {
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer {
+                HStack(spacing: 8) {
+                    repeatButton()
+                        .glassEffectUnion(id: "speechInputAccessory", namespace: speechInputAccessoryViewUnionNamespace)
+
+                    keyboardDismissButton()
+                        .glassEffectUnion(id: "speechInputAccessory", namespace: speechInputAccessoryViewUnionNamespace)
+                }
+            }
+        } else {
+            HStack(spacing: 0) {
+                repeatButton()
+                keyboardDismissButton()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func repeatButton() -> some View {
+        RepeatButton {
+            phraseSpeakViewModel.text = phraseSpeakViewModel.lastText
+            phraseSpeakViewModel.speak()
+        }
+        .disabled(phraseSpeakViewModel.lastText.isEmpty)
+    }
+
+    @ViewBuilder
+    private func keyboardDismissButton() -> some View {
+        KeyboardDismissButton {
+            phraseTextFieldFocused = false
+        }
+        .disabled(!phraseTextFieldFocused)
     }
 }
 

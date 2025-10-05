@@ -16,12 +16,27 @@ struct RepeatButton: View {
         } label: {
             Image(systemName: "arrow.uturn.backward")
         }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
-        .background(Color(.systemBackground))
-        .clipShape(.circle)
+        .repeatButtonStyle()
     }
 }
+
+private extension View {
+    @ViewBuilder
+    func repeatButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            self.font(.title2)
+                .padding(8)
+                .buttonStyle(.plain)
+                .glassEffect(.regular.interactive())
+        } else {
+            self.buttonStyle(.bordered)
+                .buttonBorderShape(.circle)
+                .background(Color(.systemBackground))
+                .clipShape(Circle())
+        }
+    }
+}
+
 
 #Preview {
     RepeatButton() {}
