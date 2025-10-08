@@ -14,68 +14,50 @@ struct PhraseCategoryCreateView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                ScrollView {
-                    VStack(spacing: 32) {
-                        Text("Create a Category", bundle: .module)
-                            .bold()
-                            .font(.largeTitle)
-                            .padding(.bottom)
-
+            List {
+                Section {
+                    VStack(spacing: 16) {
                         Image(systemName: phraseCategoryCreateViewModel.iconName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 80, height: 80)
                             .foregroundStyle(phraseCategoryCreateViewModel.iconColor)
 
-                        TextField(String(localized: "Name", bundle: .module), text: $phraseCategoryCreateViewModel.categoryName)
+                        TextField(String(localized: "Category Name", bundle: .module), text: $phraseCategoryCreateViewModel.categoryName)
                             .font(.title2)
                             .bold()
                             .multilineTextAlignment(.center)
                             .padding(.vertical, 8)
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(8)
-
-                        PhraseCategoryIconColorSelectGrid(selectedIconColor: phraseCategoryCreateViewModel.iconColor) {
-                            phraseCategoryCreateViewModel.iconColor = $0
-                        }
-                        .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(8)
-
-                        PhraseCategoryIconSelectGrid(iconName: phraseCategoryCreateViewModel.iconName,
-                                                     iconColor: phraseCategoryCreateViewModel.iconColor) {
-                            phraseCategoryCreateViewModel.iconName = $0
-                        }
-                        .padding(.horizontal, 8)
                     }
-                    .padding(.top, 64)
-                    .padding(.horizontal)
                 }
 
-                Button {
-                    phraseCategoryCreateViewModel.create()
-                    dismiss()
-                } label: {
-                    Text("Done", bundle: .module)
-                        .padding(.vertical, 8)
-                        .frame(maxWidth: .infinity)
+                Section {
+                    PhraseCategoryIconColorSelectGrid(selectedIconColor: phraseCategoryCreateViewModel.iconColor) {
+                        phraseCategoryCreateViewModel.iconColor = $0
+                    }
                 }
-                .bold()
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .buttonStyle(.borderedProminent)
-                .padding(.bottom)
-                .padding(.top, 8)
-                .padding(.horizontal, 32)
+
+                PhraseCategoryIconSelectGrid(iconName: phraseCategoryCreateViewModel.iconName,
+                                             iconColor: phraseCategoryCreateViewModel.iconColor) {
+                    phraseCategoryCreateViewModel.iconName = $0
+                }
             }
+            .listSectionSpacing(16)
+            .navigationTitle(Text("New Category", bundle: .module))
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Dismiss", systemImage: "xmark") {
                         dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color(.secondaryLabel))
+                    }
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", systemImage: "checkmark") {
+                        phraseCategoryCreateViewModel.create()
+                        dismiss()
                     }
                 }
             }
