@@ -39,9 +39,11 @@ struct PhraseCategoryCreateView: View {
                     }
                 }
 
-                PhraseCategoryIconSelectGrid(iconName: phraseCategoryCreateViewModel.iconName,
-                                             iconColor: phraseCategoryCreateViewModel.iconColor) {
-                    phraseCategoryCreateViewModel.iconName = $0
+                Section {
+                    PhraseCategoryIconSelectGrid(iconName: phraseCategoryCreateViewModel.iconName,
+                                                 iconColor: phraseCategoryCreateViewModel.iconColor) {
+                        phraseCategoryCreateViewModel.iconName = $0
+                    }
                 }
             }
             .listSectionSpacing(16)
