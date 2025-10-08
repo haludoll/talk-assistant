@@ -39,6 +39,7 @@ struct PhraseCategoryIconColorSelectGrid: View {
                                     .foregroundStyle(color)
                                     .frame(maxWidth: 44)
                             }
+                            .buttonStyle(.plain)
                         }
 
                         if let lastColor = colors.last,

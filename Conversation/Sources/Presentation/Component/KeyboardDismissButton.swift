@@ -16,10 +16,24 @@ struct KeyboardDismissButton: View {
         } label: {
             Image(systemName: "keyboard.chevron.compact.down")
         }
-        .buttonStyle(.bordered)
-        .buttonBorderShape(.circle)
-        .background(Color(.systemBackground))
-        .clipShape(.circle)
+        .keyboardDismissButtonStyle()
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func keyboardDismissButtonStyle() -> some View {
+        if #available(iOS 26.0, *) {
+            self.font(.title2)
+                .padding(8)
+                .buttonStyle(.plain)
+                .glassEffect(.regular.interactive())
+        } else {
+            self.buttonStyle(.bordered)
+                .buttonBorderShape(.circle)
+                .background(Color(.systemBackground))
+                .clipShape(Circle())
+        }
     }
 }
 

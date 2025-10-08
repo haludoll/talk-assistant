@@ -19,14 +19,9 @@ struct PhraseCategoryEditView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                ScrollView {
-                    VStack(spacing: 32) {
-                        Text("Edit Category", bundle: .module)
-                            .bold()
-                            .font(.largeTitle)
-                            .padding(.bottom)
-
+            List {
+                Section {
+                    VStack(spacing: 16) {
                         Image(systemName: phraseCategoryEditViewModel.iconName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -40,47 +35,36 @@ struct PhraseCategoryEditView: View {
                             .padding(.vertical, 8)
                             .background(Color(.secondarySystemBackground))
                             .cornerRadius(8)
-
-                        PhraseCategoryIconColorSelectGrid(selectedIconColor: phraseCategoryEditViewModel.iconColor) {
-                            phraseCategoryEditViewModel.iconColor = $0
-                        }
-                        .padding()
-                        .background(Color(.secondarySystemBackground))
-                        .cornerRadius(8)
-
-                        PhraseCategoryIconSelectGrid(iconName: phraseCategoryEditViewModel.iconName,
-                                                     iconColor: phraseCategoryEditViewModel.iconColor) {
-                            phraseCategoryEditViewModel.iconName = $0
-                        }
-                        .padding(.horizontal, 8)
                     }
-                    .padding(.top, 64)
-                    .padding(.horizontal)
                 }
 
-                Button {
-                    phraseCategoryEditViewModel.edit()
-                    dismiss()
-                } label: {
-                    Text("Done", bundle: .module)
-                        .padding(.vertical, 8)
-                        .frame(maxWidth: .infinity)
+                Section {
+                    PhraseCategoryIconColorSelectGrid(selectedIconColor: phraseCategoryEditViewModel.iconColor) {
+                        phraseCategoryEditViewModel.iconColor = $0
+                    }
                 }
-                .bold()
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .buttonStyle(.borderedProminent)
-                .padding(.bottom)
-                .padding(.top, 8)
-                .padding(.horizontal, 32)
+
+                Section {
+                    PhraseCategoryIconSelectGrid(iconName: phraseCategoryEditViewModel.iconName,
+                                                 iconColor: phraseCategoryEditViewModel.iconColor) {
+                        phraseCategoryEditViewModel.iconName = $0
+                    }
+                }
             }
+            .listSectionSpacing(16)
+            .navigationTitle(Text("Edit Category", bundle: .module))
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Dismiss", systemImage: "xmark") {
                         dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color(.secondaryLabel))
+                    }
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done", systemImage: "checkmark") {
+                        phraseCategoryEditViewModel.edit()
+                        dismiss()
                     }
                 }
             }

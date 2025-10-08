@@ -49,6 +49,7 @@ struct PhraseCategoryIconSelectGrid: View {
                             }
                             .frame(maxWidth: .infinity)
                         }
+                        .buttonStyle(.plain)
                     }
                 }
             }

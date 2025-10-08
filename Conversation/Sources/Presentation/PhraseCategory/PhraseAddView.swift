@@ -29,13 +29,13 @@ struct PhraseAddView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "Save", bundle: .module)) {
+                    Button("Done", systemImage: "checkmark") {
                         phraseAddViewModel.add(text, to: phraseCategoryID)
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "Cancel", bundle: .module)) {
+                    Button("Dismiss", systemImage: "xmark") {
                         dismiss()
                     }
                 }
