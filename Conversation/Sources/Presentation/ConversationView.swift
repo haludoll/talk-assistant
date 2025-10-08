@@ -46,7 +46,7 @@ public struct ConversationView: View {
             .blurNavigationBar()
         }
         .background(Color(.systemGroupedBackground))
-        .contentShape(Rectangle())
+        .contentShape(.rect)
         .task {
             phraseSpeakViewModel.setupVoice()
             await phraseCategorySpeakViewModel.createDefault()
@@ -69,6 +69,7 @@ public struct ConversationView: View {
                         .glassEffectUnion(id: "speechInputAccessory", namespace: speechInputAccessoryViewUnionNamespace)
                 }
             }
+            .contentShape(.rect)    // NOTE: To prevent tap events from being captured by the background phrase list
         } else {
             HStack(spacing: 0) {
                 repeatButton()
