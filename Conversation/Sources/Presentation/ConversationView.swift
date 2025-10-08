@@ -24,16 +24,12 @@ public struct ConversationView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     PhraseCategoryHeaderTitle()
 
-                    LazyVStack(spacing: 0, pinnedViews: .sectionHeaders) {
-                        Section {
-                            PhrasesPageView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory,
-                                            phraseSpeakViewModel: phraseSpeakViewModel)
-                        } header: {
-                            PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
-                                                     selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
-                                                                                   set: {  phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
-                        }
-                    }
+                    PhraseCategoryListHeader(phraseCategories: phraseCategorySpeakViewModel.phraseCategories,
+                                             selectedPhraseCategory: .init(get: { phraseCategorySpeakViewModel.selectedPhraseCategory },
+                                                                           set: {  phraseCategorySpeakViewModel.selectedPhraseCategory = $0 }))
+
+                    PhrasesPageView(selectedPhraseCategory: phraseCategorySpeakViewModel.selectedPhraseCategory,
+                                    phraseSpeakViewModel: phraseSpeakViewModel)
                 }
             }
             .padding(.bottom)
